@@ -1,0 +1,3 @@
+var GITHUB_API_KEY = 'INSERT_YOURS';
+
+export default GITHUB_API_KEY;
