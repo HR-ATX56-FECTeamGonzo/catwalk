@@ -1,1 +1,1 @@
-export default OutfitList;
+// export default OutfitList;

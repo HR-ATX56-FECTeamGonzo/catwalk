@@ -1,7 +1,7 @@
 import React, {component, useState} from 'react';
 
 const ReviewsList = () => {
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState([]);
 
   return (
     <div>
