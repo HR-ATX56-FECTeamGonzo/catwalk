@@ -1,5 +1,5 @@
 import React from 'react';
-
+let ProductInfo;
 // image gallery
   // collapsed (default) view
     // thumbnail list
