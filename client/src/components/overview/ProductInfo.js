@@ -13,15 +13,17 @@ import React from 'react';
   // avg rating + review count
     // doesn't display if no reviews
   // category + title
-  // price 
+  // price
     // displays differently for a sale
   // product description (this is the slogan + checklist at the bottom)
 
 
 // style selector/list
-  
+
 
 // size + quantity + add to bag
  // dropdown to select size
  // dropdown to select quantity
  // add to bag button: saves to cart
+
+export default ProductInfo;
