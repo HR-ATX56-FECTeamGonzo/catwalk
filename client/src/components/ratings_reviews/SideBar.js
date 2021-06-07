@@ -44,5 +44,4 @@ const SideBar = (props) => {
     </div>
   );
 };
-// {props.metaData.characteristics.comfort !== undefined ? }
 export default SideBar;
