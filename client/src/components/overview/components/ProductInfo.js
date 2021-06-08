@@ -18,14 +18,14 @@ const Price = ({prices}) => (
 );
 
 
-const ProductInfo = ({currentProduct, style}) => {
-  const original = style.original_price;
-  const sale = style.sale_price;
+const ProductInfo = ({currentProduct, currentStyle}) => {
+  const original = currentStyle.original_price;
+  const sale = currentStyle.sale_price;
   return (
     <div id='ProductInfo'>
       <Rating ratings={currentProduct.reviewMetadata.ratings}/>
       <p id='category'>Category: {currentProduct.category}</p>
-      <p id='product_name'>Product Name: {style.name} {currentProduct.name}</p>
+      <p id='product_name'>Product Name: {currentStyle.name} {currentProduct.name}</p>
       <Price prices={{original, sale}}/>
       <h3 id='slogan'>{currentProduct.slogan}</h3>
       <p id='description'>{currentProduct.description}</p>

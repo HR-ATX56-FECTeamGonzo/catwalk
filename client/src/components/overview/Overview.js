@@ -2,18 +2,25 @@
 import React, {useState} from 'react';
 import exampleData from './exampleData.js';
 import ProductInfo from './components/ProductInfo.js';
-
+import StyleList from './components/StyleList.js';
 const Overview = () => {
   // local state needed:
     // view (image gallery)
     // currently selected style
     //
+  const getDefaultStyle = (styles) => (
+    styles.find((style) => style['default?'])
+  );
+
+  const defaultStyle = getDefaultStyle(exampleData.styles.results);
+
   const [view, setView] = useState(0);
-  const [currentStyle, setCurrentStyle] = useState(exampleData.styles.results[2]);
+  const [currentStyle, setCurrentStyle] = useState(defaultStyle);
   return (
   <div id="overview">
     <h2>overview</h2>
-    <ProductInfo currentProduct={exampleData} style={currentStyle}/>
+    <ProductInfo currentProduct={exampleData} currentStyle={currentStyle}/>
+    <StyleList styles={exampleData.styles.results} current={currentStyle}/>
   </div>);
 };
 
