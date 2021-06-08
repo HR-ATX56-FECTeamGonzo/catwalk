@@ -3,6 +3,11 @@ import { GridList, GridListTile, GridListTileBar, Icon } from '@material-ui/core
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const StyleList = ({styles, current, clickHandler}) => {
+  var thumbnailStyle = {
+    width: '100px',
+    height: '100px'
+  };
+
   var iconStyle = {
     color: 'black',
     border: '1px solid black',
@@ -10,15 +15,16 @@ const StyleList = ({styles, current, clickHandler}) => {
     background: 'white',
     margin: '5px'
   };
+
   return (
     <div id='styleList'>
       <h4>Style List</h4>
-      <span>Style &gt; </span>
-      <span>{styles[current].name}</span>
-      <GridList className='styleGrid' cols={4}>
+      <p>Style &gt; {styles[current].name}</p>
+      <GridList className='styleGrid' cols={4} style={{width: '420px'}}>
         {styles.map((x, idx) => (
           <GridListTile
             cols={1}
+            style={thumbnailStyle}
             key={idx}
             onClick={(e) => { clickHandler(e, idx); }}>
             <img src={x.photos[0]['thumbnail_url']}/>
