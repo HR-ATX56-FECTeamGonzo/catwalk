@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import GITHUB_API_KEY from '../../config/config.js';
 
 
 // here i will render the review item div with all of the passed down props
@@ -8,13 +10,22 @@ const ReviewItem = (props) => {
   const year = date.slice(0, 4);
   const month = date.slice(5, 7);
   const day = date.slice(8, 10);
-  // console.log('this is the month', Number(month));
 
-  // ============= need functionality for YES button and REPORT button
   // YES button needs to send an axios PUT request to ${url}/reviews/:review_id/helpful .then(probably re-render) - maybe send back boolean flag
-  const yesButton = () => {};
+  const yesButton = (event) => {
+    event.preventDefault();
+    axios.put(`${props.url}${props.review_id}/helpful`, { headers: { 'Authorization': `${GITHUB_API_KEY}`} })
+      .then(() => console.log('successful Yes function'))
+      .catch((err) => console.log('there was an error trying to mark a review as helpful', err));
+  };
+
   // REPORT button needs to send an axios PUT request to ${url}/reviews/:review_id/report then(probably re-render) - maybe send back boolean flag
-  const reportButton = () => {};
+  const reportButton = (event) => {
+    event.preventDefault();
+    axios.put(`${props.url}${props.review_id}/report`, { headers: { 'Authorization': `${GITHUB_API_KEY}`}})
+      .then(() => console.log('successful Yes function'))
+      .catch((err) => console.log('there was an error trying to report a review', err));
+  };
 
   return (
     <div>
@@ -26,8 +37,12 @@ const ReviewItem = (props) => {
       <div>Body: {props.body}</div>
       <div>I recommend this product: {props.recommend.toString()}</div>
       <div>Helpfulness: {props.helpfulness}
-        <button onClick={'call the yesButton function'}>Yes</button>
-        <button onClick={'call the reportButton function'}>Report</button>
+        <button onClick={() => {
+          yesButton(event);
+        }}>Yes</button>
+        <button onClick={() => {
+          reportButton(event);
+        }}>Report</button>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import React from 'react';
 //  - how the product fits on a scale from too small to too large
 //  - how comfortable the product is from poor to perfect
 const SideBar = (props) => {
-  console.log('this is props from sidebar:', props.metaData);
+  // console.log('this is props from sidebar:', props.metaData);
   // need to find the average star rating
   const starRating = props.metaData.ratings;
   const oneStar = Number(starRating[1] || 0);
@@ -30,17 +30,18 @@ const SideBar = (props) => {
     <div>
       ---------------------------
       <div>star rating: {averageStarRating}</div>
-      <div>{percentRecommended}% of reviews reccomend this product</div>
-      <div>5 STARS {fiveStar}</div>
-      <div>4 STARS {fourStar}</div>
-      <div>3 STARS {threeStar}</div>
-      <div>2 STARS {twoStar}</div>
-      <div>1 STARS {oneStar}</div>
+      <div>{percentRecommended}% of reviews recommend this product</div>
+      <div>5 STARS - {fiveStar}</div>
+      <div>4 STARS - {fourStar}</div>
+      <div>3 STARS - {threeStar}</div>
+      <div>2 STARS - {twoStar}</div>
+      <div>1 STARS - {oneStar}</div>
       <div>SIZE {characteristics.Fit.value}</div>
       <div>COMFORT {characteristics.Comfort.value}</div>
       <div>QUALITY {characteristics.Quality.value}</div>
       {/* conditionally render the length if it has a length  */}
       <div>LENGTH {characteristics.Length.value}</div>
+      -----------------------------
     </div>
   );
 };
