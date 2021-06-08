@@ -18,6 +18,8 @@ const getRelatedProducts = (productId) => {
       //dispatch to reducers
       dispatch(addRelatedProducts(response.data));
     })
+    //need to take array of related product IDs and make another get request for their product information
+    //need to possibly change part of store to be an array of objects
     .catch(() => console.log('there has been an error fetching the metadata for related products'));
 };
 

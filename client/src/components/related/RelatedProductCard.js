@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import Typography from '@material-ui/core/Typography';
 
+
 const RelatedProductCard = () => {
   useEffect(() => {
     return; //add any thing

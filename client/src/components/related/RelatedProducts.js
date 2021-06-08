@@ -10,6 +10,7 @@ var RelatedProducts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //need to refactor once getRelatedProducts is fixed to return array of objects
     getRelatedProducts(currentProductId);
   }); //possibly optimize with second argument, passing array of what doesn't re-render if nothing's changed
 
@@ -17,7 +18,7 @@ var RelatedProducts = () => {
     <div>
       <Typography variant='subtitle1' align='left'>Related Products</Typography>
       {/* // */}
-      {/* need to display as carousel and pass props */}
+      {/* need to display as carousel and pass down what is in store */}
       {/* // */}
       <RelatedProductCard />
     </div>
