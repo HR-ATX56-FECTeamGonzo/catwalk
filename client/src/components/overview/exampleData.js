@@ -80,6 +80,10 @@ const exampleData = {
             'quantity': 4,
             'size': 'XL'
           }
+          ,"null": {
+            "quantity": null,
+            "size": null
+          }
         }
       },
       {
