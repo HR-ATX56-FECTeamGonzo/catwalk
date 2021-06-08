@@ -23,11 +23,12 @@ const ProductInfo = ({currentProduct, currentStyle}) => {
   const sale = currentStyle.sale_price;
   return (
     <div id='ProductInfo'>
+      <h3>Product Info</h3>
       <Rating ratings={currentProduct.reviewMetadata.ratings}/>
       <p id='category'>Category: {currentProduct.category}</p>
       <p id='product_name'>Product Name: {currentStyle.name} {currentProduct.name}</p>
       <Price prices={{original, sale}}/>
-      <h3 id='slogan'>{currentProduct.slogan}</h3>
+      <h4 id='slogan'>{currentProduct.slogan}</h4>
       <p id='description'>{currentProduct.description}</p>
     </div>
   );
