@@ -8,18 +8,15 @@ import exampleData from '../exampleData.js';
 // price
 // displays differently for a sale
 // product description (this is the slogan + checklist at the bottom)
-const Price = ({prices}) => {
-  const strDisplay = {
-    'text-decoration': 'line-through'
-  };
+const Price = ({prices}) => (
+  <div id='price'>
+    <span style={prices.sale ? { 'textDecoration': 'line-through' } : null }>
+      ${prices.original}
+    </span> &nbsp;
+    {prices.sale && <span style={{ color: 'red' }}>${prices.sale}</span>}
+  </div>
+);
 
-  return (
-    <div id='price'>
-      <span style={prices.sale ? strDisplay : null }>${prices.original} </span>
-      {prices.sale && <span style={{color: 'red'}}>${prices.sale}</span>}
-    </div>
-  );
-};
 
 const ProductInfo = ({currentProduct, style}) => {
   const original = style.original_price;
@@ -30,6 +27,8 @@ const ProductInfo = ({currentProduct, style}) => {
       <p id='category'>Category: {currentProduct.category}</p>
       <p id='product_name'>Product Name: {style.name} {currentProduct.name}</p>
       <Price prices={{original, sale}}/>
+      <h3 id='slogan'>{currentProduct.slogan}</h3>
+      <p id='description'>{currentProduct.description}</p>
     </div>
   );
 };

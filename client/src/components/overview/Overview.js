@@ -12,7 +12,7 @@ const Overview = () => {
   const [currentStyle, setCurrentStyle] = useState(exampleData.styles.results[2]);
   return (
   <div id="overview">
-    <p>overview</p>
+    <h2>overview</h2>
     <ProductInfo currentProduct={exampleData} style={currentStyle}/>
   </div>);
 };
