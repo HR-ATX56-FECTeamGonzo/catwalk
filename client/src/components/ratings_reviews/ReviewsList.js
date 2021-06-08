@@ -4,10 +4,11 @@ import ReviewItem from './ReviewItem';
 // in this component i will send the relevent data to the individual review and render that specific item
 
 const ReviewsList = (props) => {
-  console.log('this belongs to reviewsList', props.reviewData);
-  const arr = props.reviewData.map((review, i) => {
+  console.log('this belongs to reviewsList', props.reviewDataforList);
+  const arr = props.reviewDataforList.map((review, i) => {
     return (
       <ReviewItem key={i}
+        changeSort={props.changeSort}
         rating={review.rating}
         reviewer={review.reviewer_name}
         summary={review.summary}
