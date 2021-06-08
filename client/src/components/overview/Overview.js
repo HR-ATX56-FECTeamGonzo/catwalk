@@ -9,7 +9,7 @@ const Overview = () => {
     // currently selected style
     //
   const [view, setView] = useState(0);
-  const [currentStyle, setCurrentStyle] = useState(0);
+  const [currentStyle, setCurrentStyle] = useState(exampleData.styles.results[2]);
   return (
   <div id="overview">
     <p>overview</p>
