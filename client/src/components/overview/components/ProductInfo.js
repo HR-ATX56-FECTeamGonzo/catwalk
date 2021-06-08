@@ -11,24 +11,13 @@ import exampleData from '../exampleData.js';
 
 const ProductInfo = ({currentProduct, style}) => {
   // don't display this if no reviews
-  var reviewCount = 0;
-  var rating = 0;
-  for (const [key, value] of Object.entries(currentProduct.reviewMetadata.ratings) ) {
-    reviewCount += parseInt(value);
-    rating += (key * value);
-  }
-  if (reviewCount > 0) {
-    // round to nearest quarter
-    rating /= reviewCount;
-    rating = (Math.round(rating * 4) / 4);
-  }
+
   // reviewCount = 0;
   return (
     <div id='ProductInfo'>
-      {reviewCount > 0 ?
-        <Rating
-          rating={rating}
-          reviewCount={reviewCount} /> : null }
+      <Rating ratings={currentProduct.reviewMetadata.ratings}/>
+      <p>Category: {currentProduct.category}</p>
+      <p>Product Name: {currentProduct.name}</p>
     </div>
   );
 };
