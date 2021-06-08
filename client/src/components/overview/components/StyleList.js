@@ -1,7 +1,7 @@
 import React from 'react';
 import { GridList, GridListTile } from '@material-ui/core';
 
-const StyleList = ({styles, current}) => {
+const StyleList = ({styles, current, clickHandler}) => {
 
   return (
     <div>
@@ -10,7 +10,10 @@ const StyleList = ({styles, current}) => {
       <span>{styles[current].name}</span>
       <GridList className='styleGrid' cols={4}>
         {styles.map((x, idx) => (
-          <GridListTile item>
+          <GridListTile
+            cols={1}
+            key={idx}
+            onClick={(e) => { clickHandler(e, idx); }}>
             <img src={x.photos[0]['thumbnail_url']}/>
           </GridListTile>
         ))}

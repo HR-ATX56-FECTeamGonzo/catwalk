@@ -4,32 +4,45 @@ import exampleData from './exampleData.js';
 import ProductInfo from './components/ProductInfo.js';
 import StyleList from './components/StyleList.js';
 
-const getDefaultStyle = (styles) => (
-  styles.find((style) => style['default?'])
+const getDefaultStyle = (arr) => (
+  arr.find((style) => style['default?'])
 );
 
-const getDefaultStyleIndex = (styles) => (
-  styles.findIndex((style) => style['default?'])
+const getDefaultStyleIndex = (arr) => (
+  arr.findIndex((style) => style['default?'])
 );
 
 const Overview = () => {
+  // this eventually gets replaced by store variable
+  const styles = exampleData.styles.results;
+  const defaultStyle = {
+    info: getDefaultStyle(styles),
+    index: getDefaultStyleIndex(styles)
+  };
   // local state needed:
     // view (image gallery)
     // currently selected style
     //
-
-  const defaultStyle = {
-    info: getDefaultStyle(exampleData.styles.results),
-    index: getDefaultStyleIndex(exampleData.styles.results)
-  };
-
   const [view, setView] = useState(0);
   const [currentStyle, setCurrentStyle] = useState(defaultStyle);
+
+  const handleClick = (e, idx) => {
+    setCurrentStyle({
+      info: styles[idx],
+      index: idx
+    });
+  };
+
   return (
   <div id="overview">
     <h2>overview</h2>
-    <ProductInfo currentProduct={exampleData} currentStyle={currentStyle.info}/>
-    <StyleList styles={exampleData.styles.results} current={currentStyle.index}/>
+    <ProductInfo
+      currentProduct={exampleData}
+      currentStyle={currentStyle.info}/>
+    <StyleList
+      styles={styles}
+      current={currentStyle.index}
+      clickHandler={handleClick}/>
   </div>);
 };
 
