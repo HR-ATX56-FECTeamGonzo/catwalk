@@ -9,20 +9,25 @@ const ReviewItem = (props) => {
   const month = date.slice(5, 7);
   const day = date.slice(8, 10);
   // console.log('this is the month', Number(month));
+
+  // ============= need functionality for YES button and REPORT button
+  // YES button needs to send an axios PUT request to ${url}/reviews/:review_id/helpful .then(probably re-render) - maybe send back boolean flag
+  const yesButton = () => {};
+  // REPORT button needs to send an axios PUT request to ${url}/reviews/:review_id/report then(probably re-render) - maybe send back boolean flag
+  const reportButton = () => {};
+
   return (
     <div>
       ==================
-      <div>Review count: {props.count}</div>
-      <div>Sorted by: {props.sort}</div>
-      <div>Rating: {props.rating}</div>
+      <div>Rating: {props.rating}(stars)</div>
       <div>Reviewer: {props.reviewer}</div>
       <div>Date: {months[Number(month) - 1]} {day}, {year}</div>
       <div>Title: {props.summary}</div>
       <div>Body: {props.body}</div>
       <div>I recommend this product: {props.recommend.toString()}</div>
       <div>Helpfulness: {props.helpfulness}
-        <button>Yes</button>
-        <button>Report</button>
+        <button onClick={'call the yesButton function'}>Yes</button>
+        <button onClick={'call the reportButton function'}>Report</button>
       </div>
     </div>
   );
@@ -31,6 +36,9 @@ const ReviewItem = (props) => {
 export default ReviewItem;
 
 // prop types:
+
+// ====================== NEED review_id as a prop for YES and REPORT button
+
 // reting={review.rating} -------------
 // date={review.date} -----------------
 // reviewer={review.reviewer} ---------
