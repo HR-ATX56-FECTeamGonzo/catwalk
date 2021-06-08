@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import exampleData from './exampleData.js';
 import ProductInfo from './components/ProductInfo.js';
 import StyleList from './components/StyleList.js';
+import AddToCart from './components/AddToCart.js';
+
 
 const getDefaultStyle = (arr) => (
   arr.find((style) => style['default?'])
@@ -43,6 +45,7 @@ const Overview = () => {
       styles={styles}
       current={currentStyle.index}
       clickHandler={handleClick}/>
+    <AddToCart stock={currentStyle.info.skus}/>
   </div>);
 };
 
