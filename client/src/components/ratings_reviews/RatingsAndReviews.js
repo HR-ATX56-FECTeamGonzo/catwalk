@@ -3,7 +3,7 @@ import ReviewsList from './ReviewsList.js';
 import exampleData from '../../store/exampleData.js';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
-import NewReview from './NewReview.js';
+// import NewReview from './NewReview.js';
 import SideBar from './SideBar.js';
 
 // in this component i want to fetch all the reviews and send the relevent information to the review list component
@@ -46,7 +46,7 @@ const RatingsAndReviews = () => {
   }, []);
   // if the data doesnt exist yet render null
   return (
-    <div>
+    <div id='reviews'>
       <div>{metaData.ratings ? <SideBar metaData={metaData} /> : null}</div>
       <div><ReviewsList reviewData={reviewData} sort={sort} count={count}/></div>
       <button onClick={() => {
@@ -55,7 +55,7 @@ const RatingsAndReviews = () => {
       }}>MORE REVIEWS</button>
 
       <button onClick={() => {
-        return <NewReview />;
+        // return <NewReview />;
       }}>ADD A REVIEW +</button>
     </div>
   );
