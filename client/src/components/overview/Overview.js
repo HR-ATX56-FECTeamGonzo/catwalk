@@ -38,7 +38,6 @@ const Overview = () => {
   return (
   <div id="overview">
     <h2>overview</h2>
-    <ImageGallery />
     <ProductInfo
       currentProduct={exampleData}
       currentStyle={currentStyle.info}/>
