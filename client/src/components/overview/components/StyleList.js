@@ -45,11 +45,3 @@ const StyleList = ({styles, current, clickHandler}) => {
 
 export default StyleList;
 
-
-/* <div id='styleList'>
-{styles.map((x, idx) => (
-  <div key={idx}>
-  <img src={x.photos[0]['thumbnail_url']}/>
-  </div>
-  ))}
-</div> */

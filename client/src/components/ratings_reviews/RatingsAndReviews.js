@@ -3,7 +3,7 @@ import ReviewsList from './ReviewsList.js';
 import exampleData from '../../store/exampleData.js';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
-import NewReview from './NewReview.js';
+// import NewReview from './NewReview.js';
 import SideBar from './SideBar.js';
 
 // in this component i want to fetch all the reviews and send the relevent information to the review list component
@@ -55,7 +55,7 @@ const RatingsAndReviews = () => {
       }}>MORE REVIEWS</button>
 
       <button onClick={() => {
-        return <NewReview />;
+        // return <NewReview />;
       }}>ADD A REVIEW +</button>
     </div>
   );
