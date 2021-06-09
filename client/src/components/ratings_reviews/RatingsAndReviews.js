@@ -3,7 +3,7 @@ import ReviewsList from './ReviewsList.js';
 import exampleData from '../../store/exampleData.js';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
-import NewReview from './NewReview.js';
+// import NewReview from './NewReview.js';
 import SideBar from './SideBar.js';
 
 // =============== help with more reviews button, currently fetching all reviews, only want to render first two and two more after each button press
@@ -81,7 +81,7 @@ const RatingsAndReviews = () => {
         setCount(count + 2);
       }}>MORE REVIEWS</button> : null }</div>
       <button onClick={() => {
-        return <NewReview />;
+        // return <NewReview />;
       }}>ADD A REVIEW +</button>
     </div>
   );

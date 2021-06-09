@@ -25,6 +25,8 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "bootstrap": "^5.0.1",
@@ -36,5 +38,4 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0"
   }
-
 }
