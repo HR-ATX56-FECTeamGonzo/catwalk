@@ -65,7 +65,7 @@ const RatingsAndReviews = () => {
       <div>{ metaData.ratings ? <SideBar metaData={metaData} /> : null }</div>
       <div>Review count: {reviewData.length}</div>
       <div>Sorted by:
-        <select onChange={() => {
+        <select onChange={(event) => {
           sortMethodChange(event.target.value);
         }}>
           <option default value="relevant">Relevant</option>
