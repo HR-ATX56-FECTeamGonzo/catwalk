@@ -5,7 +5,7 @@ import RelatedProducts from './related/RelatedProducts.js';
 import OutfitList from './related/OutfitList.js';
 
 var App = () => (
-  <div>react app
+  <div>
     <Overview />
     <RatingsAndReviews />
     <RelatedProducts />

@@ -70,7 +70,6 @@ const AddToCart = ({stock}) => {
 
   return (
     <div id='AddToCart'>
-      <p>{JSON.stringify(stock)}</p>
       <select name='size'
         ref={sizeRef}
         value={currentSize}
