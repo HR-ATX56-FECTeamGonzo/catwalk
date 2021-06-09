@@ -1,33 +1,17 @@
-import React from 'react';
-import ReviewItem from './ReviewItem';
+import React, {component, useState} from 'react';
 
-// in this component i will send the relevent data to the individual review and render that specific item
-
-const ReviewsList = (props) => {
-  // console.log('this belongs to reviewsList', props.reviewDataforList);
-  const arr = props.reviewDataforList.map((review, i) => {
-    return (
-      <ReviewItem key={i}
-        url={props.url}
-        review_id={review.review_id.toString()}
-        changeSort={props.changeSort}
-        rating={review.rating}
-        reviewer={review.reviewer_name}
-        summary={review.summary}
-        body={review.body}
-        date={review.date}
-        recommend={review.recommend}
-        response={review.response}
-        helpfulness={review.helpfulness}
-        count={props.count}
-        sort={props.sort}
-      />
-    );
-  });
+const ReviewsList = () => {
+  const [reviews, setReviews] = useState([]);
 
   return (
     <div>
-      {arr}
+      <h3>these are the reviews: {reviews.toString()}</h3>
+      <button onClick={() => {
+        setReviews([...reviews, ' review', ' reviewTwo']);
+      }}>More Reviews</button>
+      {/* // this button needs to generate two more reviews
+    // when out of reviews button will dissapear
+    // when out of room on single page, add scrolling */}
     </div>
   );
 };
