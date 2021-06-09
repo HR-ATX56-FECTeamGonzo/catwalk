@@ -61,7 +61,7 @@ const RatingsAndReviews = () => {
 
   // if the data doesnt exist yet render null
   return (
-    <div>
+    <div id='reviews'>
       <div>{ metaData.ratings ? <SideBar metaData={metaData} /> : null }</div>
       <div>Review count: {reviewData.length}</div>
       <div>Sorted by:
