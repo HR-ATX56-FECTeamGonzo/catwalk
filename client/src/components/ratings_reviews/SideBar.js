@@ -23,7 +23,7 @@ const SideBar = (props) => {
   const recommended = props.metaData.recommended;
   const t = Number(recommended.true);
   const f = Number(recommended.false);
-  const percentRecommended = Math.floor((t / (t + f)) * 100);
+  const percentRecommended = ((t / (t + f)) * 100).toFixed(1);
   // console.log('percent of people recommended', Math.floor(percentRecommended * 100));
 
 
