@@ -1,4 +1,5 @@
 import React from 'react';
+// possibly can grab the average star rating from the store
 
 // this component needs to render:
 //  - the Average star rating for a clicked item

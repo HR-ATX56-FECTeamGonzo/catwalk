@@ -17,7 +17,7 @@ const RatingsAndReviews = () => {
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('');
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
-  const headers = { headers: { 'Authorization': `${GITHUB_API_KEY}`}}
+  const headers = { headers: { 'Authorization': `${GITHUB_API_KEY}`}};
   // state are needed for the sidebar component
   const [metaData, setMetaData] = useState({});
 
@@ -73,7 +73,7 @@ const RatingsAndReviews = () => {
           <option value="helpful">Helpful</option>
         </select>
       </div>
-      <div>{ reviewData[0] ? <ReviewsList url={url} reviewDataforList={reviewDataForList}/> : null}</div>
+      <div>{ reviewData[1] ? <ReviewsList url={url} reviewDataforList={reviewDataForList}/> : null}</div>
       {/* making MORE REVIEWS button dissapear when out of reviews */}
       <div>{ count < reviewData.length ? <button onClick={() => {
         // adding two additional items to the reviewDataforList prop everytime the button is clicked
