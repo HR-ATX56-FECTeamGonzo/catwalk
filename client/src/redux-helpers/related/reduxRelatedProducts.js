@@ -1,40 +1,44 @@
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import { useDispatch, useSelector } from 'react-redux';
+import exampleData from '../../store/exampleData.js';
 
 //action creators
-const addRelatedProducts = (relatedProductsIdArray) => ({
+export const addRelatedProducts = (relatedProductsArray) => ({
   type: 'ADD_RELATED_PRODUCTS',
-  relatedProductsIdArray
+  relatedProductsArray
 });
 
-const getRelatedProducts = (productId) => {
+//
+//
+//need to pass in parameter 'productId' and replace exampleData.id
+export const getRelatedProducts = () => {
   let url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/';
-  let currentProductId = useSelector(state => state.currentProduct.id);
+  // let currentProductId = useSelector(state => state.currentProduct.id);
 
-  return axios.get(`${url}products/${currentProductId}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
+  return axios.get(`${url}products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
     .then((response) => {
-      // console.log('this is results from metadata fetch', response.data);
-      //dispatch to reducers
-      dispatch(addRelatedProducts(response.data));
+      console.log(response);
+      let relatedProductsArray = [];
+      for (var i = 0; i < response.data; i++) {
+        relatedProductsArray.push(axios.get(`${url}products/${response.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}}));
+      }
+      return Promise.all(relatedProductsArray);
     })
-    //need to take array of related product IDs and make another get request for their product information
-    //need to possibly change part of store to be an array of objects
+    .then((result) => {
+      console.log(result);
+      dispatch(addRelatedProducts(result.data));
+    })
     .catch(() => console.log('there has been an error fetching the metadata for related products'));
 };
 
 //reducers
-const relatedProductsReducer = (previousState = [], action) => {
+export const relatedProductsReducer = (previousState = [], action) => {
   switch (action.type) {
   case 'ADD_RELATED_PRODUCTS':
-    return action.relatedProductsIdArray;
+    return action.relatedProductsArray;
   default:
     return previousState;
   }
 };
 
-export default {
-  addRelatedProducts,
-  getRelatedProducts,
-  relatedProductsReducer
-};

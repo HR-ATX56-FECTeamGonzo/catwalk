@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 // import rootReducer from './../reducers/main.js';
 import exampleData from './exampleData.js';
-import relatedProductsReducer from '../redux-helpers/related/reduxRelatedProducts.js';
+import {relatedProductsReducer} from '../redux-helpers/related/reduxRelatedProducts.js';
 
 var defaultState = {
   currentProduct: exampleData,
@@ -10,7 +10,7 @@ var defaultState = {
 };
 
 const rootReducer = combineReducers({
-  //add currentProductReducer and others
+  //add currentProductReducer or redux state tree won't render
   // currentProduct:
   relatedProducts: relatedProductsReducer
 });
