@@ -5,7 +5,7 @@ import ReviewItem from './ReviewItem';
 
 const ReviewsList = (props) => {
   // console.log('this belongs to reviewsList', props.reviewDataforList);
-  const arr = props.reviewDataforList.map((review, i) => {
+  const arr = props.reviewData.map((review, i) => {
     return (
       <ReviewItem key={i}
         url={props.url}

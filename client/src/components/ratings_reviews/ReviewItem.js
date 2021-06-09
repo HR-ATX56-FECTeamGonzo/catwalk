@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 
@@ -10,40 +10,63 @@ const ReviewItem = (props) => {
   const year = date.slice(0, 4);
   const month = date.slice(5, 7);
   const day = date.slice(8, 10);
+  const headers = { headers: { 'Authorization': `${GITHUB_API_KEY}`} };
+  const [clickedYes, setClickedYes] = useState(false);
+  const [reported, setReported] = useState(false);
+
 
   // YES button needs to send an axios PUT request to ${url}/reviews/:review_id/helpful .then(probably re-render) - maybe send back boolean flag
   const yesButton = (event) => {
     event.preventDefault();
-    axios.put(`${props.url}${props.review_id}/helpful`, { headers: { 'Authorization': `${GITHUB_API_KEY}`} })
+    (clickedYes === false ) ? axios.put(`${props.url}${props.review_id}/helpful`, null, headers)
       .then(() => console.log('successful Yes function'))
-      .catch((err) => console.log('there was an error trying to mark a review as helpful', err));
+      .catch((err) => console.log('there was an error trying to mark a review as helpful', err)) : console.log('you cant click more than once');
+    setClickedYes(true);
   };
 
   // REPORT button needs to send an axios PUT request to ${url}/reviews/:review_id/report then(probably re-render) - maybe send back boolean flag
   const reportButton = (event) => {
     event.preventDefault();
-    axios.put(`${props.url}${props.review_id}/report`, { headers: { 'Authorization': `${GITHUB_API_KEY}`}})
+    (reported === false) ? axios.put(`${props.url}${props.review_id}/report`, null, headers)
       .then(() => console.log('successful Yes function'))
-      .catch((err) => console.log('there was an error trying to report a review', err));
+      .catch((err) => console.log('there was an error trying to report a review', err)) : console.log('you cant report something twice, it shoulve dissapeared already, never to return');
+    setReported(true);
   };
 
   return (
     <div>
       ==================
-      <div>Rating: {props.rating}(stars)</div>
+      { reported ? null :
+        <div>
+          <div>Rating: {props.rating}(stars)</div>
+          <div>Reviewer: {props.reviewer}</div>
+          <div>Date: {months[Number(month) - 1]} {day}, {year}</div>
+          <div>Title: {props.summary}</div>
+          <div>Body: {props.body}</div>
+          <div>I recommend this product: {props.recommend.toString()}</div>
+          <div>Helpfulness: {clickedYes ? props.helpfulness + 1 : props.helpfulness}
+            <button onClick={() => {
+              yesButton(event);
+            }}>Yes</button>
+            <button onClick={() => {
+              reportButton(event);
+            }}>Report</button>
+          </div>
+        </div>}
+      {/* <div>Rating: {props.rating}(stars)</div>
       <div>Reviewer: {props.reviewer}</div>
       <div>Date: {months[Number(month) - 1]} {day}, {year}</div>
       <div>Title: {props.summary}</div>
       <div>Body: {props.body}</div>
       <div>I recommend this product: {props.recommend.toString()}</div>
-      <div>Helpfulness: {props.helpfulness}
+      <div>Helpfulness: {clickedYes ? props.helpfulness + 1 : props.helpfulness}
         <button onClick={() => {
           yesButton(event);
         }}>Yes</button>
         <button onClick={() => {
           reportButton(event);
         }}>Report</button>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -3,9 +3,15 @@ import ReviewsList from './ReviewsList.js';
 import exampleData from '../../store/exampleData.js';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
-// import NewReview from './NewReview.js';
+import NewReview from './NewReview.js';
 import SideBar from './SideBar.js';
-
+// -----------material-ui stuff-----------
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 // =============== help with more reviews button, currently fetching all reviews, only want to render first two and two more after each button press
 
 // in this component i want to fetch all the reviews and send the relevent information to the review list component
@@ -13,7 +19,6 @@ import SideBar from './SideBar.js';
 const RatingsAndReviews = () => {
   // these are the states for the url and review components
   const [reviewData, setReviewData] = useState([]);
-  const [reviewDataForList, setReviewDataForList] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('');
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
@@ -28,8 +33,6 @@ const RatingsAndReviews = () => {
         // console.log(response.data.results);
         let dataArr = response.data.results;
         setReviewData(dataArr);
-        // setting initial data for rendering first two reviewItems
-        setReviewDataForList(reviewDataForList.concat(dataArr[0], dataArr[1]));
       })
       .catch((err) => console.log('there has been an error fetching initial reviews'));
   };
@@ -48,7 +51,6 @@ const RatingsAndReviews = () => {
   const sortMethodChange = (event) => {
     // console.log('this is the method we are chosing to sort by next........', event);
     setSort(event);
-    setReviewDataForList([]);
     setReviewData([]);
   };
 
@@ -61,30 +63,36 @@ const RatingsAndReviews = () => {
 
   // if the data doesnt exist yet render null
   return (
-    <div id='reviews'>
+    <div>
       <div>{ metaData.ratings ? <SideBar metaData={metaData} /> : null }</div>
-      <div>Review count: {reviewData.length}</div>
-      <div>Sorted by:
-        <select onChange={(event) => {
-          sortMethodChange(event.target.value);
-        }}>
-          <option default value="relevant">Relevant</option>
-          <option value="newest">Newest</option>
-          <option value="helpful">Helpful</option>
-        </select>
+      <div>{reviewData.length} Reviews</div>
+      <div>
+        <FormControl className="sortSelector">
+          <InputLabel id="sort-select-label">Sorted By:</InputLabel>
+          <Select
+            labelId="sort-select-label"
+            id="sort-selector"
+            value={sort}
+            onChange={(event) => { sortMethodChange(event.target.value); }}
+          >
+            <MenuItem value="relevant">Relevant</MenuItem>
+            <MenuItem value="newest">Newest</MenuItem>
+            <MenuItem value="helpful">Helpful</MenuItem>
+          </Select>
+          <FormHelperText>Select sorting method</FormHelperText>
+        </FormControl>
       </div>
-      <div>{ reviewData[1] ? <ReviewsList url={url} reviewDataforList={reviewDataForList}/> : null}</div>
+      <div>{ reviewData[1] ? <ReviewsList url={url} reviewData={reviewData.slice(0, count)}/> : null}</div>
       {/* making MORE REVIEWS button dissapear when out of reviews */}
       <div>{ count < reviewData.length ? <button onClick={() => {
-        // adding two additional items to the reviewDataforList prop everytime the button is clicked
-        setReviewDataForList(reviewDataForList.concat(reviewData[count], reviewData[count + 1]));
         setCount(count + 2);
       }}>MORE REVIEWS</button> : null }</div>
       <button onClick={() => {
-        // return <NewReview />;
+        return <NewReview />;
       }}>ADD A REVIEW +</button>
     </div>
   );
 };
 
 export default RatingsAndReviews;
+

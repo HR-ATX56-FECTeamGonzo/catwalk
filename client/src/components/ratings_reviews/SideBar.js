@@ -30,7 +30,7 @@ const SideBar = (props) => {
   return (
     <div>
       ---------------------------
-      <div>star rating: {averageStarRating}</div>
+      <div>star rating: {averageStarRating.toFixed(1)}</div>
       <div>{percentRecommended}% of reviews recommend this product</div>
       <div>5 STARS - {fiveStar}</div>
       <div>4 STARS - {fourStar}</div>
