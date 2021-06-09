@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "nodemon client/src/index.js",
     "dev:react": "webpack --watch",
     "test": "jest"
   },
@@ -25,16 +25,18 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "bootstrap": "^5.0.1",
     "mysql": "^2.18.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-material-ui-carousel": "^2.2.6",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0"
   }
-
 }
