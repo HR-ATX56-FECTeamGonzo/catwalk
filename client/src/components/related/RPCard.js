@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -18,6 +18,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Rating from '@material-ui/lab/Rating';
 
 import exampleData from '../../store/exampleData.js';
 
@@ -27,36 +29,41 @@ const useStyles = makeStyles({
     maxWidth: 170,
     minHeight: 325,
     maxHeight: 325,
-    border: '.5px solid black',
+    border: '.5px solid #3d3d5c',
   },
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '12px'
+    right: '25px'
   },
   media: {
     top: '1px',
-    right: '1px',
-    height: 200,
+    right: '11px',
+    height: 190,
+    width: 170,
   },
   paper: {
     position: 'absolute',
     width: 500,
     minHeight: 200,
     backgroundColor: 'white',
-    border: '0.5px solid #000',
+    border: '0.5px solid #3d3d5c',
     // boxShadow: theme.shadows[5],
     // padding: theme.spacing(2, 4, 3),
   },
   table: {
     maxWidth: 500,
   },
+  content: {
+    backgroundColor: '#f0f0f5',
+    height: 150,
+  }
 });
 
 //functions for table
 const StyledTableCell = withStyles(() => ({
   head: {
-    backgroundColor: 'black',
+    backgroundColor: '#3d3d5c',
     color: 'white',
   },
   body: {
@@ -67,7 +74,7 @@ const StyledTableCell = withStyles(() => ({
 const StyledTableRow = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      backgroundColor: 'grey',
+      backgroundColor: '#f0f0f5',
     },
   },
 }))(TableRow);
@@ -125,7 +132,7 @@ const RPCard = (props) => {
     });
 
     const rows = comparisons.map(each => {
-      return {selectedProduct: each.CPValue, feature: each.feature, relatedProduct: each.RPValue};
+      return { selectedProduct: each.CPValue, feature: each.feature, relatedProduct: each.RPValue };
     });
 
     setComparisons(rows);
@@ -179,28 +186,24 @@ const RPCard = (props) => {
       >
         {body}
       </Modal>
-      {/* <CardActionArea> */}
       <CardMedia className={classes.media} >
-        {/**/}
-        {/* props.imageUrl passing as undefined!! */}
-        {/**/}
-        <img src={props.imageUrl} alt={props.name}/>
+        <img src={props.imageURL} alt={props.name} className={classes.media} />
         <IconButton onClick={handleOpen} className={classes.icon}>
           <StarBorderIcon />
         </IconButton>
       </CardMedia>
-      {/* </CardActionArea> */}
-
-      <CardContent>
+      <CardContent className={classes.content}>
         <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
         <Typography variant='subtitle2' alight='left'>{props.name}</Typography>
         {/* need to strikethrough original price */}
-        <Typography variant='caption' alight='left'>${props.salePrice ? props.salePrice : props.originalPrice}</Typography><br/>
-        {/**/}
-        {/* need to add star ratings, pulling from store */}
-        {/**/}
-        <Typography variant='caption' alight='left'>!! STAR RATINGS !!</Typography>
+        <Typography variant='caption' alight='left'>${props.salePrice ? props.salePrice : props.originalPrice}</Typography><br />
 
+        {/* */}
+        {/* need to get star ratings from store */}
+        {/* */}
+        <Typography component="legend"></Typography>
+        <Rating size="small" name="averageStarRating" value={Number(3.5)} readOnly precision={0.25}
+          emptyIcon={<StarBorderIcon fontSize="inherit" />} />
       </CardContent>
     </Card>
   );
