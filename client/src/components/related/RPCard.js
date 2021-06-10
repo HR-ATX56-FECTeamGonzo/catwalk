@@ -13,7 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 170,
+    minHeight: 325,
+    maxHeight: 325,
     border: '.5px solid black',
   },
   header: {
@@ -50,10 +52,12 @@ const RPCard = (props) => {
         <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
         <Typography variant='subtitle2' alight='left'>{props.name}</Typography>
         {/* need to strikethrough original price */}
-        <Typography variant='caption' alight='left'>${props.salePrice ? props.salePrice : props.originalPrice}</Typography>
+        <Typography variant='caption' alight='left'>${props.salePrice ? props.salePrice : props.originalPrice}</Typography><br/>
         {/**/}
         {/* need to add star ratings, pulling from store */}
         {/**/}
+        <Typography variant='caption' alight='left'>!! STAR RATINGS !!</Typography>
+
       </CardContent>
     </Card>
   );
