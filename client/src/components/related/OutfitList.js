@@ -35,12 +35,12 @@ const OutfitList = () => {
 
   useEffect(() => {
     setOutfit({imageURL: null, name: 'Add Outfit'});
-  });
+  }, []);
 
   return (
     <div className={classes.root}>
-      <GridList className={classes.gridList} cols={2.5}>
-        {outfit.map((each, index) => (
+      {/* <GridList className={classes.gridList} cols={2.5}>
+        {/* {outfit.map((each, index) => (
           <GridListTile key={index}>
             <img src={each.imageURL} alt={each.name} />
             <GridListTileBar
@@ -53,11 +53,11 @@ const OutfitList = () => {
                 <IconButton aria-label={`star ${each.name}`}>
                   <AddIcon className={classes.title} />
                 </IconButton>
-              }
-            />
-          </GridListTile>
-        ))}
-      </GridList>
+              } */}
+            {/* /> */}
+          {/* </GridListTile> */}
+      {/* //   ))} */}
+      {/* // </GridList> */} */}
     </div>
   );
 

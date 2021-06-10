@@ -4,7 +4,6 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import RPCard from './RPCard.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,20 +12,12 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    // backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
-  // title: {
-  //   color: theme.palette.primary.light,
-  // },
-  // titleBar: {
-  //   background:
-  //     'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-  // },
 }));
 
 const RPPassProps = (props) => {
@@ -57,7 +48,6 @@ const RPPassProps = (props) => {
         arr[i].salePrice = props.RPStyles[i].results[0].sale_price;
         arr[i].imageURL = './no-image-available.png';
       }
-
     }
     setRPCards(arr);
   };
@@ -68,26 +58,24 @@ const RPPassProps = (props) => {
 
   return (
     <div className={classes.root}>
-      <GridList className={classes.gridList} cols={2.5}>
-        {RPCards[props.RPInfo.length - 1] ?
-          RPCards.map((each, index) => (
-            <GridListTile key={index}>
-              <img src={each.imageURL} alt={each.name} />
-              <GridListTileBar
-                title={each.name}
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title,
-                }}
-                actionIcon={
-                  <IconButton aria-label={`star ${each.name}`}>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          ))
-          : null}
+      <GridList className={classes.gridList} cols={2.5} spacing={12} cellHeight={320} children={RPCard}>
+        {/* {RPCards[props.RPInfo.length - 1] ? */}
+        {RPCards.map((each, index) => (
+          <GridListTile key={index}>
+            <RPCard key={index}
+              RPCard={each}
+              imageUrl={each.imageUrl}
+              id={each.id}
+              name={each.name}
+              category={each.category}
+              style={each.style}
+              originalPrice={each.originalPrice}
+              salePrice={each.salePrice}
+            />
+          </GridListTile>
+        ))
+        }
+        {/* : null} */}
       </GridList>
     </div>
   );
