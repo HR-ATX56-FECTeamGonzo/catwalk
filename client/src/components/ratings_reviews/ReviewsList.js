@@ -8,8 +8,8 @@ const ReviewsList = (props) => {
   // console.log('this belongs to reviewsList', props.reviewDataforList);
   const arr = props.reviewData.map((review, i) => {
     return (
-      <div>
-        <ReviewItem key={i}
+      <div key={i}>
+        <ReviewItem
           url={props.url}
           data={review}
           review_id={review.review_id.toString()}
