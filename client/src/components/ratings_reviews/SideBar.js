@@ -26,31 +26,31 @@ const SideBar = (props) => {
   const threeStar = Number(starRating[3] || 0);
   const fourStar = Number(starRating[4] || 0);
   const fiveStar = Number(starRating[5] || 0);
-  const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / (oneStar + twoStar + threeStar + fourStar + fiveStar));
+  const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
+  const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
   // i need to find the metrics for the fit, comfort etc.
   const characteristics = props.metaData.characteristics;
   // now i need to calculate the percent of reviews that recommend this product
   const recommended = props.metaData.recommended;
   const t = Number(recommended.true);
   const f = Number(recommended.false);
-  const percentRecommended = ((t / (t + f)) * 100).toFixed(1);
+  const percentRecommended = ((t / (t + f)) * 100).toFixed(0);
   // console.log('percent of people recommended', Math.floor(percentRecommended * 100));
   const useStyles = makeStyles((theme) => ({
     progressBar: {
-      flexGrow: 1,
-      height: '15px'
+      minWidth: 200,
+      height: '10px'
     },
   }));
   const classes = useStyles();
   return (
 
-    <Grid container spacing={3}>
-      <Grid item><h4>RATINGS & REVIEWS</h4></Grid>
+    <Grid container >
       <Grid container item>
         <Grid item>
-          <h1>{averageStarRating.toFixed(1)}</h1>
+          <Typography variant="h1">{averageStarRating.toFixed(1)}</Typography>
         </Grid>
-        <Box component="fieldset" mb={3} borderColor="transparent">
+        <Box component="fieldset" md={3} borderColor="transparent">
           <Typography component="legend"></Typography>
           <Rating
             name="averageStarRating"
@@ -61,21 +61,46 @@ const SideBar = (props) => {
         </Box>
       </Grid>
       <Grid item>{percentRecommended}% of reviews recommend this product</Grid>
-      <Grid container item direction="column">
-        <Grid container item direction="row" alignItems="center">
-          5 STARS <LinearProgress className={classes.progressBar} variant="determinate" value={fiveStar} />
+      <Grid container item direction="column" >
+        <Grid container item direction="row" alignItems="center" spacing={1}>
+          <Grid item>
+            <p>5 STARS</p>
+          </Grid>
+          <Grid item>
+            <LinearProgress className={classes.progressBar} variant="determinate" value={(fiveStar / totalStars) * 100} />
+          </Grid>
         </Grid>
-        <Grid container item direction="row" alignItems="center">
-          4 STARS<LinearProgress className={classes.progressBar} variant="determinate" value={fourStar} />
+        <Grid container item direction="row" alignItems="center" spacing={1}>
+          <Grid item>
+            <p>4 STARS</p>
+          </Grid>
+          <Grid item>
+            <LinearProgress className={classes.progressBar} variant="determinate" value={(fourStar / totalStars) * 100} />
+          </Grid>
         </Grid>
-        <Grid container item direction="row" alignItems="center">
-          3 STARS<LinearProgress className={classes.progressBar} variant="determinate" value={threeStar} />
+        <Grid container item direction="row" alignItems="center" spacing={1}>
+          <Grid item>
+            <p>3 STARS</p>
+          </Grid>
+          <Grid item>
+            <LinearProgress className={classes.progressBar} variant="determinate" value={(threeStar / totalStars) * 100} />
+          </Grid>
         </Grid>
-        <Grid container item direction="row" alignItems="center">
-          2 STARS<LinearProgress className={classes.progressBar} variant="determinate" value={twoStar} />
+        <Grid container item direction="row" alignItems="center" spacing={1}>
+          <Grid item>
+            <p>2 STARS</p>
+          </Grid>
+          <Grid item>
+            <LinearProgress className={classes.progressBar} variant="determinate" value={(twoStar / totalStars) * 100} />
+          </Grid>
         </Grid>
-        <Grid container item direction="row" alignItems="center">
-          1 STARS<LinearProgress className={classes.progressBar} variant="determinate" value={oneStar} />
+        <Grid container item direction="row" alignItems="center" spacing={1}>
+          <Grid item>
+            <p>1 STAR</p>
+          </Grid>
+          <Grid item>
+            <LinearProgress className={classes.progressBar} variant="determinate" value={(oneStar / totalStars) * 100} />
+          </Grid>
         </Grid>
       </Grid>
       <Grid container item direction="column">
