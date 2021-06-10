@@ -48,11 +48,10 @@ const useStyles = makeStyles(() => ({
 const OutfitList = () => {
   const classes = useStyles();
   const outfitList = useSelector(state => state.outfitList);
-  const dispatch = useDispatch();
 
   return (
     <div>
-      <Typography variant='subtitle1' align='left' display='block' gutterBottom='true'>Your Outfit List</Typography>
+      <Typography variant='subtitle1' align='left' display='block'>Your Outfit List</Typography>
       <div className={classes.root}>
         <GridList className={classes.gridList} cols={3.5} spacing={18} cellHeight={340}>
           {outfitList.map((each, index) => (

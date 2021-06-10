@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import addOutfit from '../../redux-helpers/related/reduxOutfitList.js';
+
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -10,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import exampleData from '../../store/exampleData.js';
 
@@ -23,7 +27,7 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '25px'
+    right: '15px'
   },
   media: {
     top: '1px',
@@ -49,20 +53,36 @@ const useStyles = makeStyles({
   }
 });
 
+
 const OutfitCard = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  // }, []);
+  const handleDelete = () => {
+    //need to write
+  };
+
+  const handleAdd = () => {
+    //need to connect to currentProduct in store
+    //and pull in name, category, original_price, sale_price, imageUrl, star rating
+    //make an outfitObj to pass in to addOutfit()
+    dispatch(addOutfit(exampleData));
+  };
 
   return (
     <Card className={classes.root}>
-      <CardActionArea className={classes.media}>
-        <img src={props.outfit.imageUrl} alt={props.outfit.name} width='180' />
-      </CardActionArea>
+      <CardMedia onClick={handleAdd} className={classes.media}>
+        <img src={props.outfit.imageUrl} alt={props.outfit.name} className={classes.media} />
+        <IconButton onClick={handleDelete} className={classes.icon}>
+          <HighlightOffIcon />
+        </IconButton>
+      </CardMedia>
 
       <CardContent className={classes.content}>
+        <Typography variant='caption' alight='left'>{props.outfit.category}</Typography> <br />
         <Typography variant='subtitle2' alight='left'>{props.outfit.name}</Typography>
+        <Typography variant='caption' alight='left'>${props.outfit.salePrice ? props.outfit.salePrice : props.outfit.originalPrice}</Typography><br />
+
       </CardContent>
     </Card>
   );

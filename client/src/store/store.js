@@ -5,7 +5,9 @@ import exampleData from './exampleData.js';
 import { addOutfitReducer } from '../redux-helpers/related/reduxOutfitList.js';
 
 var defaultState = {
-  // currentProduct: exampleData,
+  // currentProductInfo: exampleData,
+  // currentProductStyles:
+  // currentProductStars:
   // relatedProducts: [],
   outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }],
 };

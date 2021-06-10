@@ -1,14 +1,14 @@
 //action creators
-export const addOufit = (outfit) => ({
+export const addOufit = (outfitObj) => ({
   type: 'ADD_OUTFIT',
-  outfit
+  outfitObj
 });
 
 //reducers
 export const addOutfitReducer = (previousState = [], action) => {
   switch (action.type) {
     case 'ADD_OUTFIT':
-      return [...previousState.outfitList, { outfit: action.outfit }];
+      return [...previousState.outfitList, action.outfitObj];
     default:
       return previousState;
   }
