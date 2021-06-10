@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,6 +11,16 @@ import CardHeader from '@material-ui/core/CardHeader';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+import exampleData from '../../store/exampleData.js';
+
 
 const useStyles = makeStyles({
   root: {
@@ -31,14 +41,38 @@ const useStyles = makeStyles({
   },
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 500,
+    minHeight: 200,
     backgroundColor: 'white',
-    border: '2px solid #000',
+    border: '0.5px solid #000',
     // boxShadow: theme.shadows[5],
     // padding: theme.spacing(2, 4, 3),
   },
+  table: {
+    maxWidth: 500,
+  },
 });
 
+//functions for table
+const StyledTableCell = withStyles(() => ({
+  head: {
+    backgroundColor: 'black',
+    color: 'white',
+  },
+  body: {
+    fontSize: 12,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles(() => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: 'grey',
+    },
+  },
+}))(TableRow);
+
+//functions for modal
 const rand = () => {
   return Math.round(Math.random() * 20) - 10;
 };
@@ -54,10 +88,48 @@ const getModalStyle = () => {
   };
 };
 
+//RPCard function
 const RPCard = (props) => {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
+  const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
+
+  const makeComparisons = () => {
+    const CPFeaturesAll = exampleData.features;
+    const RPFeaturesAll = props.features;
+    const CPFeatureNames = CPFeaturesAll.map(each => each.feature);
+    const RPFeatureNames = RPFeaturesAll.map(each => each.feature);
+    let comparisons = [];
+    let comparisonObj = {};
+
+    CPFeaturesAll.forEach(each => {
+      comparisonObj.feature = each.feature;
+      comparisonObj.CPValue = each.value;
+      if (RPFeatureNames.includes(each.feature)) {
+        comparisonObj.RPValue = RPFeaturesAll[RPFeatureNames.indexOf(each.feature)].value;
+        RPFeaturesAll.splice(RPFeatureNames.indexOf(each.feature), 1);
+      } else {
+        comparisonObj.RPValue = 'N/A';
+      }
+      comparisons.push(comparisonObj);
+      comparisonObj = {};
+    });
+
+    RPFeaturesAll.forEach(each => {
+      comparisonObj.feature = each.feature;
+      comparisonObj.RPValue = each.value;
+      comparisonObj.CPValue = 'N/A';
+      comparisons.push(comparisonObj);
+      comparisonObj = {};
+    });
+
+    const rows = comparisons.map(each => {
+      return {selectedProduct: each.CPValue, feature: each.feature, relatedProduct: each.RPValue};
+    });
+
+    setComparisons(rows);
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -67,12 +139,33 @@ const RPCard = (props) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    makeComparisons();
+  }, []);
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        {props.style}
-      </p>
+      <Typography variant='caption' alight='left'>COMPARE</Typography> <br />
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>{exampleData.name}</StyledTableCell>
+              <StyledTableCell align='center'>Features</StyledTableCell>
+              <StyledTableCell align='center'>{props.name}</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {comparisons.map((each, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell align='center'>{each.selectedProduct}</StyledTableCell>
+                <StyledTableCell align='center'>{each.feature}</StyledTableCell>
+                <StyledTableCell align='center'>{each.relatedProduct}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 

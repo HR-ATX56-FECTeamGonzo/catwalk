@@ -35,6 +35,7 @@ const RPPassProps = (props) => {
       arr[i].id = props.RPInfo[i].id;
       arr[i].name = props.RPInfo[i].name;
       arr[i].category = props.RPInfo[i].category;
+      arr[i].features = props.RPInfo[i].features;
       for (let j = 0; j < props.RPStyles[i].results.length; j++) {
         if (props.RPStyles[i].results[j].photos[0].thumbnail_url) {
           arr[i].style = props.RPStyles[i].results[j].name;
@@ -75,6 +76,7 @@ const RPPassProps = (props) => {
               style={each.style}
               originalPrice={each.originalPrice}
               salePrice={each.salePrice}
+              features={each.features}
             />
           </GridListTile>
         ))

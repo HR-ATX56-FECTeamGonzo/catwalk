@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import exampleData from '../../store/exampleData.js';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import {Typography} from '@material-ui/core';
 import RPPassProps from './RPPassProps.js';
+
+import exampleData from '../../store/exampleData.js';
 
 const RelatedProducts = () => {
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/products';
