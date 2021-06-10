@@ -35,10 +35,17 @@ const Overview = () => {
   const [currentStyle, setCurrentStyle] = useState(defaultStyle);
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
 
-  const handleClick = (e, idx) => {
+  const changeStyle = (e, idx) => {
     setCurrentStyle({
       info: styles[idx],
       index: idx
+    });
+  };
+
+  const changePhotoIndex = (index) => {
+    setPhotoIndex(prevState => {
+      prevState[currentStyle.info.style_id] = index;
+      return prevState;
     });
   };
 
@@ -47,14 +54,15 @@ const Overview = () => {
     <h2>overview</h2>
     <ImageGallery
       photos={currentStyle.info.photos}
-      index={photoIndexes[currentStyle.info.style_id]}/>
+      index={photoIndexes[currentStyle.info.style_id]}
+      clickHandler={changePhotoIndex}/>
     <ProductInfo
       currentProduct={exampleData}
       currentStyle={currentStyle.info}/>
     <StyleList
       styles={styles}
       current={currentStyle.index}
-      clickHandler={handleClick}/>
+      clickHandler={changeStyle}/>
     <AddToCart stock={currentStyle.info.skus}/>
   </div>);
 };
