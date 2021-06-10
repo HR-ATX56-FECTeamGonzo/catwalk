@@ -18,31 +18,35 @@ const useStyles = makeStyles({
     maxWidth: 170,
     minHeight: 325,
     maxHeight: 325,
-    border: '.5px solid black',
+    border: '.5px solid #3d3d5c',
   },
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '12px'
+    right: '25px'
   },
   media: {
     top: '1px',
-    right: '1px',
-    height: 200,
-    width: 180,
+    right: '11px',
+    height: 190,
+    width: 170,
   },
   paper: {
     position: 'absolute',
     width: 500,
     minHeight: 200,
     backgroundColor: 'white',
-    border: '0.5px solid #000',
+    border: '0.5px solid #3d3d5c',
     // boxShadow: theme.shadows[5],
     // padding: theme.spacing(2, 4, 3),
   },
   table: {
     maxWidth: 500,
   },
+  content: {
+    backgroundColor: '#f0f0f5',
+    height: 150,
+  }
 });
 
 const OutfitCard = (props) => {
@@ -54,10 +58,10 @@ const OutfitCard = (props) => {
   return (
     <Card className={classes.root}>
       <CardActionArea className={classes.media}>
-        <img src={props.outfit.imageUrl} alt={props.outfit.name} />
+        <img src={props.outfit.imageUrl} alt={props.outfit.name} width='180' />
       </CardActionArea>
 
-      <CardContent>
+      <CardContent className={classes.content}>
         <Typography variant='subtitle2' alight='left'>{props.outfit.name}</Typography>
       </CardContent>
     </Card>

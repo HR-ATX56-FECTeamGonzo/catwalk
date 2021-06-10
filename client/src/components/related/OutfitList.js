@@ -51,18 +51,20 @@ const OutfitList = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className={classes.root}>
-      <Typography variant='subtitle1' align='left'>Your Outfit List</Typography>
-      <GridList className={classes.gridList} cols={3.5} spacing={18} cellHeight={340}>
-        {outfitList.map((each, index) => (
-          <GridListTile key={index}>
-            <OutfitCard key={index}
-              outfit={each}
-            />
-          </GridListTile>
-        ))}
-      </GridList >
-    </div >
+    <div>
+      <Typography variant='subtitle1' align='left' display='block' gutterBottom='true'>Your Outfit List</Typography>
+      <div className={classes.root}>
+        <GridList className={classes.gridList} cols={3.5} spacing={18} cellHeight={340}>
+          {outfitList.map((each, index) => (
+            <GridListTile key={index}>
+              <OutfitCard key={index}
+                outfit={each}
+              />
+            </GridListTile>
+          ))}
+        </GridList >
+      </div >
+    </div>
   );
 
 };
