@@ -93,8 +93,6 @@ export default ReviewItem;
 
 // prop types:
 
-// ====================== NEED review_id as a prop for YES and REPORT button
-
 // reting={review.rating} -------------
 // date={review.date} -----------------
 // reviewer={review.reviewer} ---------
@@ -105,9 +103,3 @@ export default ReviewItem;
 // helpfulness={review.helpfulness} ---
 // count={props.count} ----------------
 
-// new button styles
-{/* <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-  <Button>One</Button>
-  <Button>Two</Button>
-  <Button>Three</Button>
-</ButtonGroup> */}
