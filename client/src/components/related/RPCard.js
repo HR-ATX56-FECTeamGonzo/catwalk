@@ -63,8 +63,8 @@ const useStyles = makeStyles({
 //functions for table
 const StyledTableCell = withStyles(() => ({
   head: {
-    backgroundColor: '#3d3d5c',
-    color: 'white',
+    backgroundColor: 'white',
+    color: 'black',
   },
   body: {
     fontSize: 12,
