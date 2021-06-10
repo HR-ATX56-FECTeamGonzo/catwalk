@@ -20,6 +20,7 @@ const StyleList = ({styles, current, clickHandler}) => {
     <div id='styleList'>
       <h4>Style List</h4>
       <p>Style &gt; {styles[current].name}</p>
+      {/*refactor tilebar ==> badge */}
       <GridList className='styleGrid' cols={4} style={{width: '420px'}}>
         {styles.map((x, idx) => (
           <GridListTile
