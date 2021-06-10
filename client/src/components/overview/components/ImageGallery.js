@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import Thumbnails from './Thumbnails.js';
 
 
 const ImageGallery = ({photos, index, clickHandler}) => {
@@ -28,11 +29,8 @@ const ImageGallery = ({photos, index, clickHandler}) => {
     },
     overlay: {
       width: '100px',
+      height: '100%',
       padding: '5px'
-    },
-    thumbnail: {
-      width: '100%',
-      height: '100px'
     }
   })();
 
@@ -46,20 +44,15 @@ const ImageGallery = ({photos, index, clickHandler}) => {
     setIndex(index);
   }, [photos]);
 
+
+
   return (
+
     <Box className={styles.gallery}>
       {/*  thumbnails */}
-      <GridList cols={1} className={styles.overlay}>
-        {photos.map((x, idx) => (
-          <GridListTile key={idx} cols={1} style={{
-            width: '100px',
-            height: '100px'
-          }}
-          onClick={(e) => { scrollGallery(e, idx); }}>
-            <img src={x['thumbnail_url']}/>
-          </GridListTile>
-        ))}
-      </GridList>
+      <Thumbnails className={styles.overlay}
+        photos={photos}
+        clickHandler={scrollGallery}/>
       {/* left button */}
       <Box className={styles.button}>
         <IconButton
