@@ -10,6 +10,11 @@ const Rating = ({ratings}) => {
     rating += (key * value);
   }
 
+  const scrollToReviews = () => {
+    console.log('scrolling');
+    document.getElementById('reviews').scrollIntoView({behavior: 'smooth'});
+  };
+
   if (reviewCount > 0) {
     rating /= reviewCount;
     // round to nearest quarter
@@ -18,7 +23,7 @@ const Rating = ({ratings}) => {
   return (
     <div id='rating' style={reviewCount === 0 ? {display: 'none'} : null}>
       <span>{rating} out of 5 stars - </span>
-      <span> Read all {reviewCount} reviews</span>
+      <span onClick={scrollToReviews}> Read all {reviewCount} reviews</span>
     </div>
   );
 };
