@@ -6,13 +6,14 @@ import {relatedProductsReducer} from '../redux-helpers/related/reduxRelatedProdu
 
 var defaultState = {
   currentProduct: exampleData,
-  relatedProducts: []
+  // relatedProducts: [],
+  outfitList: [],
 };
 
 const rootReducer = combineReducers({
   //add currentProductReducer or redux state tree won't render
   // currentProduct:
-  relatedProducts: relatedProductsReducer
+  // relatedProducts: relatedProductsReducer
 });
 
 
