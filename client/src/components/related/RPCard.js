@@ -34,25 +34,28 @@ const RPCard = (props) => {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        className={classes.header}
-        action={
-          <IconButton aria-label="settings">
-            <StarBorderIcon />
-          </IconButton>
-        }
-      />
       <CardActionArea>
         <CardMedia className={classes.media}>
+          {/**/}
           {/* props.imageUrl passing as undefined!! */}
+          {/**/}
           <img src={props.imageUrl} alt={props.name}/>
+          {/**/}
+          {/* need comparison modal on click */}
+          {/**/}
+          <IconButton className={classes.header} aria-label="settings">
+            <StarBorderIcon />
+          </IconButton>
         </CardMedia>
+
         <CardContent>
           <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
           <Typography variant='subtitle2' alight='left'>{props.name}</Typography>
           {/* need to strikethrough original price */}
           <Typography variant='caption' alight='left'>{props.salePrice ? props.salePrice : props.originalPrice}</Typography>
+          {/**/}
           {/* need to add star ratings, pulling from store */}
+          {/**/}
         </CardContent>
       </CardActionArea>
     </Card>

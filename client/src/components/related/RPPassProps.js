@@ -58,6 +58,9 @@ const RPPassProps = (props) => {
 
   return (
     <div className={classes.root}>
+      {/**/}
+      {/* need to take away scroll bar and add arrows!! */}
+      {/**/}
       <GridList className={classes.gridList} cols={2.5} spacing={12} cellHeight={320} children={RPCard}>
         {/* {RPCards[props.RPInfo.length - 1] ? */}
         {RPCards.map((each, index) => (
