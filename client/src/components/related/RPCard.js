@@ -18,14 +18,13 @@ const useStyles = makeStyles({
   },
   header: {
     position: 'absolute',
-    top: '2px',
-    right: '4px'
+    top: '6px',
+    right: '8px'
   },
   media: {
     top: '1px',
     right: '1px',
-    width: 100,
-    height: 220,
+    height: 200,
   },
 });
 
@@ -43,21 +42,19 @@ const RPCard = (props) => {
           {/**/}
           {/* need comparison modal on click */}
           {/**/}
-          <IconButton className={classes.header} aria-label="settings">
-            <StarBorderIcon />
-          </IconButton>
+          <StarBorderIcon className={classes.header}/>
         </CardMedia>
-
-        <CardContent>
-          <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
-          <Typography variant='subtitle2' alight='left'>{props.name}</Typography>
-          {/* need to strikethrough original price */}
-          <Typography variant='caption' alight='left'>{props.salePrice ? props.salePrice : props.originalPrice}</Typography>
-          {/**/}
-          {/* need to add star ratings, pulling from store */}
-          {/**/}
-        </CardContent>
       </CardActionArea>
+
+      <CardContent>
+        <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
+        <Typography variant='subtitle2' alight='left'>{props.name}</Typography>
+        {/* need to strikethrough original price */}
+        <Typography variant='caption' alight='left'>${props.salePrice ? props.salePrice : props.originalPrice}</Typography>
+        {/**/}
+        {/* need to add star ratings, pulling from store */}
+        {/**/}
+      </CardContent>
     </Card>
   );
 };
