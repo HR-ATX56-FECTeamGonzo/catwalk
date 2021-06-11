@@ -25,10 +25,11 @@ import exampleData from '../../store/exampleData.js';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 170,
-    minHeight: 325,
-    maxHeight: 325,
+    maxWidth: 200,
+    minHeight: 320,
+    maxHeight: 320,
     border: '.5px solid #3d3d5c',
+    borderRadius: 0,
   },
   icon: {
     position: 'absolute',
@@ -39,7 +40,7 @@ const useStyles = makeStyles({
     top: '1px',
     right: '11px',
     height: 190,
-    width: 170,
+    width: 200,
   },
   paper: {
     position: 'absolute',
