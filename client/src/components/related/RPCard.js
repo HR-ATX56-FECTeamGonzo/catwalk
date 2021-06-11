@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
+
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -101,6 +104,8 @@ const RPCard = (props) => {
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
   const makeComparisons = () => {
     const CPFeaturesAll = exampleData.features;
     const RPFeaturesAll = props.features;
@@ -145,6 +150,10 @@ const RPCard = (props) => {
     setOpen(false);
   };
 
+  const handleClick = (productId) => {
+    dispatch(funcs.updateCurrentProductId(productId));
+  };
+
   useEffect(() => {
     makeComparisons();
   }, []);
@@ -185,11 +194,11 @@ const RPCard = (props) => {
       >
         {body}
       </Modal>
-      <CardMedia className={classes.media} >
+      <IconButton onClick={handleOpen} className={classes.icon}>
+        <StarBorderIcon />
+      </IconButton>
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} >
         <img src={props.imageURL} alt={props.name} className={classes.media} />
-        <IconButton onClick={handleOpen} className={classes.icon}>
-          <StarBorderIcon />
-        </IconButton>
       </CardMedia>
       <CardContent className={classes.content}>
         <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
