@@ -71,12 +71,14 @@ const OutfitCard = (props) => {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} >
       <CardMedia onClick={handleAdd} className={classes.media}>
+        {props.outfit.name !== 'Add to Outfit' ?
+          <IconButton onClick={handleDelete} className={classes.icon}>
+            <HighlightOffIcon />
+          </IconButton>
+          : null}
         <img src={props.outfit.imageUrl} alt={props.outfit.name} className={classes.media} />
-        <IconButton onClick={handleDelete} className={classes.icon}>
-          <HighlightOffIcon />
-        </IconButton>
       </CardMedia>
 
       <CardContent className={classes.content}>
