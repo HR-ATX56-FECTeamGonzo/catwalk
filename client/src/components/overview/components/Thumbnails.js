@@ -15,9 +15,14 @@ const tileStyles = {
 };
 
 const TileWrapper = ({classes, idx, src, clickHandler}) => {
-  return (<GridListTile classes={ {root: classes.root, tile: classes.tile}} key={idx} id={idx} onClick={(e) => { clickHandler(e, idx); }}>
-    <img src={src}/>
-  </GridListTile>);
+  return (
+    <GridListTile
+      id={idx}
+      key={idx}
+      classes={ {root: classes.root, tile: classes.tile}}
+      onClick={() => { clickHandler(idx); }}>
+      <img src={src}/>
+    </GridListTile>);
 };
 
 const StyledTile = withStyles(tileStyles)(TileWrapper);

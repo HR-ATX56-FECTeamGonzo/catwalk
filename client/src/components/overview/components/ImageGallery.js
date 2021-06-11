@@ -34,7 +34,7 @@ const ImageGallery = ({photos, index, clickHandler}) => {
     }
   })();
 
-  const scrollGallery = (e, idx) => {
+  const scrollGallery = (idx) => {
     setIndex(idx);
     clickHandler(idx);
   };
@@ -47,7 +47,6 @@ const ImageGallery = ({photos, index, clickHandler}) => {
 
 
   return (
-
     <Box className={styles.gallery}>
       {/*  thumbnails */}
       <Thumbnails className={styles.overlay}
@@ -56,7 +55,7 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       {/* left button */}
       <Box className={styles.button}>
         <IconButton
-          onClick={(e) => { scrollGallery(e, currentIndex - 1); }}
+          onClick={() => { scrollGallery(currentIndex - 1); }}
           disabled= { currentIndex === 0 }>
           <ChevronLeft/>
         </IconButton>
@@ -64,7 +63,7 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       {/* right button */}
       <Box position='absolute' right='0px'>
         <IconButton
-          onClick={(e) => { scrollGallery(e, currentIndex + 1); }}
+          onClick={() => { scrollGallery(currentIndex + 1); }}
           disabled={ currentIndex === photos.length - 1 }>
           <ChevronRight/>
         </IconButton>
