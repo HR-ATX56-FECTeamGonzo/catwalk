@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOutfit, deleteOutfit } from '../../redux-helpers/related/reduxOutfitList.js';
+import funcs from '../../redux-helpers/related/reduxOutfitList.js';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -60,25 +60,26 @@ const OutfitCard = (props) => {
   const dispatch = useDispatch();
 
   const handleDelete = (index) => {
-    dispatch(deleteOutfit(index));
+    dispatch(funcs.deleteOutfit(index));
   };
 
   const handleAdd = () => {
     //need to connect to currentProduct in store
     //and pull in name, category, original_price, sale_price, imageUrl, star rating
     //make an outfitObj to pass in to addOutfit()
-    dispatch(addOutfit({ name: 'Add to Outfit', imageUrl: './add-icon.png' }));
+    dispatch(funcs.addOutfit());
   };
 
   return (
     <Card className={classes.root} >
-      <CardMedia onClick={handleAdd} className={classes.media}>
-        {props.outfit.name !== 'Add to Outfit' ?
-          // replace later with props.outfit.id
-          <IconButton onClick={() => handleDelete(exampleData.id)} className={classes.icon}>
-            <HighlightOffIcon />
-          </IconButton>
-          : null}
+      {props.outfit.name !== 'Add to Outfit' ?
+        // replace later with props.outfit.id
+        <IconButton onClick={() => handleDelete(exampleData.id)} className={classes.icon}>
+          <HighlightOffIcon />
+        </IconButton>
+        : null}
+
+      <CardMedia onClick={() => handleAdd()} className={classes.media}>
         <img src={props.outfit.imageUrl} alt={props.outfit.name} className={classes.media} />
       </CardMedia>
 
@@ -100,7 +101,7 @@ const OutfitCard = (props) => {
         </Typography><br />
 
       </CardContent>
-    </Card>
+    </Card >
   );
 };
 
