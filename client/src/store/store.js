@@ -2,17 +2,20 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 // import rootReducer from './../reducers/main.js';
 import exampleData from './exampleData.js';
-import {relatedProductsReducer} from '../redux-helpers/related/reduxRelatedProducts.js';
+import { addOutfitReducer } from '../redux-helpers/related/reduxOutfitList.js';
 
 var defaultState = {
-  currentProduct: exampleData,
-  relatedProducts: []
+  // currentProductInfo: exampleData,
+  // currentProductStyles:
+  // currentProductStars:
+  // relatedProducts: [],
+  outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }],
 };
 
 const rootReducer = combineReducers({
-  //add currentProductReducer or redux state tree won't render
   // currentProduct:
-  relatedProducts: relatedProductsReducer
+  // relatedProducts: relatedProductsReducer
+  outfitList: addOutfitReducer
 });
 
 
