@@ -20,7 +20,7 @@ const outfitFuncs = {
           imageURL: action.payload.imageURL, averageStars: action.payload.averageStars
         }];
       case 'DELETE_OUTFIT':
-        return [...previousState.outfitList.slice(0, action.payload), ...previousState.outfitList.slice(action.payload + 1)];
+        return [...previousState.slice(0, action.payload), ...previousState.slice(action.payload + 1)];
       default:
         return previousState;
     }

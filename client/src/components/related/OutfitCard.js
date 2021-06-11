@@ -142,7 +142,7 @@ const OutfitCard = (props) => {
     <Card className={classes.root} >
       {props.outfit.name !== 'Add to Outfit' ?
         // replace later with props.outfit.id
-        <IconButton onClick={() => handleDelete(exampleData.id)} className={classes.icon}>
+        <IconButton onClick={() => handleDelete(props.index)} className={classes.icon}>
           <HighlightOffIcon />
         </IconButton>
         : null}

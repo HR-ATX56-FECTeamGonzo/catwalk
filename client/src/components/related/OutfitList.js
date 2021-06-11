@@ -47,6 +47,7 @@ const OutfitList = () => {
           {outfitList.map((each, index) => (
             <GridListTile key={index}>
               <OutfitCard key={index}
+                index={index}
                 outfit={each}
               />
             </GridListTile>
