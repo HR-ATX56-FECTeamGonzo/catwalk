@@ -104,7 +104,18 @@ const RPCard = (props) => {
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
 
+
+  const starRating = props.metaData;
+  const oneStar = Number(starRating[1] || 0);
+  const twoStar = Number(starRating[2] || 0);
+  const threeStar = Number(starRating[3] || 0);
+  const fourStar = Number(starRating[4] || 0);
+  const fiveStar = Number(starRating[5] || 0);
+  const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
+  const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
+
   const dispatch = useDispatch();
+
 
   const makeComparisons = () => {
     const CPFeaturesAll = exampleData.features;
@@ -209,7 +220,7 @@ const RPCard = (props) => {
         {/* need to get star ratings from store */}
         {/* */}
         <Typography component="legend"></Typography>
-        <Rating size="small" name="averageStarRating" value={Number(3.5)} readOnly precision={0.25}
+        <Rating size="small" name="averageStarRating" value={Number(averageStarRating.toFixed(1))} readOnly precision={0.25}
           emptyIcon={<StarBorderIcon fontSize="inherit" />} />
       </CardContent>
     </Card>

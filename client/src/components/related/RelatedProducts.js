@@ -1,23 +1,24 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
-import {Typography} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import RPPassProps from './RPPassProps.js';
 
 import exampleData from '../../store/exampleData.js';
 
 const RelatedProducts = () => {
-  const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/products';
+  const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx';
   const [isLoading, setIsLoading] = useState(true);
   const [RPInfo, setRPInfo] = useState([]);
   const [RPStyles, setRPStyles] = useState([]);
+  const [RPMetaData, setRPMetaData] = useState([]);
 
   const getRelatedProductIds = () => {
-    axios.get(`${url}/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
+    axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}}));
+          promises.push(axios.get(`${url}/products/${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
         }
         return Promise.all(promises);
       })
@@ -25,24 +26,37 @@ const RelatedProducts = () => {
         result.forEach(item => setRPInfo(prev => prev.concat(item.data)));
       })
       .then((result) => {
-        return axios.get(`${url}/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}});
+        return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
       })
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}}));
+          promises.push(axios.get(`${url}/products/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
         }
         return Promise.all(promises);
       })
       .then((result) => {
         result.forEach(item => setRPStyles(prev => prev.concat(item.data)));
       })
+      .then((result) => {
+        return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
+      })
+      .then((result) => {
+        let promises = [];
+        for (let i = 0; i < result.data.length; i++) {
+          promises.push(axios.get(`${url}/reviews/meta?product_id=${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+        }
+        return Promise.all(promises);
+      })
+      .then((result) => {
+        result.forEach(item => setRPMetaData(prev => prev.concat(item.data)));
+      })
       .catch((err) => console.log('there has been an error with getRelatedProductIds'));
   };
 
   useEffect(() => {
     //need to optimize
-    setTimeout(() => setIsLoading(false), 1100);
+    setTimeout(() => setIsLoading(false), 1200);
     getRelatedProductIds();
   }, []);
 
@@ -52,7 +66,7 @@ const RelatedProducts = () => {
       <Typography variant='subtitle1' align='left'>Related Products</Typography>
       {isLoading ?
         <div>Loading . . . </div> :
-        <RPPassProps RPInfo={RPInfo} RPStyles={RPStyles}/>
+        <RPPassProps RPInfo={RPInfo} RPStyles={RPStyles} RPMetaData={RPMetaData} />
       }
     </div>
   );
