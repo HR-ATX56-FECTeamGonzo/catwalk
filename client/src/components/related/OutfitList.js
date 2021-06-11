@@ -33,16 +33,6 @@ const useStyles = makeStyles(() => ({
     transform: 'translateZ(0)',
     minWidth: '700px'
   },
-  icon: {
-    position: 'absolute',
-    top: '0px',
-    right: '12px'
-  },
-  media: {
-    top: '1px',
-    right: '1px',
-    height: 200,
-  },
 }));
 
 const OutfitList = () => {
