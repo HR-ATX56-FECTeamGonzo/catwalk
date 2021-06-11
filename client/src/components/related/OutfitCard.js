@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '25px'
+    right: '8px'
   },
   media: {
     top: '1px',
@@ -80,14 +80,14 @@ const OutfitCard = (props) => {
       </CardMedia>
 
       <CardContent className={classes.content}>
-        <Typography variant='caption' alight='left'>{props.outfit.category}</Typography> <br />
+        <Typography variant='caption' align='left'>{props.outfit.category}</Typography> <br />
         <Typography
           variant={props.outfit.name === 'Add to Outfit' ? 'h5' : 'subtitle2'}
           align={props.outfit.name === 'Add to Outfit' ? 'center' : 'left'}
         >
           {props.outfit.name}
         </Typography>
-        <Typography variant='caption' alight='left'>
+        <Typography variant='caption' align='left'>
           <span style={props.outfit.salePrice ? { 'textDecoration': 'line-through' } : null}>
             {props.outfit.originalPrice}
           </span>
