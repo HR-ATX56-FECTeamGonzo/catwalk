@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import outfitFuncs from '../../redux-helpers/related/reduxOutfitList.js';
+import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
+
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 
@@ -16,6 +18,8 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Rating from '@material-ui/lab/Rating';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import exampleData from '../../store/exampleData.js';
 
@@ -35,7 +39,7 @@ const useStyles = makeStyles({
   media: {
     top: '1px',
     right: '11px',
-    height: 220,
+    height: 190,
     width: 200,
   },
   paper: {
@@ -67,11 +71,16 @@ const OutfitCard = (props) => {
   const currentProductStyleIndex = useSelector(state => {
     return state.currentProductStyleIndex;
   });
+  const currentProductStars = useSelector(state => {
+    return state.currentProductStars;
+  });
+
   const dispatch = useDispatch();
 
   const handleDelete = (index) => {
     dispatch(outfitFuncs.deleteOutfit(index));
   };
+
 
   const handleAdd = (productId) => {
     const id = productId.currentProductId.toString();
@@ -123,15 +132,10 @@ const OutfitCard = (props) => {
 
       }))
       .then((results) => {
+        dispatch(funcs.updateCurrentProductStars(averageStars));
         dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
       })
       .catch((err) => console.log(err));
-
-    // {
-    //   id: 'hi',
-    //   // name: 'hi', category: 'hi', originalPrice: 'hi', salePrice: 'hi',
-    //   // imageURL: 'hi', averageStars: 'hi'
-    // }
   };
 
   return (
@@ -166,7 +170,10 @@ const OutfitCard = (props) => {
             {props.outfit.salePrice ? '$' + props.outfit.salePrice : null}
           </span>
         </Typography><br />
-
+        {props.outfit.name !== 'Add to Outfit' ?
+          <Rating size="small" name="averageStarRating" value={Number(currentProductStars.toFixed(1))} readOnly precision={0.25}
+            emptyIcon={<StarBorderIcon fontSize="inherit" />} />
+          : null}
       </CardContent>
     </Card >
   );

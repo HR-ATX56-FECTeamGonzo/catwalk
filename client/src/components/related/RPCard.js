@@ -164,6 +164,7 @@ const RPCard = (props) => {
 
   const handleClick = (productId) => {
     dispatch(funcs.updateCurrentProductId(productId));
+    dispatch(funcs.updateCurrentProductStars(averageStarRating));
   };
 
   useEffect(() => {

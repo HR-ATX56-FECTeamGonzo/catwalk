@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
+
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -23,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RPPassProps = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [RPCards, setRPCards] = useState([]);
 
@@ -43,6 +47,7 @@ const RPPassProps = (props) => {
           arr[i].originalPrice = props.RPStyles[i].results[j].original_price;
           arr[i].salePrice = props.RPStyles[i].results[j].sale_price;
           arr[i].imageURL = props.RPStyles[i].results[j].photos[0].thumbnail_url;
+          dispatch(funcs.updateCurrentProductStyleIndex(j));
         }
       }
       if (!arr[i].style) {
