@@ -1,4 +1,4 @@
-const funcs = {
+const outfitFuncs = {
   addOutfit: (outfitObj) => ({
     type: 'ADD_OUTFIT',
     payload: outfitObj
