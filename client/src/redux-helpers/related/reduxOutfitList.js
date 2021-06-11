@@ -21,4 +21,4 @@ const funcs = {
   },
 };
 
-export default funcs;
+export default outfitFuncs;
