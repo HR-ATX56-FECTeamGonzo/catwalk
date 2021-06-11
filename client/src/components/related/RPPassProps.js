@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -69,7 +69,7 @@ const RPPassProps = (props) => {
           <GridListTile key={index}>
             <RPCard key={index}
               RPCard={each}
-              imageUrl={each.imageUrl}
+              imageURL={each.imageURL}
               id={each.id}
               name={each.name}
               category={each.category}
