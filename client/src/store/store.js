@@ -3,18 +3,18 @@ import thunk from 'redux-thunk';
 // import rootReducer from './../reducers/main.js';
 import exampleData from './exampleData.js';
 import { addOutfitReducer } from '../redux-helpers/related/reduxOutfitList.js';
+import funcs from '../redux-helpers/related/reduxRelatedProducts.js';
 
 var defaultState = {
+  currentProductId: 0,
   // currentProductInfo: exampleData,
   // currentProductStyles:
   // currentProductStars:
-  // relatedProducts: [],
   outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }],
 };
 
 const rootReducer = combineReducers({
-  // currentProduct:
-  // relatedProducts: relatedProductsReducer
+  currentProductId: funcs.currentProductIdReducer,
   outfitList: addOutfitReducer
 });
 
