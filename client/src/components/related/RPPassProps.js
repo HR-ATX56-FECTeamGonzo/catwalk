@@ -36,6 +36,7 @@ const RPPassProps = (props) => {
       arr[i].name = props.RPInfo[i].name;
       arr[i].category = props.RPInfo[i].category;
       arr[i].features = props.RPInfo[i].features;
+      arr[i].metaData = props.RPMetaData[i].ratings;
       for (let j = 0; j < props.RPStyles[i].results.length; j++) {
         if (props.RPStyles[i].results[j].photos[0].thumbnail_url) {
           arr[i].style = props.RPStyles[i].results[j].name;
@@ -68,7 +69,7 @@ const RPPassProps = (props) => {
         {RPCards.map((each, index) => (
           <GridListTile key={index}>
             <RPCard key={index}
-              RPCard={each}
+              metaData={each.metaData}
               imageURL={each.imageURL}
               id={each.id}
               name={each.name}

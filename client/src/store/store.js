@@ -2,20 +2,23 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 // import rootReducer from './../reducers/main.js';
 import exampleData from './exampleData.js';
-import { addOutfitReducer } from '../redux-helpers/related/reduxOutfitList.js';
+import outfitFuncs from '../redux-helpers/related/reduxOutfitList.js';
+import funcs from '../redux-helpers/related/reduxRelatedProducts.js';
 
 var defaultState = {
+  currentProductId: 0,
   // currentProductInfo: exampleData,
   // currentProductStyles:
   // currentProductStars:
   // relatedProducts: [],
-  outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }],
+  outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }, { id: 24156 }],
 };
 
 const rootReducer = combineReducers({
   // currentProduct:
   // relatedProducts: relatedProductsReducer
-  outfitList: addOutfitReducer
+  currentProductId: funcs.currentProductIdReducer,
+  outfitList: outfitFuncs.outfitListReducer
 });
 
 
@@ -24,7 +27,8 @@ const rootReducer = combineReducers({
 // const composedEnhancers = compose(middlewareEnhancer, reduxEnhancer);
 // const store = createStore(rootReducer, defaultState, composedEnhancers);
 
-const store = createStore(rootReducer, defaultState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(rootReducer, defaultState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 
 export default store;
