@@ -81,8 +81,20 @@ const OutfitCard = (props) => {
 
       <CardContent className={classes.content}>
         <Typography variant='caption' alight='left'>{props.outfit.category}</Typography> <br />
-        <Typography variant='subtitle2' alight='left'>{props.outfit.name}</Typography>
-        <Typography variant='caption' alight='left'>${props.outfit.salePrice ? props.outfit.salePrice : props.outfit.originalPrice}</Typography><br />
+        <Typography
+          variant={props.outfit.name === 'Add to Outfit' ? 'h5' : 'subtitle2'}
+          align={props.outfit.name === 'Add to Outfit' ? 'center' : 'left'}
+        >
+          {props.outfit.name}
+        </Typography>
+        <Typography variant='caption' alight='left'>
+          <span style={props.outfit.salePrice ? { 'textDecoration': 'line-through' } : null}>
+            {props.outfit.originalPrice}
+          </span>
+          <span style={{ color: 'red' }}>
+            {props.outfit.salePrice ? '$' + props.outfit.salePrice : null}
+          </span>
+        </Typography><br />
 
       </CardContent>
     </Card>
