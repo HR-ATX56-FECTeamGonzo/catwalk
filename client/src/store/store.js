@@ -3,8 +3,10 @@ import thunk from 'redux-thunk';
 // import rootReducer from './../reducers/main.js';
 import exampleData from './exampleData.js';
 import outfitFuncs from '../redux-helpers/related/reduxOutfitList.js';
+import funcs from '../redux-helpers/related/reduxRelatedProducts.js';
 
 var defaultState = {
+  currentProductId: 0,
   // currentProductInfo: exampleData,
   // currentProductStyles:
   // currentProductStars:
@@ -15,6 +17,7 @@ var defaultState = {
 const rootReducer = combineReducers({
   // currentProduct:
   // relatedProducts: relatedProductsReducer
+  currentProductId: funcs.currentProductIdReducer,
   outfitList: outfitFuncs.outfitListReducer
 });
 

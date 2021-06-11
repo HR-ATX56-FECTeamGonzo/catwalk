@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
+
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -34,7 +37,7 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '25px'
+    right: '30px'
   },
   media: {
     top: '1px',
@@ -102,6 +105,19 @@ const RPCard = (props) => {
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
 
+
+  const starRating = props.metaData;
+  const oneStar = Number(starRating[1] || 0);
+  const twoStar = Number(starRating[2] || 0);
+  const threeStar = Number(starRating[3] || 0);
+  const fourStar = Number(starRating[4] || 0);
+  const fiveStar = Number(starRating[5] || 0);
+  const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
+  const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
+
+  const dispatch = useDispatch();
+
+
   const makeComparisons = () => {
     const CPFeaturesAll = exampleData.features;
     const RPFeaturesAll = props.features;
@@ -146,13 +162,17 @@ const RPCard = (props) => {
     setOpen(false);
   };
 
+  const handleClick = (productId) => {
+    dispatch(funcs.updateCurrentProductId(productId));
+  };
+
   useEffect(() => {
     makeComparisons();
   }, []);
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <Typography variant='caption' alight='left'>COMPARE</Typography> <br />
+      <Typography variant='caption' align='left'>COMPARE</Typography> <br />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -186,22 +206,29 @@ const RPCard = (props) => {
       >
         {body}
       </Modal>
-      <CardMedia className={classes.media} >
+      <IconButton onClick={handleOpen} className={classes.icon}>
+        <StarBorderIcon />
+      </IconButton>
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} >
         <img src={props.imageURL} alt={props.name} className={classes.media} />
-        <IconButton onClick={handleOpen} className={classes.icon}>
-          <StarBorderIcon />
-        </IconButton>
       </CardMedia>
       <CardContent className={classes.content}>
-        <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
-        <Typography variant='subtitle2' alight='left'>{props.name}</Typography>
+        <Typography variant='caption' align='left'>{props.category}</Typography> <br />
+        <Typography variant='subtitle2' align='left'>{props.name}</Typography>
         {/* need to strikethrough original price */}
-        <Typography variant='caption' alight='left'>${props.salePrice ? props.salePrice : props.originalPrice}</Typography><br />
+        <Typography variant='caption' align='left'>
+          <span style={props.salePrice ? { 'textDecoration': 'line-through' } : null}>
+            ${props.originalPrice}
+          </span>
+          <span style={{ color: 'red' }}>
+            {props.salePrice ? '$' + props.salePrice : null}
+          </span>
+        </Typography><br />
         {/* */}
         {/* need to get star ratings from store */}
         {/* */}
         <Typography component="legend"></Typography>
-        <Rating size="small" name="averageStarRating" value={Number(3.5)} readOnly precision={0.25}
+        <Rating size="small" name="averageStarRating" value={Number(averageStarRating.toFixed(1))} readOnly precision={0.25}
           emptyIcon={<StarBorderIcon fontSize="inherit" />} />
       </CardContent>
     </Card>
