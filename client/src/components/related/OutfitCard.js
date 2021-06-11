@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import outfitFuncs from '../../redux-helpers/related/reduxOutfitList.js';
+import axios from 'axios';
+import GITHUB_API_KEY from '../../config/config.js';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -33,7 +35,7 @@ const useStyles = makeStyles({
   media: {
     top: '1px',
     right: '11px',
-    height: 190,
+    height: 220,
     width: 200,
   },
   paper: {
@@ -57,17 +59,79 @@ const useStyles = makeStyles({
 
 const OutfitCard = (props) => {
   const classes = useStyles();
+
+  const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx';
+  const currentProductId = useSelector(state => {
+    return state.currentProductId;
+  });
+  const currentProductStyleIndex = useSelector(state => {
+    return state.currentProductStyleIndex;
+  });
   const dispatch = useDispatch();
 
   const handleDelete = (index) => {
     dispatch(outfitFuncs.deleteOutfit(index));
   };
 
-  const handleAdd = () => {
-    //need to connect to currentProduct in store
-    //and pull in name, category, original_price, sale_price, imageUrl, star rating
-    //make an outfitObj to pass in to addOutfit()
-    dispatch(outfitFuncs.addOutfit(obj));
+  const handleAdd = (productId) => {
+    const id = productId.currentProductId.toString();
+    let { name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars } = '';
+
+    const axiosInstance = axios.create({
+      'headers': {
+        'Authorization': `${GITHUB_API_KEY}`
+      }
+    });
+
+    axios.all([
+      axiosInstance.get(`${url}/products/${id}`),
+      axiosInstance.get(`${url}/products/${id}/styles`),
+      axiosInstance.get(`${url}/reviews/meta?product_id=${id}`)
+    ])
+      .then(axios.spread((...results) => {
+        const info = results[0].data;
+        const styles = results[1].data;
+        const metaData = results[2].data;
+
+        name = info.name;
+        category = info.category;
+        styleName = styles.results[currentProductStyleIndex].name;
+        styleId = styles.results[currentProductStyleIndex].style_id;
+        originalPrice = styles.results[currentProductStyleIndex].original_price;
+        salePrice = styles.results[currentProductStyleIndex].sale_price;
+
+        for (let i = 0; i < styles.results[currentProductStyleIndex].photos.length; i++) {
+          if (styles.results[currentProductStyleIndex].photos[i].thumbnail_url) {
+            imageURL = styles.results[currentProductStyleIndex].photos[i].thumbnail_url;
+          }
+        }
+
+        if (!imageURL) {
+          imageURL = './no_image_available.png';
+        }
+
+        const starRating = metaData.ratings;
+        const oneStar = Number(starRating[1] || 0);
+        const twoStar = Number(starRating[2] || 0);
+        const threeStar = Number(starRating[3] || 0);
+        const fourStar = Number(starRating[4] || 0);
+        const fiveStar = Number(starRating[5] || 0);
+        const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
+        const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
+
+        averageStars = averageStarRating;
+
+      }))
+      .then((results) => {
+        dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
+      })
+      .catch((err) => console.log(err));
+
+    // {
+    //   id: 'hi',
+    //   // name: 'hi', category: 'hi', originalPrice: 'hi', salePrice: 'hi',
+    //   // imageURL: 'hi', averageStars: 'hi'
+    // }
   };
 
   return (
@@ -79,8 +143,11 @@ const OutfitCard = (props) => {
         </IconButton>
         : null}
 
-      <CardMedia onClick={() => handleAdd()} className={classes.media}>
-        <img src={props.outfit.imageUrl} alt={props.outfit.name} className={classes.media} />
+      <CardMedia
+        className={classes.media}
+        onClick={() => handleAdd({ currentProductId })}
+      >
+        <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />
       </CardMedia>
 
       <CardContent className={classes.content}>

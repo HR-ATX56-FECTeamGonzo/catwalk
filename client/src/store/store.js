@@ -6,17 +6,18 @@ import outfitFuncs from '../redux-helpers/related/reduxOutfitList.js';
 import funcs from '../redux-helpers/related/reduxRelatedProducts.js';
 
 var defaultState = {
-  currentProductId: 0,
+  currentProductId: 24156,
+  currentProductStyleIndex: 0,
   // currentProductInfo: exampleData,
   // currentProductStyles:
   // currentProductStars:
   // relatedProducts: [],
-  outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }, { id: 24156 }],
+  outfitList: [{ name: 'Add to Outfit', imageURL: './add-icon.png' }],
 };
 
 const rootReducer = combineReducers({
   // currentProduct:
-  // relatedProducts: relatedProductsReducer
+  currentProductStyleIndex: funcs.currentProductStyleIndexReducer,
   currentProductId: funcs.currentProductIdReducer,
   outfitList: outfitFuncs.outfitListReducer
 });
