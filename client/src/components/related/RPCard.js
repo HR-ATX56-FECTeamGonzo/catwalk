@@ -152,7 +152,7 @@ const RPCard = (props) => {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <Typography variant='caption' alight='left'>COMPARE</Typography> <br />
+      <Typography variant='caption' align='left'>COMPARE</Typography> <br />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -193,10 +193,10 @@ const RPCard = (props) => {
         </IconButton>
       </CardMedia>
       <CardContent className={classes.content}>
-        <Typography variant='caption' alight='left'>{props.category}</Typography> <br />
-        <Typography variant='subtitle2' alight='left'>{props.name}</Typography>
+        <Typography variant='caption' align='left'>{props.category}</Typography> <br />
+        <Typography variant='subtitle2' align='left'>{props.name}</Typography>
         {/* need to strikethrough original price */}
-        <Typography variant='caption' alight='left'>
+        <Typography variant='caption' align='left'>
           <span style={props.salePrice ? { 'textDecoration': 'line-through' } : null}>
             ${props.originalPrice}
           </span>
