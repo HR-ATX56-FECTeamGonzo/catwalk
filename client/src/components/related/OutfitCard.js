@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import addOutfit from '../../redux-helpers/related/reduxOutfitList.js';
+import { addOutfit, addOutfitReducer } from '../../redux-helpers/related/reduxOutfitList.js';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
