@@ -11,7 +11,7 @@ const RelatedProducts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [RPInfo, setRPInfo] = useState([]);
   const [RPStyles, setRPStyles] = useState([]);
-  const [RPMetaData, setRPMetaData] = useState({});
+  const [RPMetaData, setRPMetaData] = useState([]);
 
   const getRelatedProductIds = () => {
     axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
@@ -44,7 +44,7 @@ const RelatedProducts = () => {
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/reviews/meta/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+          promises.push(axios.get(`${url}/reviews/meta?product_id=${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
         }
         return Promise.all(promises);
       })
