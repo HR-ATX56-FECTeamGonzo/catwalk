@@ -28,9 +28,11 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       position: 'relative'
     },
     overlay: {
-      width: '100px',
+      width: '115px',
       height: '100%',
-      padding: '5px'
+      padding: '3px',
+      backgroundColor: 'rgba(0, 0, 0, .125)',
+      overflow: 'hidden'
     }
   })();
 

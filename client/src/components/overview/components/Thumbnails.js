@@ -7,7 +7,8 @@ import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 const tileStyles = {
   root: {
     height: '100px',
-    width: '100px'
+    width: '100px',
+    margin: '5px'
   },
   tile: {
     height: '100px'
