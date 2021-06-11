@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 // import rootReducer from './../reducers/main.js';
 import exampleData from './exampleData.js';
-import funcs from '../redux-helpers/related/reduxOutfitList.js';
+import outfitFuncs from '../redux-helpers/related/reduxOutfitList.js';
 
 var defaultState = {
   // currentProductInfo: exampleData,
@@ -15,7 +15,7 @@ var defaultState = {
 const rootReducer = combineReducers({
   // currentProduct:
   // relatedProducts: relatedProductsReducer
-  outfitList: funcs.outfitListReducer
+  outfitList: outfitFuncs.outfitListReducer
 });
 
 
