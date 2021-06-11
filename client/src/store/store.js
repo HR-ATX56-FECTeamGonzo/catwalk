@@ -9,7 +9,7 @@ var defaultState = {
   // currentProductStyles:
   // currentProductStars:
   // relatedProducts: [],
-  outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }],
+  outfitList: [{ name: 'Add to Outfit', imageUrl: './add-icon.png' }, { id: 24156 }],
 };
 
 const rootReducer = combineReducers({

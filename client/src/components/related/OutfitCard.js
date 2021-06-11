@@ -67,7 +67,7 @@ const OutfitCard = (props) => {
     //need to connect to currentProduct in store
     //and pull in name, category, original_price, sale_price, imageUrl, star rating
     //make an outfitObj to pass in to addOutfit()
-    dispatch(funcs.addOutfit());
+    dispatch(funcs.addOutfit(obj));
   };
 
   return (
