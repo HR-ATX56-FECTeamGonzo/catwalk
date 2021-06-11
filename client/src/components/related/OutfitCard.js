@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '18px'
+    right: '8px'
   },
   media: {
     top: '1px',

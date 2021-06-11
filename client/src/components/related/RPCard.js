@@ -34,7 +34,7 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '25px'
+    right: '30px'
   },
   media: {
     top: '1px',
