@@ -31,17 +31,7 @@ const useStyles = makeStyles(() => ({
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    minWidth: '700px'
-  },
-  icon: {
-    position: 'absolute',
-    top: '0px',
-    right: '12px'
-  },
-  media: {
-    top: '1px',
-    right: '1px',
-    height: 200,
+    minWidth: '800px'
   },
 }));
 

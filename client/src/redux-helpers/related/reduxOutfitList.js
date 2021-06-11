@@ -1,20 +1,24 @@
-//action creators
-const addOufit = (outfitObj) => ({
-  type: 'ADD_OUTFIT',
-  outfitObj
-});
+const funcs = {
+  addOutfit: (outfitObj) => ({
+    type: 'ADD_OUTFIT',
+    payload: outfitObj
+  }),
 
-//reducers
-const addOutfitReducer = (previousState = [], action) => {
-  switch (action.type) {
-    case 'ADD_OUTFIT':
-      return [...previousState.outfitList, action.outfitObj];
-    default:
-      return previousState;
-  }
+  deleteOutfit: (index) => ({
+    type: 'DELETE_OUTFIT',
+    payload: index
+  }),
+
+  outfitListReducer: (previousState = [], action) => {
+    switch (action.type) {
+      case 'ADD_OUTFIT':
+        return previousState.outfitList.concat(action.payload);
+      case 'DELETE_OUTFIT':
+        return [...previousState.outfitList.slice(0, action.payload), ...previousState.outfitList.slice(action.payload + 1)];
+      default:
+        return previousState;
+    }
+  },
 };
 
-module.exports = {
-  addOufit,
-  addOutfitReducer
-}
+export default outfitFuncs;
