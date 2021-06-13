@@ -21,7 +21,7 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      cursor: 'help',
+      zIndex: '30',
       '&:hover': {
         cursor: 'not-allowed'
       }

@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React, {useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, Grid, Collapse } from '@material-ui/core';
+import { Box, Grid, Collapse, Fade } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import exampleData from './exampleData.js';
@@ -26,6 +26,7 @@ const setIdtoKey = (sum, val) => {
 const LayoutViews = makeStyles({
   root: {
     height: '800px',
+    display: 'flex'
   },
   container: {
     height: '100%',
@@ -33,12 +34,18 @@ const LayoutViews = makeStyles({
     transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
   },
   hidden: {
-    visibility: 'visible',
-    width: '50%'
+    width: '50%',
+    backgroundColor: 'rgba(0, 0, 0, .25)'
   },
   entered: {
-    visibility: 'visible',
     width: '100%'
+  },
+  menu: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'absolute',
+    left: '50%',
+    marginLeft: '10px'
   }
 });
 
@@ -90,9 +97,7 @@ const Overview = () => {
   });
 
   return (
-  <div id="overview">
-    <h2>overview</h2>
-    <div className = {classes.root} >
+  <div id="overview" className={classes.root}>
       <Collapse
         in={view !== 0} collapsedHeight='100%' timeout='auto'
         classes = { {container: classes.container, hidden: classes.hidden, entered: classes.entered } }>
@@ -102,15 +107,16 @@ const Overview = () => {
           index={photoIndexes[currentStyle.info.style_id]}
           clickHandler={changePhotoIndex}/>
       </Collapse>
+    <div className={classes.menu}>
+      <ProductInfo
+        currentProduct={exampleData}
+        currentStyle={currentStyle.info}/>
+      <StyleList
+        styles={styles}
+        current={currentStyle.index}
+        clickHandler={changeStyle}/>
+      <AddToCart stock={currentStyle.info.skus}/>
     </div>
-    <ProductInfo
-      currentProduct={exampleData}
-      currentStyle={currentStyle.info}/>
-    <StyleList
-      styles={styles}
-      current={currentStyle.index}
-      clickHandler={changeStyle}/>
-    <AddToCart stock={currentStyle.info.skus}/>
   </div>);
 };
 

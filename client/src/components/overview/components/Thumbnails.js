@@ -20,11 +20,14 @@ const tabStyles = {
     height: '100px',
     padding: '0px',
     margin: '2px',
-    display: 'inline-block',
-    '& .MuiTab-wrapper img': {
-      width: '100px',
-      height: 'auto',
-      alignSelf: 'flex-start'
+    display: 'flex',
+    '& .MuiTab-wrapper': {
+      width: 'auto',
+      minHeight: '100px',
+      justifyContent: 'center',
+      '& img': {
+        width: '150px'
+      }
     }
   }
 };
