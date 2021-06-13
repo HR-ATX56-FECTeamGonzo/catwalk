@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React, {useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Collapse, Fade } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
@@ -25,7 +25,7 @@ const setIdtoKey = (sum, val) => {
 
 const LayoutViews = makeStyles({
   root: {
-    height: '805px',
+    height: '805 px',
     display: 'flex'
   },
   container: {

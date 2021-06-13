@@ -4,13 +4,17 @@ import Overview from './overview/Overview.js';
 import RelatedProducts from './related/RelatedProducts.js';
 import OutfitList from './related/OutfitList.js';
 
-var App = () => (
-  <div>
-    <Overview />
-    <RelatedProducts />
-    <OutfitList />
-    <RatingsAndReviews />
-  </div>
-);
+var App = () => {
 
+  return (
+    <div>
+      <Overview />
+      <RelatedProducts />
+      <OutfitList />
+      <div id='reviews'>
+        <RatingsAndReviews />
+      </div>
+    </div>
+  );
+};
 export default App;
