@@ -8,7 +8,7 @@ const tabStyles = {
     width: '100px',
     height: '100%',
     padding: '0px 2px',
-    backgroundColor: 'rgba(0, 0, 0, .125)',
+    backgroundColor: 'rgba(0, 0, 0, .25)',
     '& .MuiTabs-indicator': {
       width: '100%',
       backgroundColor: 'transparent',
@@ -18,13 +18,12 @@ const tabStyles = {
   },
   tab: {
     height: '100px',
-    width: '100px',
     padding: '0px',
     margin: '2px',
     display: 'inline-block',
     '& .MuiTab-wrapper img': {
       width: '100px',
-      height: '100%',
+      height: 'auto',
       alignSelf: 'flex-start'
     }
   }

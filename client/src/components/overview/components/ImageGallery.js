@@ -18,7 +18,6 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
       backgroundPosition: 'center',
       border: '1px solid black',
       height: '750px',
-      width: '50%',
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
@@ -49,7 +48,7 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
 
 
   return (
-    <Box zIndex='4' className={styles.gallery} onClick={toggleView}>
+    <Box className={styles.gallery} onClick={toggleView}>
       {/*  thumbnails */}
       <Thumbnails
         current={currentIndex}
@@ -58,7 +57,7 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
       {/* left button */}
       <Box className={styles.button}>
         <IconButton
-          onClick={(e) => {scrollGallery(e, currentIndex - 1); }}
+          onClick={(e) => { scrollGallery(e, currentIndex - 1); }}
           disabled= { currentIndex === 0 }>
           <ChevronLeft/>
         </IconButton>
@@ -66,7 +65,7 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
       {/* right button */}
       <Box className={styles.button} position='absolute' right='0px' >
         <IconButton
-          onClick={(e) => {scrollGallery(e, currentIndex + 1); }}
+          onClick={(e) => { scrollGallery(e, currentIndex + 1); }}
           disabled={ currentIndex === photos.length - 1 }>
           <ChevronRight/>
         </IconButton>

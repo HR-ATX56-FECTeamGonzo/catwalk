@@ -1,10 +1,9 @@
 /* eslint-disable indent */
 import React, {useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, Grid, IconButton } from '@material-ui/core';
+import { Box, Grid, Collapse } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
-import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import exampleData from './exampleData.js';
 import ProductInfo from './components/ProductInfo.js';
 import StyleList from './components/StyleList.js';
@@ -24,6 +23,25 @@ const setIdtoKey = (sum, val) => {
   return sum;
 };
 
+const LayoutViews = makeStyles({
+  root: {
+    height: '800px',
+  },
+  container: {
+    height: '100%',
+    width: '50%',
+    transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+  },
+  hidden: {
+    visibility: 'visible',
+    width: '50%'
+  },
+  entered: {
+    visibility: 'visible',
+    width: '100%'
+  }
+});
+
 const Overview = () => {
   // this eventually gets replaced by store variable
   const styles = exampleData.styles.results;
@@ -35,6 +53,7 @@ const Overview = () => {
   const [view, setView] = useState(0);
   const [currentStyle, setCurrentStyle] = useState(defaultStyle);
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
+  const classes = LayoutViews();
   const dispatch = useDispatch();
 
   const changeStyle = (e, idx) => {
@@ -73,12 +92,16 @@ const Overview = () => {
   return (
   <div id="overview">
     <h2>overview</h2>
-    <div id='gallery'>
-    <ImageGallery
-      toggleView={(e) => {toggleView(e);} }
-      photos={currentStyle.info.photos}
-      index={photoIndexes[currentStyle.info.style_id]}
-      clickHandler={changePhotoIndex}/>
+    <div className = {classes.root} >
+      <Collapse
+        in={view !== 0} collapsedHeight='100%' timeout='auto'
+        classes = { {container: classes.container, hidden: classes.hidden, entered: classes.entered } }>
+        <ImageGallery
+          toggleView={(e) => { toggleView(e); } }
+          photos={currentStyle.info.photos}
+          index={photoIndexes[currentStyle.info.style_id]}
+          clickHandler={changePhotoIndex}/>
+      </Collapse>
     </div>
     <ProductInfo
       currentProduct={exampleData}
