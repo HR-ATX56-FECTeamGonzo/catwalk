@@ -25,7 +25,7 @@ const setIdtoKey = (sum, val) => {
 
 const LayoutViews = makeStyles({
   root: {
-    height: '800px',
+    height: '805px',
     display: 'flex'
   },
   container: {

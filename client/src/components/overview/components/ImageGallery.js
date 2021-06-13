@@ -5,34 +5,33 @@ import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import Thumbnails from './Thumbnails.js';
 
+const useStyles = makeStyles({
+  gallery: {
+    backgroundColor: 'rgba(100, 100, 100, .3)',
+    border: '1px solid black',
+    height: '800px',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    zIndex: '30',
+    '&:hover': {
+      cursor: 'not-allowed'
+    }
+  },
+  button: {
+    backgroundColor: 'rgba(100, 100, 100, .3)',
+    borderRadius: '50%',
+    border: '1px solid rgba(20, 20, 20, .3)',
+    margin: '10px'
+  }
+});
 
 const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
   const [currentIndex, setIndex] = useState(index);
+  const styles = useStyles();
+
   // style hook
-  const styles = makeStyles({
-    gallery: {
-      backgroundImage: `url(${photos[currentIndex].url})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'contain',
-      backgroundPosition: 'center',
-      border: '1px solid black',
-      height: '750px',
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'center',
-      zIndex: '30',
-      '&:hover': {
-        cursor: 'not-allowed'
-      }
-    },
-    button: {
-      backgroundColor: 'rgba(100, 100, 100, .3)',
-      borderRadius: '50%',
-      border: '1px solid rgba(20, 20, 20, .3)',
-      margin: '10px'
-    }
-  })();
 
   const scrollGallery = (e, idx) => {
     e.stopPropagation();
@@ -55,6 +54,7 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
         photos={photos}
         clickHandler={scrollGallery}/>
       {/* left button */}
+      { currentIndex !== 0 &&
       <Box className={styles.button}>
         <IconButton
           onClick={(e) => { scrollGallery(e, currentIndex - 1); }}
@@ -62,7 +62,9 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
           <ChevronLeft/>
         </IconButton>
       </Box>
+      }
       {/* right button */}
+      { currentIndex !== photos.length - 1 &&
       <Box className={styles.button} position='absolute' right='0px' >
         <IconButton
           onClick={(e) => { scrollGallery(e, currentIndex + 1); }}
@@ -70,6 +72,7 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
           <ChevronRight/>
         </IconButton>
       </Box>
+      }
     </Box>
   );
 };
