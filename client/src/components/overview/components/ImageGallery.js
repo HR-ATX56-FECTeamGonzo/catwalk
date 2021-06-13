@@ -24,7 +24,13 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       alignItems: 'center'
     },
     button: {
-      position: 'relative'
+      backgroundColor: 'rgba(100, 100, 100, .3)',
+      borderRadius: '50%',
+      border: '1px solid rgba(20, 20, 20, .3)',
+      margin: '10px'
+    },
+    left: {
+
     },
     overlay: {
       width: '115px',
@@ -62,7 +68,7 @@ const ImageGallery = ({photos, index, clickHandler}) => {
         </IconButton>
       </Box>
       {/* right button */}
-      <Box position='absolute' right='0px'>
+      <Box className={styles.button} position='absolute' right='0px' >
         <IconButton
           onClick={() => { scrollGallery(currentIndex + 1); }}
           disabled={ currentIndex === photos.length - 1 }>
