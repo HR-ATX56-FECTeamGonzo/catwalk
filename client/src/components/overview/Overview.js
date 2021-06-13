@@ -1,5 +1,6 @@
 /* eslint-disable indent */
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import exampleData from './exampleData.js';
 import ProductInfo from './components/ProductInfo.js';
 import StyleList from './components/StyleList.js';
@@ -8,11 +9,10 @@ import ImageGallery from './components/ImageGallery.js';
 
 
 const getDefaultStyle = (arr) => (
-  arr.find((style) => style['default?'])
-);
-
-const getDefaultStyleIndex = (arr) => (
-  arr.findIndex((style) => style['default?'])
+  {
+    info: arr.find((style) => style['default?']),
+    index: arr.findIndex((style) => style['default?'])
+  }
 );
 
 const setIdtoKey = (sum, val) => {
@@ -23,10 +23,7 @@ const setIdtoKey = (sum, val) => {
 const Overview = () => {
   // this eventually gets replaced by store variable
   const styles = exampleData.styles.results;
-  const defaultStyle = {
-    info: getDefaultStyle(styles),
-    index: getDefaultStyleIndex(styles)
-  };
+  const defaultStyle = getDefaultStyle(styles);
   // local state needed:
     // view (image gallery)
     // currently selected style
@@ -34,6 +31,7 @@ const Overview = () => {
   const [view, setView] = useState(0);
   const [currentStyle, setCurrentStyle] = useState(defaultStyle);
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
+  const dispatch = useDispatch();
 
   const changeStyle = (e, idx) => {
     setCurrentStyle({
@@ -48,6 +46,14 @@ const Overview = () => {
       return prevState;
     });
   };
+
+  useEffect(() => {
+    dispatch(
+      {
+        type: 'UPDATE_CURRENT_PRODUCT_STYLE_INDEX',
+        payload: currentStyle.findIndex
+      }, [currentStyle]);
+  });
 
   return (
   <div id="overview">

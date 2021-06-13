@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import Thumbnails from './Thumbnails.js';
@@ -10,7 +9,6 @@ import Thumbnails from './Thumbnails.js';
 const ImageGallery = ({photos, index, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
   const [currentIndex, setIndex] = useState(index);
-  const dispatch = useDispatch;
   // style hook
   const styles = makeStyles({
     gallery: {
@@ -45,7 +43,6 @@ const ImageGallery = ({photos, index, clickHandler}) => {
   // sets currently selected item on style change
   useEffect(() => {
     setIndex(index);
-    dispatch();
   }, [photos]);
 
 
