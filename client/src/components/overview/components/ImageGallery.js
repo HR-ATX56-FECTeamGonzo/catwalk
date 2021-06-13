@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import Thumbnails from './Thumbnails.js';
 
 
-const ImageGallery = ({photos, index, clickHandler}) => {
+const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
   const [currentIndex, setIndex] = useState(index);
   // style hook
@@ -21,7 +21,11 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       width: '50%',
       position: 'relative',
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      cursor: 'help',
+      '&:hover': {
+        cursor: 'not-allowed'
+      }
     },
     button: {
       backgroundColor: 'rgba(100, 100, 100, .3)',
@@ -31,7 +35,8 @@ const ImageGallery = ({photos, index, clickHandler}) => {
     }
   })();
 
-  const scrollGallery = (idx) => {
+  const scrollGallery = (e, idx) => {
+    e.stopPropagation();
     setIndex(idx);
     clickHandler(idx);
   };
@@ -44,7 +49,7 @@ const ImageGallery = ({photos, index, clickHandler}) => {
 
 
   return (
-    <Box className={styles.gallery}>
+    <Box zIndex='4' className={styles.gallery} onClick={toggleView}>
       {/*  thumbnails */}
       <Thumbnails
         current={currentIndex}
@@ -53,7 +58,7 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       {/* left button */}
       <Box className={styles.button}>
         <IconButton
-          onClick={() => { scrollGallery(currentIndex - 1); }}
+          onClick={(e) => {scrollGallery(e, currentIndex - 1); }}
           disabled= { currentIndex === 0 }>
           <ChevronLeft/>
         </IconButton>
@@ -61,7 +66,7 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       {/* right button */}
       <Box className={styles.button} position='absolute' right='0px' >
         <IconButton
-          onClick={() => { scrollGallery(currentIndex + 1); }}
+          onClick={(e) => {scrollGallery(e, currentIndex + 1); }}
           disabled={ currentIndex === photos.length - 1 }>
           <ChevronRight/>
         </IconButton>

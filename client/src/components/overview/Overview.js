@@ -1,6 +1,10 @@
 /* eslint-disable indent */
 import React, {useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Box, Grid, IconButton } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { sizing, borders, spacing, flexbox } from '@material-ui/system';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import exampleData from './exampleData.js';
 import ProductInfo from './components/ProductInfo.js';
 import StyleList from './components/StyleList.js';
@@ -47,6 +51,17 @@ const Overview = () => {
     });
   };
 
+  const toggleView = (e) => {
+    if (e.target === e.currentTarget) {
+      (console.log('changing view'));
+      setView(prevState => {
+        console.log(prevState);
+        return prevState === 0 ? 1 : 0;
+        }
+      );
+    }
+  };
+
   useEffect(() => {
     dispatch(
       {
@@ -58,10 +73,13 @@ const Overview = () => {
   return (
   <div id="overview">
     <h2>overview</h2>
+    <div id='gallery'>
     <ImageGallery
+      toggleView={(e) => {toggleView(e);} }
       photos={currentStyle.info.photos}
       index={photoIndexes[currentStyle.info.style_id]}
       clickHandler={changePhotoIndex}/>
+    </div>
     <ProductInfo
       currentProduct={exampleData}
       currentStyle={currentStyle.info}/>

@@ -31,13 +31,13 @@ const tabStyles = {
 };
 
 const TabsWrapper = ({clickHandler, current, photos, classes}) => (
-  <Tabs
+  <Tabs id='thumbnails'
     orientation='vertical'
     value={current}
     className = {classes.root}
     scrollButtons = 'on'
     variant = 'scrollable'
-    onChange={(e, val) => { clickHandler(val); }}>
+    onChange={(e, val) => { clickHandler(e, val); }}>
     {photos.map((x, idx) => (
       <Tab key={idx}
         className= {classes.tab}
