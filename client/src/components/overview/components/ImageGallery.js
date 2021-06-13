@@ -28,16 +28,6 @@ const ImageGallery = ({photos, index, clickHandler}) => {
       borderRadius: '50%',
       border: '1px solid rgba(20, 20, 20, .3)',
       margin: '10px'
-    },
-    left: {
-
-    },
-    overlay: {
-      width: '115px',
-      height: '100%',
-      padding: '3px',
-      backgroundColor: 'rgba(0, 0, 0, .125)',
-      overflow: 'hidden'
     }
   })();
 
@@ -56,7 +46,8 @@ const ImageGallery = ({photos, index, clickHandler}) => {
   return (
     <Box className={styles.gallery}>
       {/*  thumbnails */}
-      <Thumbnails className={styles.overlay}
+      <Thumbnails
+        current={currentIndex}
         photos={photos}
         clickHandler={scrollGallery}/>
       {/* left button */}

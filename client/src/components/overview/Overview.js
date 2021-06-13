@@ -51,7 +51,7 @@ const Overview = () => {
     dispatch(
       {
         type: 'UPDATE_CURRENT_PRODUCT_STYLE_INDEX',
-        payload: currentStyle.findIndex
+        payload: currentStyle.index
       }, [currentStyle]);
   });
 
