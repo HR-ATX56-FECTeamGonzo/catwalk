@@ -6,9 +6,9 @@ import OutfitList from './related/OutfitList.js';
 
 var App = () => (
   <div>
-    <Overview />
+    {/* <Overview />
     <RelatedProducts />
-    <OutfitList />
+    <OutfitList /> */}
     <RatingsAndReviews />
   </div>
 );

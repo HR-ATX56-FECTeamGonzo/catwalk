@@ -8,6 +8,8 @@ import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Sliders from './SidebarProgressBar.js';
 
 // possibly can grab the average star rating from the store
 
@@ -44,6 +46,12 @@ const SideBar = (props) => {
     progressBar: {
       minWidth: 200,
       height: '10px',
+      '& .MuiLinearProgress-barColorPrimary': {
+        backgroundColor: '#7CFC00',
+        // foregroundColor: 'rgb(136 118 118)',
+      },
+      // '& .MuiLinearProgress-bar': {
+      // }
     },
     rating: {
       backgroundColor: 'white',
@@ -60,40 +68,49 @@ const SideBar = (props) => {
     },
     slider: {
       minWidth: 200,
+      touchAction: 'none',
+    },
+    labels: {
+      display: 'flex',
+      justifyContent: 'space-between',
     },
   }));
+  // const SuperSlider = withStyles({
+  //   root: {
+  //     '&.Mui-disabled': {
+  //       color: '#52af77',
+  //       height: 8,
+  //     },
+  //   },
+  //   thumb: {
+  //     '&.Mui-disabled': {
+  //       height: 24,
+  //       width: 24,
+  //       backgroundColor: '#fff',
+  //       border: '2px solid currentColor',
+  //       marginTop: -8,
+  //       marginLeft: -12,
+  //       '&:focus, &:hover, &$active': {
+  //         boxShadow: 'inherit',
+  //       },
+  //     },
+  //   },
+  //   active: { passive: true },
+  //   mark: {
+  //     height: 8,
+  //     color: 'white',
+  //     width: 8,
+  //   },
+  //   track: {
+  //     height: 8,
+  //     borderRadius: 4,
+  //   },
+  //   rail: {
+  //     height: 8,
+  //     borderRadius: 4,
+  //   },
+  // })(Slider);
   const classes = useStyles();
-
-  const SuperSlider = withStyles({
-    root: {
-      color: '#52af77',
-      height: 8,
-    },
-    thumb: {
-      height: 24,
-      width: 24,
-      backgroundColor: '#fff',
-      border: '2px solid currentColor',
-      marginTop: -8,
-      marginLeft: -12,
-      '&:focus, &:hover, &$active': {
-        boxShadow: 'inherit',
-      },
-    },
-    mark: {
-      height: 8,
-      color: 'white',
-      width: 8,
-    },
-    track: {
-      height: 8,
-      borderRadius: 4,
-    },
-    rail: {
-      height: 8,
-      borderRadius: 4,
-    },
-  })(Slider);
   return (
     <Grid container>
       <Grid container item direction="column" spacing={4}>
@@ -123,7 +140,8 @@ const SideBar = (props) => {
                   <p>5 STARS</p>
                 </Grid>
                 <Grid item>
-                  <LinearProgress className={classes.progressBar} variant="determinate" value={(fiveStar / totalStars) * 100} />
+                  <LinearProgress className={classes.progressBar} color="primary" variant="determinate" value={(fiveStar / totalStars) * 100}
+                  />
                 </Grid>
               </Grid>
               <Grid container item direction="row" alignItems="center" spacing={1} className={classes.progressBarContainer}>
@@ -163,27 +181,38 @@ const SideBar = (props) => {
         </Grid>
         <Grid item>
           <Box className={classes.characteristics}>
-            <Grid container direction="column">
-              <Grid container item direction="row" alignItems="center" spacing={1}>
+            {/* <Grid container direction="column"> */}
+            {/* <Grid container item direction="row" alignItems="center" spacing={1}>
                 <Grid item>
                   <p>SIZE</p>
                 </Grid>
                 <Grid item >
-                  {/* <SuperSlider
-                    className={classes.slider}
-                    disabled
-                    passive
-                    track={false}
-                    defaultValue={characteristics.Fit.value}
-                    step={2}
-                    marks
-                    min={0}
-                    max={6}
-                  /> */}
-                  {characteristics.Fit.value}
+                  <Grid item >
+                    <SuperSlider
+                      className={classes.slider}
+                      disabled
+                      track={false}
+                      value={Number(characteristics.Fit.value)}
+                      step={2}
+                      marks
+                      min={0}
+                      max={6}
+                    />
+                  </Grid>
+                  <Grid container item direction="row" className={classes.labels} >
+                    <Grid item><Typography>yo</Typography></Grid>
+                    <Grid item><Typography>yo</Typography></Grid>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid container item direction="row" alignItems="center" spacing={1}>
+              </Grid> */}
+            <Sliders
+              size={characteristics.Size ? Number(characteristics.Size.value) : 0}
+              width={characteristics.Width ? Number(characteristics.Width.value) : 0}
+              comfort={characteristics.Comfort ? Number(characteristics.Comfort.value) : 0}
+              quality={characteristics.Quality ? Number(characteristics.Quality.value) : 0}
+              length={characteristics.Length ? Number(characteristics.Length.value) : 0}
+              fit={characteristics.Fit ? Number(characteristics.Fit.value) : 0} />
+            {/* <Grid container item direction="row" alignItems="center" spacing={1}>
                 <Grid item>
                   <p>COMFORT</p>
                 </Grid>
@@ -206,8 +235,8 @@ const SideBar = (props) => {
                 <Grid item>
                   {characteristics.Length.value}
                 </Grid>
-              </Grid>
-            </Grid>
+              </Grid> */}
+            {/* </Grid> */}
           </Box>
         </Grid>
       </Grid>
