@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React, {useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, Collapse, Fade } from '@material-ui/core';
+import { Collapse, Fade, Box, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import exampleData from './exampleData.js';
@@ -25,7 +25,7 @@ const setIdtoKey = (sum, val) => {
 
 const LayoutViews = makeStyles({
   root: {
-    height: '805 px',
+    height: '805px',
     display: 'flex'
   },
   container: {
@@ -38,7 +38,8 @@ const LayoutViews = makeStyles({
     backgroundColor: 'rgba(0, 0, 0, .25)'
   },
   entered: {
-    width: '100%'
+    width: '100%',
+    height: '120%'
   },
   menu: {
     display: 'flex',
@@ -53,10 +54,6 @@ const Overview = () => {
   // this eventually gets replaced by store variable
   const styles = exampleData.styles.results;
   const defaultStyle = getDefaultStyle(styles);
-  // local state needed:
-    // view (image gallery)
-    // currently selected style
-    // currently selected image per style
   const [view, setView] = useState(0);
   const [currentStyle, setCurrentStyle] = useState(defaultStyle);
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
@@ -99,9 +96,10 @@ const Overview = () => {
   return (
   <div id="overview" className={classes.root}>
       <Collapse
-        in={view !== 0} collapsedHeight='100%' timeout='auto'
+        in={view !== 0} collapsedHeight='100%'
         classes = { {container: classes.container, hidden: classes.hidden, entered: classes.entered } }>
         <ImageGallery
+          view={view}
           toggleView={(e) => { toggleView(e); } }
           photos={currentStyle.info.photos}
           index={photoIndexes[currentStyle.info.style_id]}
