@@ -43,15 +43,6 @@ const useStyles = makeStyles({
     maxHeight: 200,
     width: 180,
   },
-  paper: {
-    position: 'absolute',
-    width: 500,
-    minHeight: 200,
-    backgroundColor: 'white',
-    border: '0.5px solid #3d3d5c',
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
-  },
   table: {
     maxWidth: 500,
   },

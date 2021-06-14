@@ -52,8 +52,6 @@ const useStyles = makeStyles({
     minHeight: 240,
     backgroundColor: 'white',
     border: '0.5px solid #3d3d5c',
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
   },
   table: {
     maxWidth: 500,
@@ -211,7 +209,7 @@ const RPCard = (props) => {
       <IconButton onClick={handleOpen} className={classes.icon}>
         <StarBorderIcon />
       </IconButton>
-      <CardMedia onClick={() => handleClick(props.id)} >
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media}  >
         <img src={props.imageURL} alt={props.name} className={classes.media} />
       </CardMedia>
       <CardContent className={classes.content}>
