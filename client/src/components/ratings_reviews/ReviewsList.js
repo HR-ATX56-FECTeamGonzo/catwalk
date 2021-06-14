@@ -12,16 +12,7 @@ const ReviewsList = (props) => {
         <ReviewItem
           url={props.url}
           data={review}
-          review_id={review.review_id.toString()}
           changeSort={props.changeSort}
-          rating={review.rating}
-          reviewer={review.reviewer_name}
-          summary={review.summary}
-          body={review.body}
-          date={review.date}
-          recommend={review.recommend}
-          response={review.response}
-          helpfulness={review.helpfulness}
           count={props.count}
           sort={props.sort}
         />

@@ -14,6 +14,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
+
 // =============== help with more reviews button, currently fetching all reviews, only want to render first two and two more after each button press
 
 // in this component i want to fetch all the reviews and send the relevent information to the review list component
@@ -72,13 +74,15 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       left: '25%'
     },
-
     reviews: {
       backgroundColor: 'white',
     },
     other: {
       backgroundColor: 'white',
-    }
+    },
+    reviewsButtons: {
+      paddingTop: '15px',
+    },
   }));
   const classes = useStyles();
   // if the data doesnt exist yet render null
@@ -108,16 +112,22 @@ const RatingsAndReviews = () => {
         </Grid>
         <Grid container item direction="column">{reviewData[1] ? <ReviewsList url={url} reviewData={reviewData.slice(0, count)} /> : null}</Grid>
         {/* making MORE REVIEWS button dissapear when out of reviews */}
-        <Grid item>{count < reviewData.length ? <button onClick={() => {
-          setCount(count + 2);
-        }}>MORE REVIEWS</button> : null}</Grid>
-        <button onClick={() => {
-          return <NewReview />;
-        }}>ADD A REVIEW +</button>
+        < Grid className={classes.reviewsButtons} container item direction="row" spacing={2}>
+          <Grid item>{count < reviewData.length
+            ? <Button variant="outlined" color="primary" onClick={() => {
+              setCount(count + 2);
+            }}>MORE REVIEWS</Button>
+            : null}</Grid>
+          <Grid item>
+            <NewReview />
+          </Grid>
+        </Grid>
       </Grid>
-    </Grid>
+    </Grid >
   );
 };
-
+{/* <Button variant="outlined" color="primary" onClick={() => {
+  setCount(count + 2);
+}}>MORE REVIEWS</Button> > */}
 export default RatingsAndReviews;
 
