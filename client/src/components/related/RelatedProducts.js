@@ -18,12 +18,14 @@ const RelatedProducts = () => {
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/products/${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+          promises.push(
+            axios.get(`${url}/products/${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
+              .then((results) => {
+                setRPInfo(prev => prev.concat(results.data));
+              })
+          );
         }
         return Promise.all(promises);
-      })
-      .then((result) => {
-        result.forEach(item => setRPInfo(prev => prev.concat(item.data)));
       })
       .then((result) => {
         return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
@@ -31,12 +33,14 @@ const RelatedProducts = () => {
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/products/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+          promises.push(
+            axios.get(`${url}/products/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
+              .then((results) => {
+                setRPStyles(prev => prev.concat(results.data));
+              })
+          );
         }
         return Promise.all(promises);
-      })
-      .then((result) => {
-        result.forEach(item => setRPStyles(prev => prev.concat(item.data)));
       })
       .then((result) => {
         return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
@@ -44,29 +48,32 @@ const RelatedProducts = () => {
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/reviews/meta?product_id=${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+          promises.push(
+            axios.get(`${url}/reviews/meta?product_id=${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
+              .then((results) => {
+                setRPMetaData(prev => prev.concat(results.data));
+              })
+          );
         }
         return Promise.all(promises);
       })
       .then((result) => {
-        result.forEach(item => setRPMetaData(prev => prev.concat(item.data)));
+        setIsLoading(false);
       })
       .catch((err) => console.log('error with getRelatedProductIds'));
   };
 
   useEffect(() => {
-    //need to optimize
-    setTimeout(() => setIsLoading(false), 1200);
+    // setTimeout(() => setIsLoading(false), 1000);
     getRelatedProductIds();
   }, []);
-
 
   return (
     <div id='relatedProducts'>
       <Typography variant='subtitle1' align='left'>Related Products</Typography>
-      {isLoading ?
-        <div>Loading . . . </div> :
+      {!isLoading ?
         <RPPassProps RPInfo={RPInfo} RPStyles={RPStyles} RPMetaData={RPMetaData} />
+        : <div>Loading . . . </div>
       }
     </div>
   );

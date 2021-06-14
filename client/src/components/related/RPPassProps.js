@@ -71,7 +71,6 @@ const RPPassProps = (props) => {
       {/* need to take away scroll bar and add arrows!! */}
       {/**/}
       <GridList className={classes.gridList} cols={3.5} spacing={5} cellHeight={340}>
-        {/* {RPCards[props.RPInfo.length - 1] ? */}
         {RPCards.map((each, index) => (
           <GridListTile key={index}>
             <RPCard key={index}
@@ -88,7 +87,6 @@ const RPPassProps = (props) => {
           </GridListTile>
         ))
         }
-        {/* : null} */}
       </GridList>
     </div>
   );
