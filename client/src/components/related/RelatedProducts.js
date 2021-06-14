@@ -51,7 +51,7 @@ const RelatedProducts = () => {
       .then((result) => {
         result.forEach(item => setRPMetaData(prev => prev.concat(item.data)));
       })
-      .catch((err) => console.log('there has been an error with getRelatedProductIds'));
+      .catch((err) => console.log('error with getRelatedProductIds'));
   };
 
   useEffect(() => {

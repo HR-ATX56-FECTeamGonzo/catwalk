@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '30px'
+    right: '10px'
   },
   media: {
     top: '1px',
@@ -164,6 +164,7 @@ const RPCard = (props) => {
 
   const handleClick = (productId) => {
     dispatch(funcs.updateCurrentProductId(productId));
+    dispatch(funcs.updateCurrentProductStars(averageStarRating));
   };
 
   useEffect(() => {
