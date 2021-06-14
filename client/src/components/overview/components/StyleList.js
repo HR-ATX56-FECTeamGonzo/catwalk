@@ -27,7 +27,7 @@ const StyleList = ({styles, current, clickHandler}) => {
             cols={1}
             style={thumbnailStyle}
             key={idx}
-            onClick={(e) => { clickHandler(e, idx); }}>
+            onClick={(e) => { e.stopPropagation(); clickHandler(e, idx); }}>
             <img src={x.photos[0]['thumbnail_url']}/>
             {idx === current &&
             <GridListTileBar

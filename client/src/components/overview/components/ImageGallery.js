@@ -5,36 +5,36 @@ import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import Thumbnails from './Thumbnails.js';
 
+const useStyles = makeStyles({
+  gallery: {
+    backgroundColor: 'rgba(100, 100, 100, .3)',
+    border: '1px solid black',
+    height: '800px',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    zIndex: '30',
+    '&:hover': {
+      cursor: 'not-allowed'
+    }
+  },
+  button: {
+    backgroundColor: 'rgba(100, 100, 100, .3)',
+    borderRadius: '50%',
+    border: '1px solid rgba(20, 20, 20, .3)',
+    margin: '10px'
+  }
+});
 
-const ImageGallery = ({photos, index, clickHandler}) => {
+const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
   const [currentIndex, setIndex] = useState(index);
+  const styles = useStyles();
 
   // style hook
-  const styles = makeStyles({
-    gallery: {
-      backgroundImage: `url(${photos[currentIndex].url})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'contain',
-      backgroundPosition: 'center',
-      border: '1px solid black',
-      height: '750px',
-      width: '50%',
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'center'
-    },
-    button: {
-      position: 'relative'
-    },
-    overlay: {
-      width: '100px',
-      height: '100%',
-      padding: '5px'
-    }
-  })();
 
-  const scrollGallery = (idx) => {
+  const scrollGallery = (e, idx) => {
+    e.stopPropagation();
     setIndex(idx);
     clickHandler(idx);
   };
@@ -47,27 +47,41 @@ const ImageGallery = ({photos, index, clickHandler}) => {
 
 
   return (
-    <Box className={styles.gallery}>
+    <Box className={styles.gallery} onClick={toggleView}>
       {/*  thumbnails */}
-      <Thumbnails className={styles.overlay}
-        photos={photos}
-        clickHandler={scrollGallery}/>
+      <Box clone order={-1}
+        minWidth='105px'
+        flexShrink='0'>
+        <Thumbnails
+          current={currentIndex}
+          photos={photos}
+          clickHandler={scrollGallery}/>
+      </Box>
       {/* left button */}
-      <Box className={styles.button}>
+      <Box className={styles.button} clone
+        order={0}
+        visibility={currentIndex !== 0 ? 'visible' : 'hidden'}>
         <IconButton
-          onClick={() => { scrollGallery(currentIndex - 1); }}
+          onClick={(e) => { scrollGallery(e, currentIndex - 1); }}
           disabled= { currentIndex === 0 }>
           <ChevronLeft/>
         </IconButton>
       </Box>
+      {/* image */}
+      <Box component='img'
+        height='100%'
+        onClick={toggleView}
+        src={photos[currentIndex].url} />
       {/* right button */}
-      <Box position='absolute' right='0px'>
+      { currentIndex !== photos.length - 1 &&
+      <Box className={styles.button} position='absolute' right='0px' >
         <IconButton
-          onClick={() => { scrollGallery(currentIndex + 1); }}
+          onClick={(e) => { scrollGallery(e, currentIndex + 1); }}
           disabled={ currentIndex === photos.length - 1 }>
           <ChevronRight/>
         </IconButton>
       </Box>
+      }
     </Box>
   );
 };
