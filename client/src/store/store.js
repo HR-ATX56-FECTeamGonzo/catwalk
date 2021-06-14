@@ -6,14 +6,14 @@ import exampleData from './exampleData.js';
 import outfitFuncs from '../redux-helpers/related/reduxOutfitList.js';
 import funcs from '../redux-helpers/related/reduxRelatedProducts.js';
 
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 var defaultState = {
   currentProductId: 24156,
   currentProductStyleIndex: 0,
   currentProductStars: 0,
-  outfitList: [{ name: 'Add to Outfit', imageURL: 'client/dist/add-icon.png' }],
+  outfitList: [{ name: 'Add to Outfit' }],
 };
 
 const persistConfig = {
@@ -39,7 +39,7 @@ const store = createStore(persistedReducer, defaultState, window.__REDUX_DEVTOOL
 );
 const persistor = persistStore(store);
 
-const storeFuncs = { store, persistor }
+const storeFuncs = { store, persistor };
 
 export default { store, persistor };
 

@@ -24,37 +24,36 @@ import { useCookies } from 'react-cookie';
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'stretch',
+    display: 'table',
+    flexWrap: 'nowrap',
+    justifyContent: 'start',
     overflow: 'hidden',
-    // backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    minWidth: '800px'
+    minWidth: '800px',
+    maxWidth: '800px'
   },
 }));
 
 const OutfitList = (props) => {
   const classes = useStyles();
   const outfitList = useSelector(state => state.outfitList);
-
-  // const [cookies, setCookie] = useCookies(['user']);
+  // const [isLoading, setIsLoading] = useState(true);
 
   // useEffect(() => {
-  //   setCookie('user', 'gowtham', {
-  //     path: '/'
-  //   });
-  // });
+  //   setTimeout(() => setIsLoading(false), 2000);
+  // }, []);
 
   return (
     <div>
       <Typography variant='subtitle1' align='left' display='block'>Your Outfit List</Typography>
       <div className={classes.root}>
-        <GridList className={classes.gridList} cols={3.5} spacing={18} cellHeight={380}>
+        {/* {isLoading ?
+          <div>Loading . . . </div> : */}
+        <GridList className={classes.gridList} cols={3.5} spacing={5} cellHeight={340}>
           {outfitList.map((each, index) => (
             <GridListTile key={index}>
               <OutfitCard key={index}
@@ -65,6 +64,7 @@ const OutfitList = (props) => {
             </GridListTile>
           ))}
         </GridList >
+        {/* } */}
       </div >
     </div>
   );

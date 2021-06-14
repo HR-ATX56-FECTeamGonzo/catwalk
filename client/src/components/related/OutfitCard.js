@@ -25,22 +25,23 @@ import exampleData from '../../store/exampleData.js';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 200,
-    minHeight: 320,
-    maxHeight: 320,
+    minWidth: 180,
+    maxWidth: 180,
+    minHeight: 330,
+    maxHeight: 330,
     border: '.5px solid #3d3d5c',
     borderRadius: 0,
   },
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '8px'
+    right: '38px'
   },
   media: {
-    top: '1px',
     right: '11px',
-    height: 230,
-    width: 200,
+    minHeight: 200,
+    maxHeight: 200,
+    width: 180,
   },
   paper: {
     position: 'absolute',
@@ -141,7 +142,6 @@ const OutfitCard = (props) => {
   return (
     <Card className={classes.root} >
       {props.outfit.name !== 'Add to Outfit' ?
-        // replace later with props.outfit.id
         <IconButton onClick={() => handleDelete(props.index)} className={classes.icon}>
           <HighlightOffIcon />
         </IconButton>
@@ -151,7 +151,10 @@ const OutfitCard = (props) => {
         className={classes.media}
         onClick={() => handleAdd({ currentProductId })}
       >
-        <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />
+        {props.outfit.name !== 'Add to Outfit' ?
+          <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />
+          : <img src='./add-icon.png' alt={props.outfit.name} className={classes.media} />
+        }
       </CardMedia>
 
       <CardContent className={classes.content}>
