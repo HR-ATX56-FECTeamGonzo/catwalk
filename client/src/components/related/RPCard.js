@@ -29,8 +29,8 @@ import exampleData from '../../store/exampleData.js';
 const useStyles = makeStyles({
   root: {
     maxWidth: 200,
-    minHeight: 320,
-    maxHeight: 320,
+    minHeight: 360,
+    maxHeight: 360,
     border: '.5px solid #3d3d5c',
     borderRadius: 0,
   },
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
   paper: {
     position: 'absolute',
     width: 500,
-    minHeight: 200,
+    minHeight: 240,
     backgroundColor: 'white',
     border: '0.5px solid #3d3d5c',
     // boxShadow: theme.shadows[5],
