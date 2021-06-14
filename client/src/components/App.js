@@ -5,7 +5,6 @@ import RelatedProducts from './related/RelatedProducts.js';
 import OutfitList from './related/OutfitList.js';
 
 var App = () => {
-
   return (
     <div>
       <Overview />
