@@ -25,7 +25,7 @@ const tabStyles = {
     '& .MuiTab-wrapper': {
       width: 'auto',
       minHeight: '100px',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       '& img': {
         width: '150px'
       }
@@ -54,35 +54,3 @@ const TabsWrapper = ({clickHandler, current, photos, classes}) => (
 const StyledTabs = withStyles(tabStyles)(TabsWrapper);
 
 export default StyledTabs;
-
-/*
-  const tileStyles = {
-    root: {
-      height: '100px',
-      width: '100px',
-      margin: '5px'
-    },
-    tile: {
-      height: '100px'
-    }
-  };
-
-  const TileWrapper = ({classes, idx, src, clickHandler}) => {
-    return (
-      <GridListTile
-        id={idx}
-        key={idx}
-        classes={ {root: classes.root, tile: classes.tile}}
-        onClick={() => { clickHandler(idx); }}>
-        <img src={src}/>
-      </GridListTile>);
-  };
-
-  const StyledTile = withStyles(tileStyles)(TileWrapper);
-
-
-<GridList cols={1} className={className}>
-{photos.map((x, idx) => (
-  <StyledTile idx={idx} key={idx} src={x['thumbnail_url']} clickHandler={clickHandler}/>
-  ))}
-  </GridList> */
