@@ -19,6 +19,9 @@ import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
+import { useCookies } from 'react-cookie';
+
+
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
@@ -35,9 +38,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const OutfitList = () => {
+const OutfitList = (props) => {
   const classes = useStyles();
   const outfitList = useSelector(state => state.outfitList);
+
+  // const [cookies, setCookie] = useCookies(['user']);
+
+  // useEffect(() => {
+  //   setCookie('user', 'gowtham', {
+  //     path: '/'
+  //   });
+  // });
 
   return (
     <div>
@@ -48,6 +59,7 @@ const OutfitList = () => {
             <GridListTile key={index}>
               <OutfitCard key={index}
                 outfit={each}
+                cookies={props.cookies}
               />
             </GridListTile>
           ))}
