@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   media: {
     top: '1px',
     right: '11px',
-    height: 190,
+    height: 230,
     width: 200,
   },
   paper: {

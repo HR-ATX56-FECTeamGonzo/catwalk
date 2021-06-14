@@ -13,7 +13,7 @@ var defaultState = {
   currentProductId: 24156,
   currentProductStyleIndex: 0,
   currentProductStars: 0,
-  outfitList: [{ name: 'Add to Outfit', imageURL: './add-icon.png' }],
+  outfitList: [{ name: 'Add to Outfit', imageURL: 'client/dist/add-icon.png' }],
 };
 
 const persistConfig = {

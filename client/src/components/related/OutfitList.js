@@ -54,7 +54,7 @@ const OutfitList = (props) => {
     <div>
       <Typography variant='subtitle1' align='left' display='block'>Your Outfit List</Typography>
       <div className={classes.root}>
-        <GridList className={classes.gridList} cols={3.5} spacing={18} cellHeight={340}>
+        <GridList className={classes.gridList} cols={3.5} spacing={18} cellHeight={380}>
           {outfitList.map((each, index) => (
             <GridListTile key={index}>
               <OutfitCard key={index}

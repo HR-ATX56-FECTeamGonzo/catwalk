@@ -26,7 +26,7 @@ const Sliders = (props) => {
         },
       },
     },
-    passive: { '&.Mui-disabled': { passive: 'true' } },
+    active: { '&.Mui-disabled': { passive: 'true' } },
     mark: {
       height: 8,
       color: 'white',
