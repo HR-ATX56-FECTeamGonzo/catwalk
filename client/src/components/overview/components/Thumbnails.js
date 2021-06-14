@@ -5,6 +5,7 @@ import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 
 const tabStyles = {
   root: {
+    minWidth: '100px',
     width: '100px',
     height: '100%',
     padding: '0px 2px',

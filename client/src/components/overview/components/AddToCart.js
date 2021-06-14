@@ -59,7 +59,7 @@ const AddToCart = ({stock}) => {
   const handleButtonClick = (e) => {
     // if step = 0, open up size dropdown.
     console.log(sizeRef.current);
-    sizeRef.current.focus();
+    sizeRef.current.click();
   };
   // resets dropdowns on style switch
   useEffect(() => {

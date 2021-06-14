@@ -49,20 +49,29 @@ const ImageGallery = ({toggleView, photos, index, clickHandler}) => {
   return (
     <Box className={styles.gallery} onClick={toggleView}>
       {/*  thumbnails */}
-      <Thumbnails
-        current={currentIndex}
-        photos={photos}
-        clickHandler={scrollGallery}/>
+      <Box clone order={-1}
+        minWidth='105px'
+        flexShrink='0'>
+        <Thumbnails
+          current={currentIndex}
+          photos={photos}
+          clickHandler={scrollGallery}/>
+      </Box>
       {/* left button */}
-      { currentIndex !== 0 &&
-      <Box className={styles.button}>
+      <Box className={styles.button} clone
+        order={0}
+        visibility={currentIndex !== 0 ? 'visible' : 'hidden'}>
         <IconButton
           onClick={(e) => { scrollGallery(e, currentIndex - 1); }}
           disabled= { currentIndex === 0 }>
           <ChevronLeft/>
         </IconButton>
       </Box>
-      }
+      {/* image */}
+      <Box component='img'
+        height='100%'
+        onClick={toggleView}
+        src={photos[currentIndex].url} />
       {/* right button */}
       { currentIndex !== photos.length - 1 &&
       <Box className={styles.button} position='absolute' right='0px' >
