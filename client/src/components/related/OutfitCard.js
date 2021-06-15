@@ -140,7 +140,7 @@ const OutfitCard = (props) => {
 
       <CardMedia
         className={classes.media}
-        onClick={() => handleAdd({ currentProductId })}
+        onClick={props.outfit.name === 'Add to Outfit' ? () => handleAdd({ currentProductId }) : null}
       >
         {props.outfit.name !== 'Add to Outfit' ?
           <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />
