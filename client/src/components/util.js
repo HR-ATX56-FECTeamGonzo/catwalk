@@ -10,7 +10,7 @@ const trackClick = (element, widget) => {
     { element, widget, time },
     { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }
   )
-    .then(console.log('successfully posted'))
+    .then(console.log('successfully posted to interactions api'))
     .catch(err => console.log(err));
 
 };

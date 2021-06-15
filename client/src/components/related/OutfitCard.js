@@ -72,7 +72,7 @@ const OutfitCard = (props) => {
 
   const handleDelete = (index) => {
     dispatch(outfitFuncs.deleteOutfit(index));
-    trackClick('outfitList', 'relatedProducts');
+    trackClick('outfitListDelete', 'relatedProducts');
   };
 
 
@@ -128,7 +128,7 @@ const OutfitCard = (props) => {
       .then((results) => {
         dispatch(funcs.updateCurrentProductStars(averageStars));
         dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
-        trackClick('outfitList', 'relatedProducts');
+        trackClick('outfitListAddIcon', 'relatedProducts');
       })
       .catch((err) => console.log(err));
   };
