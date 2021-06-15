@@ -1,98 +1,117 @@
 import React, {useState, useEffect, useRef} from 'react';
+import { Select, MenuItem, Button, Box } from '@material-ui/core';
+import { display } from '@material-ui/system';
+import axios from '../../../redux-helpers/lib/axios-config.js';
 
-const SizeOptions = ({options}) => {
-  if (options.length === 0) {
-    return (<option value=''>OUT OF STOCK</option>);
+const Sizes = props => {
+  var options = Object.keys(props.options);
+  if (options.length < 1) {
+    return <Select value='0' disabled={true}>
+      <MenuItem value='0'>OUT OF STOCK</MenuItem>
+    </Select>;
   }
   return (
-    <React.Fragment>
-      <option value='' disabled>Select Size</option>
-      {options.map(x => (<option key={x} value={x}>{x}</option>))}
-    </React.Fragment>
+    <Select {...props}>
+      <MenuItem value='0' disabled>Select Size</MenuItem>
+      {options.map((x, idx) => (
+        <MenuItem key={idx} value={x}>{x}</MenuItem>))}
+    </Select>
   );
 };
 
-const Quantities = ({count}) => {
-  if (count === undefined) {
-    return <option value='-' disabled>-</option>;
-  }
+const Quantities = props => {
   var options = [];
-  var max = Math.min(count, 15);
+  var max = Math.min(props.count, 15);
   for (var x = 1; x <= max; x++) {
     options.push(x);
   }
   return (
-    <React.Fragment>
-      <option value='-' disabled>-</option>
-      {options.map(x => (<option key={x} value={x}>{x}</option>))}
-    </React.Fragment>
+    <Select {...props}>
+      <MenuItem value='-' disabled>-</MenuItem>
+      {options.map(x => (<MenuItem key={x} value={x}>{x}</MenuItem>))}
+    </Select>
   );
 };
 
 const AddToCart = ({stock}) => {
   const [step, setStep] = useState(0);
-  const [currentSize, setSize] = useState('');
-  const [currentQuantity, setQuantity] = useState('-');
+  const [isOpen, open] = useState(false);
+  const [currentSize, setSize] = useState('0');
+  const [quantity, setQuantity] = useState('-');
   var sizes = {};
-  const sizeRef = useRef(null);
-  // parse stock object in a way that will be easy to iterate over
+  // filter sizes with 0 quantity out and duplicate stocks for a size
   for (var x in stock) {
     let {size, quantity} = stock[x];
     if (quantity > 0) {
       if (sizes[size]) {
-        sizes[size] += quantity;
+        sizes[size][0] += quantity;
       } else {
-        sizes[size] = quantity;
+        sizes[size] = [quantity, x];
       }
     }
   }
+
   const handleSizeChange = (size) => {
+    open(false);
     setSize(size);
     setQuantity('1');
     setStep(1);
   };
+
   const handleQuantityChange = (quantity) => {
     setQuantity(quantity);
     setStep(2);
   };
 
   const handleButtonClick = (e) => {
-    // if step = 0, open up size dropdown.
-    console.log(sizeRef.current);
-    sizeRef.current.click();
+    if (step === 0) {
+      open(true);
+      return;
+    }
+
+    let count = quantity;
+    let skuID = parseInt(sizes[currentSize][1]);
+    let requests = [...Array(count)].map(x => (axios.post('cart', {'sku_id': skuID })));
+    Promise.all(requests)
+      .then(data => {
+        if (!data.status) {
+          console.log(data[0].status);
+          return;
+        }
+        console.log(data.status);
+        // add a "added to cart popup, maybe"
+      })
+      .catch((e) => {
+        console.error('error adding to cart: ' + e.message);
+      });
   };
+
   // resets dropdowns on style switch
   useEffect(() => {
     setStep(0);
-    setSize('');
+    setSize('0');
     setQuantity('-');
   }, [stock]);
 
   return (
     <div id='AddToCart'>
-      <select name='size'
-        ref={sizeRef}
+      <Sizes
         value={currentSize}
-        disabled={ Object.keys(sizes).length === 0 ? true : false }
-        onChange={(e) => (handleSizeChange(e.target.value))}>
-        <SizeOptions options={Object.keys(sizes)}/>
-      </select>
-      <br/>
-      <select name='quantity'
-        value={currentQuantity}
+        options={sizes}
+        open={isOpen}
+        onOpen={() => open(true)}
+        onClose={() => open(false)}
+        onChange={(e) => (handleSizeChange(e.target.value))}/>
+      <Quantities value={quantity}
         disabled={step < 1}
-        onChange={(e) => (handleQuantityChange(e.target.value))}>
-        <Quantities count={sizes[currentSize]}/>
-      </select>
+        onChange={(e) => (handleQuantityChange(e.target.value))}
+        count={sizes[currentSize] ? sizes[currentSize][0] : 0}/>
       <br/>
-      <button
-        style={Object.keys(sizes).length === 0 ? {display: 'none'} : {} }
-        onClick={(e) => (handleButtonClick(e))}>
-      Add to Cart</button>
+      <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible' } >
+        <Button onClick={handleButtonClick}>ADD TO CART</Button>
+      </Box>
     </div>
   );
 };
 
 export default AddToCart;
-
-

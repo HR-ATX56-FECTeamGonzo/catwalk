@@ -39,7 +39,7 @@ const LayoutViews = makeStyles({
   },
   hidden: {
     width: '50%',
-    backgroundColor: 'rgba(0, 0, 0, .25)'
+    backgroundColor: 'rgba(124, 124, 124, 1)'
   },
   entered: {
     width: '100%',
@@ -83,9 +83,7 @@ const Overview = () => {
 
   const toggleView = (e) => {
     if (e.target === e.currentTarget) {
-      (console.log('changing view'));
       setView(prevState => {
-        console.log(prevState);
         return prevState === 0 ? 1 : 0;
         }
       );
@@ -101,11 +99,12 @@ const Overview = () => {
   });
 
   useEffect(() => {
-    const source = axios.CancelToken.source();
     console.log('product was changed to id ' + productID);
+    const source = axios.CancelToken.source();
     var test = () => {
+      debugger;
       setIsLoading(true);
-      getAllProductData(productID)
+      getAllProductData(productID, source.token)
       .then((data) => {
         console.log('data succesfully fetched');
         ReactDOM.unstable_batchedUpdates(() => {
@@ -123,10 +122,9 @@ const Overview = () => {
           setCurrentStyle(getDefaultStyle(styles));
           setPhotoIndex(styles.reduce(setIdtoKey, {}));
         });
-        // setTimeout(() => setIsLoading(false), 1300);
       })
       .then(() => {
-        setTimeout(() => setIsLoading(false), 400);
+        setIsLoading(false);
       })
       .catch((e) => {
         console.error('error setting overview state' + e);
@@ -135,6 +133,7 @@ const Overview = () => {
     test();
     return () => {
       console.log('cleanup');
+      source.cancel('calling token cancel');
     };
   }, [productID]);
 
@@ -165,29 +164,3 @@ const Overview = () => {
 
 
 export default Overview;
-
-// image gallery
-// collapsed (default) view
-// thumbnail list
-// functionality to switch to expanded view on click
-// expanded view
-// icons for each image, otherwise functionally the same as thumbnail list
-// extra zoom functionality on click
-
-
-// product info
-// avg rating + review count
-// doesn't display if no reviews
-// category + title
-// price
-// displays differently for a sale
-// product description (this is the slogan + checklist at the bottom)
-
-
-// style selector/list
-
-
-// size + quantity + add to bag
-// dropdown to select size
-// dropdown to select quantity
-// add to bag button: saves to cart

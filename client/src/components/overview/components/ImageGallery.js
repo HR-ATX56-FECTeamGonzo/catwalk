@@ -9,8 +9,7 @@ import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles({
   gallery: {
-    backgroundColor: 'rgba(100, 100, 100, .3)',
-    border: '1px solid black',
+    backgroundColor: props => props.bgColor,
     height: '800px',
     position: 'relative',
     display: 'flex',
@@ -18,7 +17,8 @@ const useStyles = makeStyles({
     zIndex: '30',
     '&:hover': {
       cursor: 'not-allowed'
-    }
+    },
+    transition: '300ms cubic-bezier(0.4, 0, 0.2, 1)'
   },
   button: {
     backgroundColor: 'rgba(100, 100, 100, .3)',
@@ -34,7 +34,8 @@ const ImageGallery = ({view, toggleView, photos, index = 0, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
   const [currentIndex, setIndex] = useState(index);
   const currentView = view;
-  const styles = useStyles();
+  const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';
+  const styles = useStyles({bgColor});
   // style hook
 
   const scrollGallery = (e, idx) => {

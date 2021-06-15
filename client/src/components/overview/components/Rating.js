@@ -13,7 +13,6 @@ const RatingInfo = ({ratings}) => {
   }
 
   const scrollToReviews = () => {
-    console.log('scrolling');
     document.getElementById('reviews').scrollIntoView({behavior: 'smooth'});
   };
 
