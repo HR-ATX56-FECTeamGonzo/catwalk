@@ -21,7 +21,7 @@ const RelatedProducts = () => {
           promises.push(
             axios.get(`${url}/products/${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
               .then((results) => {
-                setRPInfo(prev => prev.concat(results.data));
+                setRPInfo(prev => [...prev, results.data]);
               })
           );
         }
@@ -36,7 +36,7 @@ const RelatedProducts = () => {
           promises.push(
             axios.get(`${url}/products/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
               .then((results) => {
-                setRPStyles(prev => prev.concat(results.data));
+                setRPStyles(prev => [...prev, results.data]);
               })
           );
         }
@@ -51,7 +51,7 @@ const RelatedProducts = () => {
           promises.push(
             axios.get(`${url}/reviews/meta?product_id=${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
               .then((results) => {
-                setRPMetaData(prev => prev.concat(results.data));
+                setRPMetaData(prev => [...prev, results.data]);
               })
           );
         }
@@ -64,7 +64,6 @@ const RelatedProducts = () => {
   };
 
   useEffect(() => {
-    // setTimeout(() => setIsLoading(false), 1000);
     getRelatedProductIds();
   }, []);
 
@@ -80,27 +79,3 @@ const RelatedProducts = () => {
 };
 
 export default RelatedProducts;
-
-//another way of fetching all information
-//gets the same result but seems to set off infinite loop of api calls
-//not sure why!
-//
-// const fetchAll = () => {
-//   return axios.get(`${url}/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
-//     .then((results) => {
-//       const RPInfo = Promise.all(results.data.map(
-//         id => axios.get(`${url}/${id}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
-//       ));
-//       const RPStyles = Promise.all(results.data.map(
-//         id => axios.get(`${url}/${id}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
-//       ));
-//       return Promise.all([RPInfo, RPStyles]);
-//     })
-//     .then((res) => {
-//       setRPInfo(res[0]);
-//       setRPStyles(res[1]);
-//     })
-//     .catch((err) => console.log('error getting ids'));
-// };
-
-// // const promise = fetchAll();
