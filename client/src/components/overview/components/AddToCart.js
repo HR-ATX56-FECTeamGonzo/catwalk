@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { Select, MenuItem, Button, Box } from '@material-ui/core';
+import { Select, MenuItem, Button, Box, Popover } from '@material-ui/core';
 import { display } from '@material-ui/system';
 import axios from '../../../redux-helpers/lib/axios-config.js';
 
-const Sizes = props => {
+const Sizes = React.forwardRef((props, ref) => {
   var options = Object.keys(props.options);
   if (options.length < 1) {
     return <Select value='0' disabled={true}>
@@ -11,13 +11,15 @@ const Sizes = props => {
     </Select>;
   }
   return (
-    <Select {...props}>
-      <MenuItem value='0' disabled>Select Size</MenuItem>
-      {options.map((x, idx) => (
-        <MenuItem key={idx} value={x}>{x}</MenuItem>))}
-    </Select>
+    <div>
+      <Select {...props} ref={ref}>
+        <MenuItem value='0' disabled>Select Size</MenuItem>
+        {options.map((x, idx) => (
+          <MenuItem key={idx} value={x}>{x}</MenuItem>))}
+      </Select>
+    </div>
   );
-};
+});
 
 const Quantities = props => {
   var options = [];
@@ -38,6 +40,8 @@ const AddToCart = ({stock}) => {
   const [isOpen, open] = useState(false);
   const [currentSize, setSize] = useState('0');
   const [quantity, setQuantity] = useState('-');
+  const [anchor, setAnchor] = useState(null);
+  const sizeRef = useRef();
   var sizes = {};
   // filter sizes with 0 quantity out and duplicate stocks for a size
   for (var x in stock) {
@@ -65,7 +69,9 @@ const AddToCart = ({stock}) => {
 
   const handleButtonClick = (e) => {
     if (step === 0) {
+      setAnchor(sizeRef.current);
       open(true);
+
       return;
     }
 
@@ -79,7 +85,7 @@ const AddToCart = ({stock}) => {
           return;
         }
         console.log(data.status);
-        // add a "added to cart popup, maybe"
+        // add a "added to cart" popup, maybe
       })
       .catch((e) => {
         console.error('error adding to cart: ' + e.message);
@@ -96,6 +102,7 @@ const AddToCart = ({stock}) => {
   return (
     <div id='AddToCart'>
       <Sizes
+        ref={sizeRef}
         value={currentSize}
         options={sizes}
         open={isOpen}
@@ -110,6 +117,12 @@ const AddToCart = ({stock}) => {
       <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible' } >
         <Button onClick={handleButtonClick}>ADD TO CART</Button>
       </Box>
+      <Popover
+        anchorEl={anchor}
+        open={Boolean(anchor)}
+        onClose={() => { setAnchor(null); }}>
+        Please select a size.
+      </Popover>
     </div>
   );
 };

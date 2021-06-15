@@ -23,7 +23,7 @@ const RatingInfo = ({ratings}) => {
   }
   return (
     <div id='rating' style={reviewCount === 0 ? {display: 'none'} : null}>
-      <Rating defaultValue={rating} readOnly={true}/>
+      <Rating defaultValue={rating} readOnly={true} precision={.25}/>
       <span onClick={scrollToReviews}> Read all {reviewCount} reviews</span>
     </div>
   );
