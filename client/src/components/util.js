@@ -6,11 +6,12 @@ const trackClick = (element, widget) => {
   const time = Date();
 
   axios.post(
-    `${url}/interactions`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } },
-    { element, widget, time }
+    `${url}/interactions`,
+    { element, widget, time },
+    { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }
   )
     .then(console.log('successfully posted'))
-    .catch(console.log(err));
+    .catch(err => console.log(err));
 
 };
 

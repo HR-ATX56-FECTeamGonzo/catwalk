@@ -209,7 +209,7 @@ const RPCard = (props) => {
       <IconButton onClick={handleOpen} className={classes.icon}>
         <StarBorderIcon />
       </IconButton>
-      <CardMedia onClick={() => handleClick(props.id)} className={classes.media}  >
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} >
         <img src={props.imageURL} alt={props.name} className={classes.media} />
       </CardMedia>
       <CardContent className={classes.content}>

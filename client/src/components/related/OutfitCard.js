@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import outfitFuncs from '../../redux-helpers/related/reduxOutfitList.js';
 import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
+import trackClick from '../util.js';
 
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
@@ -71,6 +72,7 @@ const OutfitCard = (props) => {
 
   const handleDelete = (index) => {
     dispatch(outfitFuncs.deleteOutfit(index));
+    trackClick('outfitList', 'relatedProducts');
   };
 
 
@@ -126,6 +128,7 @@ const OutfitCard = (props) => {
       .then((results) => {
         dispatch(funcs.updateCurrentProductStars(averageStars));
         dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
+        trackClick('outfitList', 'relatedProducts');
       })
       .catch((err) => console.log(err));
   };
