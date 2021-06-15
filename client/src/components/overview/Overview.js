@@ -29,21 +29,23 @@ const setIdtoKey = (sum, val) => {
 
 const LayoutViews = makeStyles({
   root: {
-    height: '805px',
-    display: 'flex'
+    display: 'flex',
+    height: props => props.height
   },
   container: {
     height: '100%',
     width: '50%',
-    transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+    transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    '& .MuiCollapse-wrapper': {
+      height: '100%'
+    },
   },
   hidden: {
     width: '50%',
     backgroundColor: 'rgba(124, 124, 124, 1)'
   },
   entered: {
-    width: '100%',
-    height: '120%'
+    width: '100%'
   },
   menu: {
     display: 'flex',
@@ -64,7 +66,7 @@ const Overview = () => {
   const [styles, setStyles] = useState(exampleData.styles.results);
   const [currentStyle, setCurrentStyle] = useState(getDefaultStyle(exampleData.styles.results));
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
-  const classes = LayoutViews();
+  const classes = LayoutViews({ 'height': view === 0 ? '65vh' : '95vh'});
   const dispatch = useDispatch();
 
   const changeStyle = (e, idx) => {

@@ -10,7 +10,7 @@ import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
 const useStyles = makeStyles({
   gallery: {
     backgroundColor: props => props.bgColor,
-    height: '800px',
+    height: '100%',
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
@@ -53,7 +53,7 @@ const ImageGallery = ({view, toggleView, photos, index = 0, clickHandler}) => {
 
   return (
     <Box className={styles.gallery} onClick={toggleView}>
-      <MainImage src={photos[currentIndex].url} onClick={toggleView}/>
+      <MainImage src={photos[currentIndex].url} toggleView={toggleView}/>
       {/*  thumbnails */}
       <Thumbnails
         isVisible={view === 0}

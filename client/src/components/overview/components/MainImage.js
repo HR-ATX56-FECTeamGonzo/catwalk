@@ -7,16 +7,22 @@ const imageViews = makeStyles({
 
 });
 
-const MainImage = (props) => {
+const MainImage = ({src, toggleView}) => {
+  const [zoomed, setZoom] = useState(false);
 
+  const handleClick = () => {
+    setZoom(prevState => !prevState);
+  };
   return (
-    <Box component='img'
-      maxHeight='100%'
+    <Box maxHeight='100%'
       maxWidth='100%'
       width='auto'
       position='absolute'
       left={0} right={0} mx='auto'
-      {...props} />
+      display='flex'
+      onClick={(e) => { toggleView(e); }}>
+      <Box />
+    </Box>
   );
 };
 
