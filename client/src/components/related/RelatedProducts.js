@@ -56,7 +56,7 @@ const RelatedProducts = () => {
 
   useEffect(() => {
     //need to optimize
-    setTimeout(() => setIsLoading(false), 5000);
+    setTimeout(() => setIsLoading(false), 2400);
     getRelatedProductIds();
   }, []);
 

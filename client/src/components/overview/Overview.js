@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import React, {useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Collapse, Fade, Box, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -9,14 +10,17 @@ import ProductInfo from './components/ProductInfo.js';
 import StyleList from './components/StyleList.js';
 import AddToCart from './components/AddToCart.js';
 import ImageGallery from './components/ImageGallery.js';
+import getAllProductData from '../../redux-helpers/lib/getAllProductData.js';
+import axios from 'axios';
 
-
-const getDefaultStyle = (arr) => (
-  {
-    info: arr.find((style) => style['default?']),
-    index: arr.findIndex((style) => style['default?'])
+const getDefaultStyle = (arr) => {
+  let index = arr.findIndex((style) => style['default?']);
+  if (index === -1) {
+    index = 0;
   }
-);
+  let info = arr[index];
+  return {info, index};
+};
 
 const setIdtoKey = (sum, val) => {
   sum[val.style_id] = 0;
@@ -51,11 +55,14 @@ const LayoutViews = makeStyles({
 });
 
 const Overview = () => {
-  // this eventually gets replaced by store variable
-  const styles = exampleData.styles.results;
-  const defaultStyle = getDefaultStyle(styles);
+  const productID = useSelector((state) => state.currentProductId);
   const [view, setView] = useState(0);
-  const [currentStyle, setCurrentStyle] = useState(defaultStyle);
+  const [productData, setData] = useState({});
+  const [productInfo, setInfo] = useState(exampleData);
+  const [isLoading, setIsLoading] = useState(false);
+  // this eventually gets replaced by store variable
+  const [styles, setStyles] = useState(exampleData.styles.results);
+  const [currentStyle, setCurrentStyle] = useState(getDefaultStyle(exampleData.styles.results));
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
   const classes = LayoutViews();
   const dispatch = useDispatch();
@@ -93,7 +100,45 @@ const Overview = () => {
       }, [currentStyle]);
   });
 
-  return (
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    console.log('product was changed to id ' + productID);
+    var test = () => {
+      setIsLoading(true);
+      getAllProductData(productID)
+      .then((data) => {
+        console.log('data succesfully fetched');
+        ReactDOM.unstable_batchedUpdates(() => {
+          var productInfo = {
+            ratings: data[0].ratings,
+            name: data[1].name,
+            category: data[1].category,
+            slogan: data[1].slogan,
+            description: data[1].description
+          };
+          setData(data);
+          setInfo(productInfo);
+          let styles = data[2].results;
+          setStyles(styles);
+          setCurrentStyle(getDefaultStyle(styles));
+          setPhotoIndex(styles.reduce(setIdtoKey, {}));
+        });
+        // setTimeout(() => setIsLoading(false), 1300);
+      })
+      .then(() => {
+        setTimeout(() => setIsLoading(false), 400);
+      })
+      .catch((e) => {
+        console.error('error setting overview state' + e);
+      });
+    };
+    test();
+    return () => {
+      console.log('cleanup');
+    };
+  }, [productID]);
+
+  return ( isLoading ? <p>loading...</p> :
   <div id="overview" className={classes.root}>
       <Collapse
         in={view !== 0} collapsedHeight='100%'
@@ -107,7 +152,7 @@ const Overview = () => {
       </Collapse>
     <div className={classes.menu}>
       <ProductInfo
-        currentProduct={exampleData}
+        currentProduct={productInfo}
         currentStyle={currentStyle.info}/>
       <StyleList
         styles={styles}

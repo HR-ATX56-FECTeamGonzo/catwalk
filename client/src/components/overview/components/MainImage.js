@@ -3,6 +3,10 @@ import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 
+const imageViews = makeStyles({
+
+});
+
 const MainImage = (props) => {
 
   return (

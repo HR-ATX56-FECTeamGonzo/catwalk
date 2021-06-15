@@ -30,13 +30,11 @@ const useStyles = makeStyles({
   }
 });
 
-const ImageGallery = ({view, toggleView, photos, index, clickHandler}) => {
+const ImageGallery = ({view, toggleView, photos, index = 0, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
-  console.log(view);
   const [currentIndex, setIndex] = useState(index);
   const currentView = view;
   const styles = useStyles();
-
   // style hook
 
   const scrollGallery = (e, idx) => {
