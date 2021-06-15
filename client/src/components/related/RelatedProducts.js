@@ -18,12 +18,14 @@ const RelatedProducts = () => {
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/products/${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+          promises.push(
+            axios.get(`${url}/products/${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
+              .then((results) => {
+                setRPInfo(prev => [...prev, results.data]);
+              })
+          );
         }
         return Promise.all(promises);
-      })
-      .then((result) => {
-        result.forEach(item => setRPInfo(prev => prev.concat(item.data)));
       })
       .then((result) => {
         return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
@@ -31,12 +33,14 @@ const RelatedProducts = () => {
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/products/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+          promises.push(
+            axios.get(`${url}/products/${result.data[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
+              .then((results) => {
+                setRPStyles(prev => [...prev, results.data]);
+              })
+          );
         }
         return Promise.all(promises);
-      })
-      .then((result) => {
-        result.forEach(item => setRPStyles(prev => prev.concat(item.data)));
       })
       .then((result) => {
         return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
@@ -44,56 +48,34 @@ const RelatedProducts = () => {
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
-          promises.push(axios.get(`${url}/reviews/meta?product_id=${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } }));
+          promises.push(
+            axios.get(`${url}/reviews/meta?product_id=${result.data[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
+              .then((results) => {
+                setRPMetaData(prev => [...prev, results.data]);
+              })
+          );
         }
         return Promise.all(promises);
       })
       .then((result) => {
-        result.forEach(item => setRPMetaData(prev => prev.concat(item.data)));
+        setIsLoading(false);
       })
       .catch((err) => console.log('error with getRelatedProductIds'));
   };
 
   useEffect(() => {
-    //need to optimize
-    setTimeout(() => setIsLoading(false), 1200);
     getRelatedProductIds();
   }, []);
-
 
   return (
     <div id='relatedProducts'>
       <Typography variant='subtitle1' align='left'>Related Products</Typography>
-      {isLoading ?
-        <div>Loading . . . </div> :
+      {!isLoading ?
         <RPPassProps RPInfo={RPInfo} RPStyles={RPStyles} RPMetaData={RPMetaData} />
+        : <div>Loading . . . </div>
       }
     </div>
   );
 };
 
 export default RelatedProducts;
-
-//another way of fetching all information
-//gets the same result but seems to set off infinite loop of api calls
-//not sure why!
-//
-// const fetchAll = () => {
-//   return axios.get(`${url}/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
-//     .then((results) => {
-//       const RPInfo = Promise.all(results.data.map(
-//         id => axios.get(`${url}/${id}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
-//       ));
-//       const RPStyles = Promise.all(results.data.map(
-//         id => axios.get(`${url}/${id}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}`}})
-//       ));
-//       return Promise.all([RPInfo, RPStyles]);
-//     })
-//     .then((res) => {
-//       setRPInfo(res[0]);
-//       setRPStyles(res[1]);
-//     })
-//     .catch((err) => console.log('error getting ids'));
-// };
-
-// // const promise = fetchAll();
