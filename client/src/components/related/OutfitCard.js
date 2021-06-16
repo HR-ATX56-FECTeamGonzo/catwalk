@@ -95,7 +95,7 @@ const OutfitCard = (props) => {
         const info = results[0].data;
         const styles = results[1].data;
         const metaData = results[2].data;
-
+        console.log(results[1].data.results);
         name = info.name;
         category = info.category;
         styleName = styles.results[currentProductStyleIndex].name;

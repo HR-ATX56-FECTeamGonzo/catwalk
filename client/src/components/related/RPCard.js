@@ -166,8 +166,8 @@ const RPCard = (props) => {
   const handleClick = (productId) => {
     dispatch(funcs.updateCurrentProductId(productId));
     dispatch(funcs.updateCurrentProductStars(averageStarRating));
+    dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
     trackClick('relatedProductsCard', 'relatedProducts');
-
   };
 
   useEffect(() => {
@@ -228,9 +228,6 @@ const RPCard = (props) => {
             {props.salePrice ? '$' + props.salePrice : null}
           </span>
         </Typography><br />
-        {/* */}
-        {/* need to get star ratings from store */}
-        {/* */}
         <Typography component="legend"></Typography>
         <Rating size="small" name="averageStarRating" value={Number(averageStarRating.toFixed(1))} readOnly precision={0.25}
           emptyIcon={<StarBorderIcon fontSize="inherit" />} />

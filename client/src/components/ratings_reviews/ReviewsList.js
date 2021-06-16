@@ -18,10 +18,8 @@ const ReviewsList = (props) => {
         />
         <Divider />
       </div>
-
     );
   });
-  // later pass a data tag with whole review passed in
   return (
     <div>
       {arr}
