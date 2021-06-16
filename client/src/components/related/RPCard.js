@@ -38,7 +38,8 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '38px'
+    right: '38px',
+    color: '#3d3d5c',
   },
   media: {
     right: '11px',
@@ -165,7 +166,7 @@ const RPCard = (props) => {
     dispatch(funcs.updateCurrentProductId(productId));
     dispatch(funcs.updateCurrentProductStars(averageStarRating));
     dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
-    console.log(props);
+    // console.log(props);
 
   };
 
@@ -212,7 +213,7 @@ const RPCard = (props) => {
       <IconButton onClick={handleOpen} className={classes.icon}>
         <StarBorderIcon />
       </IconButton>
-      <CardMedia onClick={() => handleClick(props.id)} className={classes.media}  >
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} >
         <img src={props.imageURL} alt={props.name} className={classes.media} />
       </CardMedia>
       <CardContent className={classes.content}>

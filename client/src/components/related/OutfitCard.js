@@ -35,7 +35,9 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '38px'
+    right: '38px',
+    color: '#3d3d5c',
+
   },
   media: {
     right: '11px',
@@ -108,7 +110,7 @@ const OutfitCard = (props) => {
         }
 
         if (!imageURL) {
-          imageURL = './no_image_available.png';
+          imageURL = './noImage.png';
         }
 
         const starRating = metaData.ratings;
@@ -126,6 +128,7 @@ const OutfitCard = (props) => {
       .then((results) => {
         dispatch(funcs.updateCurrentProductStars(averageStars));
         dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
+        //console.log(props.outfit.imageURL);
       })
       .catch((err) => console.log(err));
   };
@@ -144,7 +147,7 @@ const OutfitCard = (props) => {
       >
         {props.outfit.name !== 'Add to Outfit' ?
           <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />
-          : <img src='./add-icon.png' alt={props.outfit.name} className={classes.media} />
+          : <img src='./addIcon.png' alt={props.outfit.name} className={classes.media} />
         }
       </CardMedia>
 
