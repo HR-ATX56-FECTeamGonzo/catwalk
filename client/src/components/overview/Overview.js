@@ -104,11 +104,9 @@ const Overview = () => {
     console.log('product was changed to id ' + productID);
     const source = axios.CancelToken.source();
     var test = () => {
-      debugger;
       setIsLoading(true);
       getAllProductData(productID, source.token)
       .then((data) => {
-        console.log('data succesfully fetched');
         ReactDOM.unstable_batchedUpdates(() => {
           var productInfo = {
             ratings: data[0].ratings,
@@ -134,12 +132,12 @@ const Overview = () => {
     };
     test();
     return () => {
-      console.log('cleanup');
+      console.log('cleanup in overview');
       source.cancel('calling token cancel');
     };
   }, [productID]);
 
-  return ( isLoading ? <p>loading...</p> :
+  return ( isLoading ? <p className={classes.root}>loading...</p> :
   <div id="overview" className={classes.root}>
       <Collapse
         in={view !== 0} collapsedHeight='100%'

@@ -30,6 +30,7 @@ const useStyles = makeStyles({
   }
 });
 
+
 const ImageGallery = ({view, toggleView, photos, index = 0, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
   const [currentIndex, setIndex] = useState(index);
