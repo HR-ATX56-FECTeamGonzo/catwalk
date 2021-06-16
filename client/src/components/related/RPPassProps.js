@@ -44,14 +44,17 @@ const RPPassProps = (props) => {
       arr[i].metaData = props.RPMetaData[i].ratings;
       for (let j = 0; j < props.RPStyles[i].results.length; j++) {
         if (props.RPStyles[i].results[j].photos[0].thumbnail_url) {
+          arr[i].styleIndex = j;
           arr[i].style = props.RPStyles[i].results[j].name;
           arr[i].originalPrice = props.RPStyles[i].results[j].original_price;
           arr[i].salePrice = props.RPStyles[i].results[j].sale_price;
           arr[i].imageURL = props.RPStyles[i].results[j].photos[0].thumbnail_url;
-          dispatch(funcs.updateCurrentProductStyleIndex(j));
+          break;
         }
+
       }
       if (!arr[i].style) {
+        arr[i].styleIndex = 0;
         arr[i].style = props.RPStyles[i].results[0].name;
         arr[i].originalPrice = props.RPStyles[i].results[0].original_price;
         arr[i].salePrice = props.RPStyles[i].results[0].sale_price;
@@ -80,6 +83,7 @@ const RPPassProps = (props) => {
               name={each.name}
               category={each.category}
               style={each.style}
+              styleIndex={each.styleIndex}
               originalPrice={each.originalPrice}
               salePrice={each.salePrice}
               features={each.features}
