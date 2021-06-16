@@ -19,6 +19,12 @@ const exampleData = {
     }
   ],
   // "related" is manually assigned here. must make a separate request for related product ids in actual app
+  'ratings': {
+    '1': '3',
+    '3': '6',
+    '4': '4',
+    '5': '16'
+  },
   'related': [ 24157, 24158, 24163, 24162 ],
   'styles': {
     'product_id': '24156',
@@ -248,6 +254,7 @@ const exampleData = {
             'url': 'https://images.unsplash.com/photo-1486025402772-bc179c8dfb0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80'
           },
           {
+
             'thumbnail_url': 'https://images.unsplash.com/photo-1473691955023-da1c49c95c78?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80',
             'url': 'https://images.unsplash.com/photo-1473691955023-da1c49c95c78?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80'
           },
@@ -405,12 +412,6 @@ const exampleData = {
   },
   'reviewMetadata': {
     'product_id': '24156',
-    'ratings': {
-      '1': '3',
-      '3': '6',
-      '4': '4',
-      '5': '16'
-    },
     'recommended': {
       'false': '18',
       'true': '11'

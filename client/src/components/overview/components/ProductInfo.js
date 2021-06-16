@@ -18,7 +18,7 @@ const ProductInfo = ({currentProduct, currentStyle}) => {
   return (
     <div id='ProductInfo'>
       <h3>Product Info</h3>
-      <Rating ratings={currentProduct.reviewMetadata.ratings}/>
+      <Rating ratings={currentProduct.ratings}/>
       <p id='category'>Category: {currentProduct.category}</p>
       <p id='product_name'>Product Name: {currentProduct.name}</p>
       <Price prices={{original, sale}}/>
