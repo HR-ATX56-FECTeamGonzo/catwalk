@@ -151,7 +151,7 @@ const OutfitCard = (props) => {
         {props.outfit.name !== 'Add to Outfit' ?
           <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />
           : <img src='./addIcon.png' alt={props.outfit.name} className={classes.media} />
-         }
+        }
       </CardMedia>
 
       <CardContent className={classes.content}>
