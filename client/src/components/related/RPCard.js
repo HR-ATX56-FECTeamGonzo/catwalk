@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
+import trackClick from '../util.js';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -156,6 +157,7 @@ const RPCard = (props) => {
 
   const handleOpen = () => {
     setOpen(true);
+    trackClick('relatedProductsModal', 'relatedProducts');
   };
 
   const handleClose = () => {
@@ -167,7 +169,7 @@ const RPCard = (props) => {
     dispatch(funcs.updateCurrentProductStars(averageStarRating));
     dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
     // console.log(props);
-
+    trackClick('relatedProductsCard', 'relatedProducts');
   };
 
   useEffect(() => {

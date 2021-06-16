@@ -30,18 +30,16 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// const reduxEnhancer = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-// const middlewareEnhancer = applyMiddleware(thunk);
-// const composedEnhancers = compose(middlewareEnhancer, reduxEnhancer);
-// const store = createStore(rootReducer, defaultState, composedEnhancers);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const allMiddleware = composeEnhancers(applyMiddleware(thunk));
 
-const store = createStore(persistedReducer, defaultState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = createStore(persistedReducer, defaultState, allMiddleware);
+
 const persistor = persistStore(store);
 
 const storeFuncs = { store, persistor };
 
-export default { store, persistor };
+export default { store, persistor, rootReducer };
 
 
 //also works:

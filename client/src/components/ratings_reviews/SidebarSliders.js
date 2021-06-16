@@ -196,11 +196,3 @@ const Sliders = (props) => {
 
 
 export default Sliders;
-
-// props are: (conditionally render)
-// size
-// width
-// comfort
-// quality
-// length
-// value
