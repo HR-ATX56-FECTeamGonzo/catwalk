@@ -28,22 +28,23 @@ import exampleData from '../../store/exampleData.js';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 200,
-    minHeight: 360,
-    maxHeight: 360,
+    minWidth: 180,
+    maxWidth: 180,
+    minHeight: 330,
+    maxHeight: 330,
     border: '.5px solid #3d3d5c',
     borderRadius: 0,
   },
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '10px'
+    right: '38px'
   },
   media: {
-    top: '1px',
     right: '11px',
-    height: 190,
-    width: 200,
+    minHeight: 200,
+    maxHeight: 200,
+    width: 180,
   },
   paper: {
     position: 'absolute',
@@ -51,8 +52,6 @@ const useStyles = makeStyles({
     minHeight: 240,
     backgroundColor: 'white',
     border: '0.5px solid #3d3d5c',
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
   },
   table: {
     maxWidth: 500,
@@ -210,7 +209,7 @@ const RPCard = (props) => {
       <IconButton onClick={handleOpen} className={classes.icon}>
         <StarBorderIcon />
       </IconButton>
-      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} >
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media}  >
         <img src={props.imageURL} alt={props.name} className={classes.media} />
       </CardMedia>
       <CardContent className={classes.content}>

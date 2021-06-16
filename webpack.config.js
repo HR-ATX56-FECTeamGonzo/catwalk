@@ -11,7 +11,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)?/,
+        test: /\.(js|jsx|png)?/,
         include: SRC_DIR,
         loader: 'babel-loader',
         options: {

@@ -11,16 +11,17 @@ import RPCard from './RPCard.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'stretch',
+    display: 'table',
+    flexWrap: 'nowrap',
+    justifyContent: 'start',
     overflow: 'hidden',
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    minWidth: '800px'
+    minWidth: '800px',
+    maxWidth: '800px'
   },
 }));
 
@@ -69,8 +70,7 @@ const RPPassProps = (props) => {
       {/**/}
       {/* need to take away scroll bar and add arrows!! */}
       {/**/}
-      <GridList className={classes.gridList} cols={3.5} spacing={18} cellHeight={340}>
-        {/* {RPCards[props.RPInfo.length - 1] ? */}
+      <GridList className={classes.gridList} cols={3.5} spacing={5} cellHeight={340}>
         {RPCards.map((each, index) => (
           <GridListTile key={index}>
             <RPCard key={index}
@@ -87,7 +87,6 @@ const RPPassProps = (props) => {
           </GridListTile>
         ))
         }
-        {/* : null} */}
       </GridList>
     </div>
   );
