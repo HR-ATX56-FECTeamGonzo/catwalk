@@ -53,13 +53,17 @@ const ImageGallery = ({view, toggleView, photos, index = 0, clickHandler}) => {
 
   return (
     <Box className={styles.gallery} onClick={toggleView}>
-      <MainImage src={photos[currentIndex].url} toggleView={toggleView}/>
       {/*  thumbnails */}
       <Thumbnails
         isVisible={view === 0}
         current={currentIndex}
         photos={photos}
         clickHandler={scrollGallery}/>
+      {/* main image} */}
+      <MainImage
+        view={view}
+        src={photos[currentIndex].url}
+        clickHandler={toggleView}/>
       {/* left button */}
       <Box className={styles.button}
         visibility={currentIndex !== 0 ? 'visible' : 'hidden'}
