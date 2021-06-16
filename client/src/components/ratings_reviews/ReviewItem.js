@@ -103,15 +103,5 @@ const ReviewItem = (props) => {
 
 export default ReviewItem;
 
-// prop types:
 
-// reting={review.rating} -------------
-// date={review.date} -----------------
-// reviewer={review.reviewer} ---------
-// summary={review.summary} -----------
-// body={review.body} -----------------
-// recommend={review.recommend} -------
-// response={review.response} ---------
-// helpfulness={review.helpfulness} ---
-// count={props.count} ----------------
 

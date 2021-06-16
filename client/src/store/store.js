@@ -34,11 +34,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const allMiddleware = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(persistedReducer, defaultState, allMiddleware);
+
 const persistor = persistStore(store);
 
 const storeFuncs = { store, persistor };
 
-export default { store, persistor };
+export default { store, persistor, rootReducer };
 
 
 //also works:

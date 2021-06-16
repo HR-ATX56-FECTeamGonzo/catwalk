@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Sliders from './SidebarProgressBar.js';
+import Sliders from './SidebarSliders.js';
 
 // possibly can grab the average star rating from the store
 
@@ -75,41 +75,7 @@ const SideBar = (props) => {
       justifyContent: 'space-between',
     },
   }));
-  // const SuperSlider = withStyles({
-  //   root: {
-  //     '&.Mui-disabled': {
-  //       color: '#52af77',
-  //       height: 8,
-  //     },
-  //   },
-  //   thumb: {
-  //     '&.Mui-disabled': {
-  //       height: 24,
-  //       width: 24,
-  //       backgroundColor: '#fff',
-  //       border: '2px solid currentColor',
-  //       marginTop: -8,
-  //       marginLeft: -12,
-  //       '&:focus, &:hover, &$active': {
-  //         boxShadow: 'inherit',
-  //       },
-  //     },
-  //   },
-  //   active: { passive: true },
-  //   mark: {
-  //     height: 8,
-  //     color: 'white',
-  //     width: 8,
-  //   },
-  //   track: {
-  //     height: 8,
-  //     borderRadius: 4,
-  //   },
-  //   rail: {
-  //     height: 8,
-  //     borderRadius: 4,
-  //   },
-  // })(Slider);
+
   const classes = useStyles();
   return (
     <Grid container>
@@ -181,30 +147,6 @@ const SideBar = (props) => {
         </Grid>
         <Grid item>
           <Box className={classes.characteristics}>
-            {/* <Grid container direction="column"> */}
-            {/* <Grid container item direction="row" alignItems="center" spacing={1}>
-                <Grid item>
-                  <p>SIZE</p>
-                </Grid>
-                <Grid item >
-                  <Grid item >
-                    <SuperSlider
-                      className={classes.slider}
-                      disabled
-                      track={false}
-                      value={Number(characteristics.Fit.value)}
-                      step={2}
-                      marks
-                      min={0}
-                      max={6}
-                    />
-                  </Grid>
-                  <Grid container item direction="row" className={classes.labels} >
-                    <Grid item><Typography>yo</Typography></Grid>
-                    <Grid item><Typography>yo</Typography></Grid>
-                  </Grid>
-                </Grid>
-              </Grid> */}
             <Sliders
               size={characteristics.Size ? Number(characteristics.Size.value) : 0}
               width={characteristics.Width ? Number(characteristics.Width.value) : 0}
@@ -212,31 +154,6 @@ const SideBar = (props) => {
               quality={characteristics.Quality ? Number(characteristics.Quality.value) : 0}
               length={characteristics.Length ? Number(characteristics.Length.value) : 0}
               fit={characteristics.Fit ? Number(characteristics.Fit.value) : 0} />
-            {/* <Grid container item direction="row" alignItems="center" spacing={1}>
-                <Grid item>
-                  <p>COMFORT</p>
-                </Grid>
-                <Grid item>
-                  {characteristics.Comfort.value}
-                </Grid>
-              </Grid>
-              <Grid container item direction="row" alignItems="center" spacing={1}>
-                <Grid item>
-                  <p>QUALITY</p>
-                </Grid>
-                <Grid item>
-                  {characteristics.Quality.value}
-                </Grid>
-              </Grid>
-              <Grid container item direction="row" alignItems="center" spacing={1}>
-                <Grid item>
-                  <p>LENGTH</p>
-                </Grid>
-                <Grid item>
-                  {characteristics.Length.value}
-                </Grid>
-              </Grid> */}
-            {/* </Grid> */}
           </Box>
         </Grid>
       </Grid>
