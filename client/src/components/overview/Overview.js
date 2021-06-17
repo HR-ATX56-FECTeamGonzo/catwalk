@@ -30,7 +30,9 @@ const setIdtoKey = (sum, val) => {
 const LayoutViews = makeStyles({
   root: {
     display: 'flex',
-    height: props => props.height
+    height: props => props.height,
+    width: '90%',
+    margin: '0px auto'
   },
   container: {
     height: '100%',
@@ -52,7 +54,9 @@ const LayoutViews = makeStyles({
     flexDirection: 'column',
     position: 'absolute',
     left: '50%',
-    marginLeft: '10px'
+    margin: 'auto',
+    height: '65vh',
+
   }
 });
 
@@ -115,7 +119,7 @@ const Overview = () => {
             slogan: data[1].slogan,
             description: data[1].description
           };
-          setData(data);
+          // setData(data);
           setInfo(productInfo);
           let styles = data[2].results;
           setStyles(styles);
