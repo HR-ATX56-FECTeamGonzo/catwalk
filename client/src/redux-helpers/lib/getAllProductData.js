@@ -23,7 +23,7 @@ import calculateAverage from './calculateAverage.js';
 const getAllProductData = (id, cancelToken) => {
   // assign promises to variables first
   // review metadata
-  debugger;
+  //debugger;
   var reviewMetadata = axios.get('/reviews/meta', { params: { 'product_id': id } }, { cancelToken });
   // product info
   var productInfo = axios.get(`products/${id}`, { cancelToken });

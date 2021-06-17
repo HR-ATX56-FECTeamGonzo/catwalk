@@ -22,8 +22,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-import exampleData from '../../store/exampleData.js';
-
 const useStyles = makeStyles({
   root: {
     minWidth: 180,
@@ -97,7 +95,7 @@ const OutfitCard = (props) => {
         const info = results[0].data;
         const styles = results[1].data;
         const metaData = results[2].data;
-        console.log(results[1].data.results);
+        // console.log(results[1].data.results);
         name = info.name;
         category = info.category;
         styleName = styles.results[currentProductStyleIndex].name;
