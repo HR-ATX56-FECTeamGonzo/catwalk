@@ -114,20 +114,22 @@ const NewReview = (props) => {
 
   // textfield handlers and hooks --------------------------------------------
   const [summaryError, setSummaryError] = useState(true);
-  const [summary, setSummary] = useState('');
+  const [summary, setSummary] = useState(' ');
   const [bodyError, setBodyError] = useState(true);
   const [body, setBody] = useState('');
   const [nameError, setNameError] = useState(true);
   const [name, setName] = useState('');
   const [emailError, setEmailError] = useState(true);
   const [email, setEmail] = useState('');
+  const [uploadedPhotos, setUploadedPhotos] = useState([]);
+
 
 
   // submission handler and alert hooks
   const [isAlert, setIsAlert] = useState(true);
   const [isComplete, setIsComplete] = useState(null);
   const isFormReady = () => {
-    if (!bodyError && !summaryError && rating !== null && reccomend !== null && !nameError && !emailError) {
+    if (!bodyError && rating !== null && reccomend !== null && !nameError && !emailError) {
       setIsComplete(true);
     } else {
       setIsComplete(false);
@@ -141,6 +143,7 @@ const NewReview = (props) => {
       'rating': rating,
       'summary': summary,
       'body': body,
+      'photos': uploadedPhotos,
       'recommend': recommend,
       'name': name,
       'email': email,
@@ -285,6 +288,8 @@ const NewReview = (props) => {
                     emailError={emailError}
                     setEmailError={setEmailError}
                     reccomend={reccomend}
+                    uploadedPhotos={uploadedPhotos}
+                    setUploadedPhotos={setUploadedPhotos}
                   />
                 </Grid>
                 <Divider />

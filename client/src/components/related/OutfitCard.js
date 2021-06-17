@@ -22,8 +22,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-import exampleData from '../../store/exampleData.js';
-
 const useStyles = makeStyles({
   root: {
     minWidth: 180,
@@ -36,7 +34,9 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '38px'
+    right: '38px',
+    color: '#3d3d5c',
+
   },
   media: {
     right: '11px',
@@ -95,7 +95,7 @@ const OutfitCard = (props) => {
         const info = results[0].data;
         const styles = results[1].data;
         const metaData = results[2].data;
-        console.log(results[1].data.results);
+        // console.log(results[1].data.results);
         name = info.name;
         category = info.category;
         styleName = styles.results[currentProductStyleIndex].name;
@@ -110,7 +110,7 @@ const OutfitCard = (props) => {
         }
 
         if (!imageURL) {
-          imageURL = './no_image_available.png';
+          imageURL = './noImage.png';
         }
 
         const starRating = metaData.ratings;
@@ -128,6 +128,7 @@ const OutfitCard = (props) => {
       .then((results) => {
         dispatch(funcs.updateCurrentProductStars(averageStars));
         dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
+        //console.log(props.outfit.imageURL);
         trackClick('outfitListAddIcon', 'relatedProducts');
       })
       .catch((err) => console.log(err));
@@ -147,7 +148,7 @@ const OutfitCard = (props) => {
       >
         {props.outfit.name !== 'Add to Outfit' ?
           <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />
-          : <img src='./add-icon.png' id='addIcon' alt={props.outfit.name} className={classes.media} />
+          : <img src='./addIcon.png' alt={props.outfit.name} className={classes.media} />
         }
       </CardMedia>
 

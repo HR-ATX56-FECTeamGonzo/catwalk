@@ -39,7 +39,8 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '38px'
+    right: '38px',
+    color: '#3d3d5c',
   },
   media: {
     right: '11px',
@@ -104,6 +105,7 @@ const RPCard = (props) => {
   const [modalStyle] = useState(getModalStyle);
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
+  const currentProductId = useSelector(state => state.currentProductId);
 
 
   const starRating = props.metaData;
@@ -167,6 +169,7 @@ const RPCard = (props) => {
     dispatch(funcs.updateCurrentProductId(productId));
     dispatch(funcs.updateCurrentProductStars(averageStarRating));
     dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
+    // console.log(props);
     trackClick('relatedProductsCard', 'relatedProducts');
   };
 
@@ -200,6 +203,8 @@ const RPCard = (props) => {
     </div>
   );
 
+  const image = props.imageURL;
+
   return (
     <Card className={classes.root}>
       <Modal
@@ -213,8 +218,8 @@ const RPCard = (props) => {
       <IconButton onClick={handleOpen} className={classes.icon}>
         <StarBorderIcon />
       </IconButton>
-      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} >
-        <img src={props.imageURL} alt={props.name} className={classes.media} />
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} image={image}>
+        {/* <img src={props.imageURL} alt={props.name} className={classes.media} /> */}
       </CardMedia>
       <CardContent className={classes.content}>
         <Typography variant='caption' align='left'>{props.category}</Typography> <br />

@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { CookiesProvider } from 'react-cookie';
 
-import exampleData from './exampleData.js';
 import outfitFuncs from '../redux-helpers/related/reduxOutfitList.js';
 import funcs from '../redux-helpers/related/reduxRelatedProducts.js';
 import {ProductData, Product} from '../redux-helpers/currentProduct.reducers.js';
