@@ -39,7 +39,8 @@ const useStyles = makeStyles({
   icon: {
     position: 'absolute',
     top: '0px',
-    right: '38px'
+    right: '38px',
+    color: '#3d3d5c',
   },
   media: {
     right: '11px',
@@ -167,6 +168,7 @@ const RPCard = (props) => {
     dispatch(funcs.updateCurrentProductId(productId));
     dispatch(funcs.updateCurrentProductStars(averageStarRating));
     dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
+    // console.log(props);
     trackClick('relatedProductsCard', 'relatedProducts');
   };
 
