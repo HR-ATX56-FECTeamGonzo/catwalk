@@ -26,13 +26,15 @@ const RatingsAndReviews = () => {
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
+  // const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
   const headers = { headers: { 'Authorization': `${GITHUB_API_KEY}` } };
   // state are needed for the sidebar component
   const [metaData, setMetaData] = useState({});
 
   // getting reviews for a product
   const getReviews = () => {
-    axios.get(`${url}?count=1000&sort=${sort}&product_id=${exampleData.id}`, headers)
+    axios.get(`${url}?count=1000&sort=${sort}&product_id=${24156}`, headers)
+      // axios.get(`${url}?count=1000&sort=${sort}&product_id=${exampleData.id}`, headers)
       .then((response) => {
         // console.log(response.data.results);
         let dataArr = response.data.results;
@@ -43,7 +45,8 @@ const RatingsAndReviews = () => {
 
   // a method for fetching metadata for products is needed to send to SideBar component
   const getMetaData = () => {
-    axios.get(`${url}meta?product_id=${exampleData.id}`, headers)
+    // axios.get(`${url}meta?product_id=${exampleData.id}`, headers)
+    axios.get(`${url}meta?product_id=${24156}`, headers)
       .then((response) => {
         // console.log('this is results from metadata fetch', response.data);
         setMetaData(response.data);
@@ -75,6 +78,7 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       display: 'flex',
       justifyContent: 'center',
+      height: '850px'
       // backgroundColor: 'gold',
     },
     section: {
@@ -93,7 +97,7 @@ const RatingsAndReviews = () => {
   const classes = useStyles();
   // if the data doesnt exist yet render null
   return (
-    <Grid container className={classes.main} >
+    <Grid id="review" container className={classes.main} >
       {/* <Grid id="review" container direction="row" > */}
       <Grid container item className={classes.section} direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
       <Grid container item direction="column" md={3} className={classes.other}>
