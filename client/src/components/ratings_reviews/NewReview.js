@@ -121,6 +121,8 @@ const NewReview = (props) => {
   const [name, setName] = useState('');
   const [emailError, setEmailError] = useState(true);
   const [email, setEmail] = useState('');
+  const [uploadedPhotos, setUploadedPhotos] = useState([]);
+
 
 
   // submission handler and alert hooks
@@ -141,6 +143,7 @@ const NewReview = (props) => {
       'rating': rating,
       'summary': summary,
       'body': body,
+      'photos': uploadedPhotos,
       'recommend': recommend,
       'name': name,
       'email': email,
@@ -285,6 +288,8 @@ const NewReview = (props) => {
                     emailError={emailError}
                     setEmailError={setEmailError}
                     reccomend={reccomend}
+                    uploadedPhotos={uploadedPhotos}
+                    setUploadedPhotos={setUploadedPhotos}
                   />
                 </Grid>
                 <Divider />

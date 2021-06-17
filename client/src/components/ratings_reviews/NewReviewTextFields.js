@@ -47,16 +47,21 @@ const TextFields = (props) => {
     upload: {
       display: 'none',
     },
+    photos: {
+      marginLeft: '10px'
+    },
     photo: {
       display: 'flex',
       flexDirection: 'row',
       justify: 'space-around',
-      height: '100px',
-      minHeight: '100px',
+      height: '90px',
+      minHeight: '90px',
       maxHeight: '100%',
-      width: '100px',
-      minWidth: '100px',
+      width: '90px',
+      minWidth: '90px',
       maxWidth: '20%',
+      // margin: '0px, 10px, 0px, 10px',
+
       // backgroundColor: 'brown',
     },
     photoContainer: {
@@ -66,13 +71,17 @@ const TextFields = (props) => {
       maxHeight: '100px',
       minWidth: '500px',
       maxWidth: '500px',
+
     },
+    uploadDiv: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+
   }));
   const classes = useStyles();
 
-  // textfield handlers and hooks
-  // const [summaryError, setSummaryError] = useState(true);
-  // const [summary, setSummary] = useState('');
+  // textfield handlers
   const handleSummaryChange = (event) => {
     props.setSummary(event);
   };
@@ -85,8 +94,7 @@ const TextFields = (props) => {
   };
 
 
-  // const [bodyError, setBodyError] = useState(true);
-  // const [body, setBody] = useState('');
+
   const handleBodyChange = (event) => { // text field typing
     props.setBody(event);
   };
@@ -100,8 +108,7 @@ const TextFields = (props) => {
     }
   };
 
-  // const [nameError, setNameError] = useState(true);
-  // const [name, setName] = useState('');
+
   const handleNameChange = (event) => {
     props.setName(event);
   };
@@ -113,8 +120,7 @@ const TextFields = (props) => {
     }
   };
 
-  // const [emailError, setEmailError] = useState(true);
-  // const [email, setEmail] = useState('');
+
   const handleEmailChange = (event) => {
     props.setEmail(event);
   };
@@ -131,19 +137,17 @@ const TextFields = (props) => {
       props.setEmailError(true);
     }
   };
-  const [uploadedPhotos, setUploadedPhotos] = useState([]);
+  // const [uploadedPhotos, setUploadedPhotos] = useState([]);
   const handleUploadChange = (event) => {
-
     const url = URL.createObjectURL(event);
-    // console.log(url)
-    setUploadedPhotos(uploadedPhotos.concat(url));
+    props.setUploadedPhotos(props.uploadedPhotos.concat(url));
   };
 
-  const pics = uploadedPhotos.map((image) => {
-    let pic = image.url;
+  const pics = props.uploadedPhotos.map((image, i) => {
+    let pic = image;
     return (
-      <Grid item key={image.id}>
-        <Card >
+      <Grid item key={i}>
+        <Card className={classes.photos}>
           <CardMedia
             className={classes.photo}
             image={pic}
@@ -160,7 +164,7 @@ const TextFields = (props) => {
     handleSummaryErrorChange();
     handleNameErrorChange();
     handleEmailErrorChange();
-  }, [props.body, props.summary, props.name, props.email, uploadedPhotos]);
+  }, [props.body, props.summary, props.name, props.email, props.uploadedPhotos]);
   return (
 
     <Grid container item spacing={3} direction="column">
@@ -205,28 +209,27 @@ const TextFields = (props) => {
           </Typography>}
       </Grid>
       <Divider />
-      <Grid item>
+      <Grid container item direction="row" className={classes.uploadDiv} spacing={1}>
         <input
           accept="image/*"
           className={classes.upload}
           id="contained-button-file"
           multiple
-          onChange={() => { handleUploadChange(event.target.value); }}
+          onChange={() => { handleUploadChange(event.target.files[0]); }}
           type="file"
         />
-        {uploadedPhotos[0] ? <Grid container item className={classes.photoContainer}>{pics}</Grid> : null}
         <label htmlFor="contained-button-file">
-          <Button variant="contained" color="primary" component="span">
-            Upload
-          </Button>
+          {props.uploadedPhotos.length === 5
+            ? <Button className={classes.upload} variant="contained" color="primary" component="span">
+              Upload
+            </Button>
+            : <Button variant="contained" color="primary" component="span">
+              Upload
+            </Button>}
         </label>
-        {/* <input accept="image/*" className={classes.upload} id="icon-button-file" multiple type="file" />
-        <label htmlFor="icon-button-file">
-          <IconButton color="primary" aria-label="upload picture" component="span">
-            <PhotoCamera />
-          </IconButton>
-        </label> */}
+        {props.uploadedPhotos[0] ? <Grid container item className={classes.photoContainer}>{pics}</Grid> : null}
       </Grid>
+      <Divider />
       <Grid item>
         <TextField
           error={props.nameError}

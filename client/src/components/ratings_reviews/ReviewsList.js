@@ -10,7 +10,8 @@ const ReviewsList = (props) => {
       maxHeight: '625px',
       minHeight: '300px',
       maxWidth: '650px',
-      overflow: 'scroll',
+      overflowY: 'auto',
+      overflowX: 'hidden',
     },
   }));
   const classes = useStyles();

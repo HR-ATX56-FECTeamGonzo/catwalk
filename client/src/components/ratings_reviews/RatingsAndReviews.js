@@ -96,7 +96,7 @@ const RatingsAndReviews = () => {
   const classes = useStyles();
   // if the data doesnt exist yet render null
   return (
-    <Grid container className={classes.main} >
+    <Grid id="review" container className={classes.main} >
       {/* <Grid id="review" container direction="row" > */}
       <Grid container item className={classes.section} direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
       <Grid container item direction="column" md={3} className={classes.other}>
