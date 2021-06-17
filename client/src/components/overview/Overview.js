@@ -10,7 +10,7 @@ import ProductInfo from './components/ProductInfo.js';
 import StyleList from './components/StyleList.js';
 import AddToCart from './components/AddToCart.js';
 import ImageGallery from './components/ImageGallery.js';
-import getAllProductData from '../../redux-helpers/lib/getAllProductData.js';
+import {getAllProductData, dispatchAllProductData } from '../../redux-helpers/lib/getAllProductData.js';
 import axios from 'axios';
 
 const getDefaultStyle = (arr) => {
@@ -31,7 +31,7 @@ const LayoutViews = makeStyles({
   root: {
     display: 'flex',
     height: props => props.height,
-    width: '90%',
+    width: '100%',
     margin: '0px auto'
   },
   container: {
@@ -53,7 +53,7 @@ const LayoutViews = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
-    left: '50%',
+    left: '52%',
     margin: 'auto',
     height: '65vh',
 
@@ -101,14 +101,15 @@ const Overview = () => {
       {
         type: 'UPDATE_CURRENT_PRODUCT_STYLE_INDEX',
         payload: currentStyle.index
-      }, [currentStyle]);
-  });
+      });
+  }, [currentStyle]);
 
   useEffect(() => {
     console.log('product was changed to id ' + productID);
     const source = axios.CancelToken.source();
     var test = () => {
       setIsLoading(true);
+      dispatch(dispatchAllProductData(productID));
       getAllProductData(productID, source.token)
       .then((data) => {
         ReactDOM.unstable_batchedUpdates(() => {
@@ -119,7 +120,7 @@ const Overview = () => {
             slogan: data[1].slogan,
             description: data[1].description
           };
-          // setData(data);
+          setData(data);
           setInfo(productInfo);
           let styles = data[2].results;
           setStyles(styles);

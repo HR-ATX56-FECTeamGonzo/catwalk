@@ -11,13 +11,11 @@ const Sizes = React.forwardRef((props, ref) => {
     </Select>;
   }
   return (
-    <div>
-      <Select {...props} ref={ref}>
-        <MenuItem value='0' disabled>Select Size</MenuItem>
-        {options.map((x, idx) => (
-          <MenuItem key={idx} value={x}>{x}</MenuItem>))}
-      </Select>
-    </div>
+    <Select {...props} ref={ref}>
+      <MenuItem value='0' disabled>Select Size</MenuItem>
+      {options.map((x, idx) => (
+        <MenuItem key={idx} value={x}>{x}</MenuItem>))}
+    </Select>
   );
 });
 

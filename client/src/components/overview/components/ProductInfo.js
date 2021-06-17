@@ -5,11 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const styles = makeStyles({
   root: {
-    background: 'rgba(0,0,0,.4)'
+
   },
   category: {
-    fontsize: '1.5em',
-    lineHeight: '1.6'
+    fontSize: '1.3em',
+    fontWeight: '100',
+    lineHeight: '1.6',
+    paddingLeft: '.2em'
   },
   name: {
     fontWeight: '600',
@@ -17,19 +19,18 @@ const styles = makeStyles({
     lineHeight: '1.0'
   },
   sale: {
-
+    textDecoration: props => props.sale ? 'line-through' : null
   }
 });
+
 const Price = ({prices, className}) => {
   return (
-    <div id='price'className={className}>
-      <Typography>
+    <div id='price' style={ {margin: '10px 0px'} }>
+      <Typography display='inline' className={className}>
         ${prices.original}
       </Typography>
-      <span style={prices.sale ? { 'textDecoration': 'line-through' } : null }>
-        ${prices.original}
-      </span> &nbsp;
-      {prices.sale && <span style={{ color: 'red' }}>${prices.sale}</span>}
+       &nbsp;
+      {prices.sale && <Typography display='inline' style={{ color: 'red' }}>${prices.sale}</Typography>}
     </div>
   );
 
@@ -38,7 +39,7 @@ const Price = ({prices, className}) => {
 const ProductInfo = ({currentProduct, currentStyle}) => {
   const original = currentStyle.original_price;
   const sale = currentStyle.sale_price;
-  const classes = styles();
+  const classes = styles({sale: sale});
   return (
     <div id='ProductInfo' className={classes.root}>
       <Rating ratings={currentProduct.ratings}/>

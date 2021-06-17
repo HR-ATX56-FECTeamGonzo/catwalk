@@ -19,9 +19,18 @@ export const relatedProductsReducer = (state = [], action) => {
   }
 };
 
-export const ratingsReducer = (state = {}, action) => {
+export const ratingsReducer = (state, action) => {
   switch (action.type) {
   case 'UPDATE_RATING_METADATA':
+    return action.payload;
+  default:
+    return state;
+  }
+};
+
+export const ProductData = (state = null, action) => {
+  switch (action.type) {
+  case 'UPDATE_PRODUCT_DATA':
     return action.payload;
   default:
     return state;

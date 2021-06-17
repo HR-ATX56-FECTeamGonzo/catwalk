@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridList, GridListTile, GridListTileBar, Icon } from '@material-ui/core';
+import { GridList, GridListTile, GridListTileBar, Icon, Typography } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const StyleList = ({styles, current, clickHandler}) => {
@@ -18,8 +18,12 @@ const StyleList = ({styles, current, clickHandler}) => {
 
   return (
     <div id='styleList'>
-      <h4>Style List</h4>
-      <p>Style &gt; {styles[current].name}</p>
+      <Typography display='inline' style={{lineHeight: '3em', fontWeight: 500}}>
+        Style&nbsp;&gt;&nbsp;
+      </Typography>
+      <Typography display='inline'>
+        {styles[current].name}
+      </Typography>
       {/*refactor tilebar ==> badge */}
       <GridList className='styleGrid' cols={4} style={{width: '420px'}}>
         {styles.map((x, idx) => (

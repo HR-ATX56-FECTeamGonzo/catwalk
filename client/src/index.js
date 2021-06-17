@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import storeFuncs from './store/store.js';
 
 // import { CookiesProvider } from 'react-cookie';
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
 
 Window._store = storeFuncs.store;
 
