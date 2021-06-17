@@ -1,12 +1,22 @@
 import React from 'react';
 import ReviewItem from './ReviewItem';
 import Divider from '@material-ui/core/Divider';
-
+import { makeStyles } from '@material-ui/core/styles';
 // in this component i will send the relevent data to the individual review and render that specific item
 
 const ReviewsList = (props) => {
-  // console.log('this belongs to reviewsList', props.reviewDataforList);
+  const useStyles = makeStyles((theme) => ({
+    reviews: {
+      maxHeight: '625px',
+      minHeight: '300px',
+      maxWidth: '650px',
+      overflow: 'scroll',
+    },
+  }));
+  const classes = useStyles();
+  // console.log('this belongs to reviewsList', props.reviewData);
   const arr = props.reviewData.map((review, i) => {
+    // console.log('this belongs to reviewsList', review.photos);
     return (
       <div key={i}>
         <ReviewItem
@@ -21,7 +31,7 @@ const ReviewsList = (props) => {
     );
   });
   return (
-    <div>
+    <div className={classes.reviews}>
       {arr}
     </div>
   );

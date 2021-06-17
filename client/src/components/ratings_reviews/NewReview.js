@@ -114,7 +114,7 @@ const NewReview = (props) => {
 
   // textfield handlers and hooks --------------------------------------------
   const [summaryError, setSummaryError] = useState(true);
-  const [summary, setSummary] = useState('');
+  const [summary, setSummary] = useState(' ');
   const [bodyError, setBodyError] = useState(true);
   const [body, setBody] = useState('');
   const [nameError, setNameError] = useState(true);
@@ -127,7 +127,7 @@ const NewReview = (props) => {
   const [isAlert, setIsAlert] = useState(true);
   const [isComplete, setIsComplete] = useState(null);
   const isFormReady = () => {
-    if (!bodyError && !summaryError && rating !== null && reccomend !== null && !nameError && !emailError) {
+    if (!bodyError && rating !== null && reccomend !== null && !nameError && !emailError) {
       setIsComplete(true);
     } else {
       setIsComplete(false);

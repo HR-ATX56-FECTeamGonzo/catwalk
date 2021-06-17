@@ -11,9 +11,13 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CheckIcon from '@material-ui/icons/Check';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import { makeStyles } from '@material-ui/core/styles';
+
+
 // here i will render the review item div with all of the passed down props
 const ReviewItem = (props) => {
-  // console.log('this is props', props);
   const months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const date = props.data.date.toString();
   const year = date.slice(0, 4);
@@ -41,6 +45,73 @@ const ReviewItem = (props) => {
       .catch((err) => console.log('there was an error trying to report a review', err)) : console.log('you cant report something twice, it shoulve dissapeared already, never to return');
     setReported(true);
   };
+  const useStyles = makeStyles((theme) => ({
+    photoContainer: {
+      display: 'flex',
+      justify: 'space-around',
+      minHeight: '100px',
+      maxHeight: '100px',
+      minWidth: '500px',
+      maxWidth: '500px',
+    },
+    photo: {
+      display: 'flex',
+      flexDirection: 'row',
+      justify: 'space-around',
+      height: '100px',
+      minHeight: '100px',
+      maxHeight: '100%',
+      width: '100px',
+      minWidth: '100px',
+      maxWidth: '20%',
+      // backgroundColor: 'brown',
+    },
+    paperHolder: {
+      backgroundColor: '#f0f0f5',
+      minHeight: '60px',
+    },
+    paper: {
+      padding: '10px',
+      backgroundColor: '#f0f0f5',
+    },
+    recommendation: {
+      paddingTop: '15px',
+      paddingBottom: '10px',
+    },
+    responseItem: {
+      paddingLeft: '10px',
+    },
+    buttonGroup: {
+      display: 'flex',
+      alignItems: 'center',
+      paddingTop: '10px',
+      paddingBottom: '7px',
+    },
+    button: {
+      height: '12px'
+    },
+    mainText: {
+      paddingBottom: '12px',
+    },
+  }));
+  const classes = useStyles();
+  const photos = props.data.photos.map((image) => {
+    let pic = image.url;
+    return (
+      <Grid item key={image.id}>
+        <Card >
+          <CardMedia
+            className={classes.photo}
+            image={pic}
+            title="user posted image"
+          >
+          </CardMedia>
+        </Card>
+      </Grid>
+    );
+  });
+  // console.log(Array.isArray(photos));
+
 
   return (
     <div>
@@ -62,37 +133,46 @@ const ReviewItem = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item direction="column">
-            <Grid item><h4>{props.data.summary}</h4></Grid>
-            <Grid item><p>{props.data.body}</p></Grid>
-            {
-              props.data.recommend ?
-                <Grid container item direction="row" alignItems="center" spacing={1}>
-                  <Grid item><CheckIcon>check</CheckIcon></Grid>
-                  <Grid item><p>I recommend this product</p></Grid>
-                </Grid>
-                : null
+          <Grid container item direction="column" >
+            <Grid item className={classes.mainText}><Typography variant="subtitle1">{props.data.summary}</Typography></Grid>
+            <Grid item className={classes.mainText}><Typography variant="caption">{props.data.body}</Typography></Grid>
+            {props.data.photos[0]
+              ? <Grid container item className={classes.photoContainer} direction="row" spacing={1}>{photos}</Grid>
+              : null}
+            {props.data.recommend ?
+              <Grid container item direction="row" alignItems="center" className={classes.recommendation} spacing={1}>
+                <Grid item><CheckIcon>check</CheckIcon></Grid>
+                <Grid item><Typography variant="caption">I recommend this product</Typography></Grid>
+              </Grid>
+              : null
             }
             <Grid item >
               {props.data.response ?
-                <Paper styles={{ backgroundColor: 'yellow' }}>
-                  <Grid container item direction="column">
-                    <Grid item><p>Response:</p></Grid>
-                    <Grid item>{props.data.response}</Grid>
+                // <Paper className={classes.paper}>
+                <Grid item>
+                  <Grid container item direction="column" className={classes.paper}>
+                    <Grid item className={classes.responseItem}><Typography variant="subtitle2">Response</Typography></Grid>
+                    <Grid item className={classes.responseItem}><Typography variant="caption">{props.data.response}</Typography></Grid>
                   </Grid>
-                </Paper>
+                </Grid>
+                // </Paper>
                 : null
               }
             </Grid>
-            <Grid item container direction="row">
-              <p>Was this review helpful? </p>
+            <Grid item container direction="row" className={classes.buttonGroup}>
+              <Typography variant="caption">Was this review helpful?</Typography>
               <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-                <Button onClick={() => {
+                <Button className={classes.button} onClick={() => {
                   yesButton(event);
-                }}>Yes ({clickedYes ? props.data.helpfulness + 1 : props.data.helpfulness})</Button>
-                <Button onClick={() => {
+                }}>
+                  <Typography variant="caption">Yes</Typography>
+                  ({clickedYes ? props.data.helpfulness + 1 : props.data.helpfulness})
+                </Button>
+                <Button className={classes.button} onClick={() => {
                   reportButton(event);
-                }}>Report</Button>
+                }}>
+                  <Typography variant="caption">Report</Typography>
+                </Button>
               </ButtonGroup>
             </Grid>
           </Grid>
