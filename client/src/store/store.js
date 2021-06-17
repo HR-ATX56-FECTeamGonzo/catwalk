@@ -4,6 +4,7 @@ import { CookiesProvider } from 'react-cookie';
 
 import outfitFuncs from '../redux-helpers/related/reduxOutfitList.js';
 import funcs from '../redux-helpers/related/reduxRelatedProducts.js';
+import {ProductData} from '../redux-helpers/currentProduct.reducers.js';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
@@ -22,6 +23,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   currentProductId: funcs.currentProductIdReducer,
+  currentProductData: ProductData,
   currentProductStyleIndex: funcs.currentProductStyleIndexReducer,
   currentProductStars: funcs.currentProductStarsReducer,
   outfitList: outfitFuncs.outfitListReducer

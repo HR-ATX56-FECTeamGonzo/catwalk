@@ -22,11 +22,12 @@ const useStyles = makeStyles({
   },
   button: {
     backgroundColor: 'rgba(100, 100, 100, .3)',
-    borderRadius: '50%',
-    border: '1px solid rgba(20, 20, 20, .3)',
     margin: '10px',
     position: 'absolute',
-    transition: '300ms cubic-bezier(0.4, 0, 0.2, 1)'
+    transition: '300ms cubic-bezier(0.4, 0, 0.2, 1)',
+    '&:hover': {
+      backgroundColor: 'rgba(100, 100, 100, .5)',
+    },
   }
 });
 
@@ -83,7 +84,7 @@ const ImageGallery = ({view, toggleView, photos, index = 0, clickHandler}) => {
         <IconButton
           onClick={(e) => { scrollGallery(e, currentIndex + 1); }}
           disabled={ currentIndex === photos.length - 1 }>
-          <ChevronRight/>
+          <ChevronRight />
         </IconButton>
       </Box>
       <Indicator
