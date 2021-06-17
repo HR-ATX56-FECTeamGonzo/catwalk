@@ -1,6 +1,16 @@
 import axios from './axios-config.js';
 import calculateAverage from './calculateAverage.js';
 import {batch} from 'react-redux';
+import process from '../currentProduct.actions.js';
+
+const getDefaultStyle = (arr) => {
+  let index = arr.findIndex((style) => style['default?']);
+  if (index === -1) {
+    index = 0;
+  }
+  let info = arr[index];
+  return {info, index};
+};
 
 // will be called like so: store.dispatch(getAllProductData)
 export const dispatchAllProductData = (id) => {
@@ -12,7 +22,10 @@ export const dispatchAllProductData = (id) => {
     var productInfo = axios.get(`products/${id}`);
     // related products
     var relatedProducts = axios.get(`products/${id}/related`);
-    Promise.all([reviewMetadata, productInfo, relatedProducts])
+    // styles
+    var styles = axios.get(`products/${id}/styles`);
+
+    Promise.all([reviewMetadata, productInfo, relatedProducts, styles])
       .then((responses) => {
         // processing this will be a pain
         let data = responses.map(x => x.data);
@@ -24,6 +37,7 @@ export const dispatchAllProductData = (id) => {
         };
         console.log('testing batch dispatch');
         batch(() => {
+          dispatch(process(data));
           dispatch({ type: 'UPDATE_PRODUCT_DATA', payload: productData});
         });
         return data;
