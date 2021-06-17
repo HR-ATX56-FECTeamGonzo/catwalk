@@ -203,6 +203,8 @@ const RPCard = (props) => {
     </div>
   );
 
+  const image = props.imageURL;
+
   return (
     <Card className={classes.root}>
       <Modal
@@ -216,8 +218,8 @@ const RPCard = (props) => {
       <IconButton onClick={handleOpen} className={classes.icon}>
         <StarBorderIcon />
       </IconButton>
-      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} >
-        <img src={props.imageURL} alt={props.name} className={classes.media} />
+      <CardMedia onClick={() => handleClick(props.id)} className={classes.media} image={image}>
+        {/* <img src={props.imageURL} alt={props.name} className={classes.media} /> */}
       </CardMedia>
       <CardContent className={classes.content}>
         <Typography variant='caption' align='left'>{props.category}</Typography> <br />
