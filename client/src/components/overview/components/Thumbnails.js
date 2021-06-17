@@ -1,28 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { Tabs, Tab, GridListTile, IconButton } from '@material-ui/core';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { sizing, borders, spacing, flexbox } from '@material-ui/system';
+import React from 'react';
+import { Tabs, Tab, IconButton, Fade } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const tabStyles = {
   root: {
-    minWidth: '100px',
-    width: '100px',
+    minWidth: '104px',
+    width: '104px',
     height: '100%',
+    alignItems: 'center',
     padding: '0px 2px',
+    zIndex: 30,
     backgroundColor: 'rgba(0, 0, 0, .25)',
     '& .MuiTabs-indicator': {
       width: '100%',
       backgroundColor: 'transparent',
       border: '5px solid black',
       boxSizing: 'border-box'
+    },
+    '& .MuiTabs-scroller': {
+      width: '100px'
     }
   },
   tab: {
     height: '100px',
     padding: '0px',
-    margin: '2px',
-    display: 'flex',
+    minWidth: '100px',
+    margin: '2px 0px',
     '& .MuiTab-wrapper': {
+      overflowX: 'hidden',
       width: 'auto',
       minHeight: '100px',
       justifyContent: 'flex-start',
@@ -33,22 +38,25 @@ const tabStyles = {
   }
 };
 
-const TabsWrapper = ({clickHandler, current, photos, classes}) => (
-  <Tabs id='thumbnails'
-    orientation='vertical'
-    value={current}
-    className = {classes.root}
-    scrollButtons = 'on'
-    variant = 'scrollable'
-    onChange={(e, val) => { clickHandler(e, val); }}>
-    {photos.map((x, idx) => (
-      <Tab key={idx}
-        className= {classes.tab}
-        icon={ <img src={x['thumbnail_url']}/> }
-        value={idx} >
-      </Tab>
-    ))}
-  </Tabs>
+const TabsWrapper = ({clickHandler, current, photos, classes, isVisible}) => (
+  <Fade in={isVisible} >
+    <Tabs id='thumbnails'
+      orientation='vertical'
+      value={current}
+      className = {classes.root}
+      scrollButtons = 'on'
+      variant = 'scrollable'
+      onChange={(e, val) => { clickHandler(e, val); }}>
+      {photos.map((x, idx) => (
+        <Tab key={idx}
+          disabled={!isVisible}
+          className= {classes.tab}
+          icon={ <img src={x['thumbnail_url']}/> }
+          value={idx} >
+        </Tab>
+      ))}
+    </Tabs>
+  </Fade>
 );
 
 const StyledTabs = withStyles(tabStyles)(TabsWrapper);

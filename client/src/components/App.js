@@ -4,8 +4,6 @@ import Overview from './overview/Overview.js';
 import RelatedProducts from './related/RelatedProducts.js';
 import OutfitList from './related/OutfitList.js';
 
-
-
 var App = () => (
   <div>
     <Overview />
