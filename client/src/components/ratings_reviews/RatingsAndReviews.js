@@ -25,7 +25,7 @@ const RatingsAndReviews = () => {
   const [reviewData, setReviewData] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
-  const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews/';
+  const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
   // const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
   const headers = { headers: { 'Authorization': `${GITHUB_API_KEY}` } };
   // state are needed for the sidebar component
@@ -33,7 +33,7 @@ const RatingsAndReviews = () => {
 
   // getting reviews for a product
   const getReviews = () => {
-    axios.get(`${url}?count=1000&sort=${sort}&product_id=${27190}`, headers)
+    axios.get(`${url}?count=1000&sort=${sort}&product_id=${24156}`, headers)
       // axios.get(`${url}?count=1000&sort=${sort}&product_id=${exampleData.id}`, headers)
       .then((response) => {
         // console.log(response.data.results);
@@ -46,7 +46,7 @@ const RatingsAndReviews = () => {
   // a method for fetching metadata for products is needed to send to SideBar component
   const getMetaData = () => {
     // axios.get(`${url}meta?product_id=${exampleData.id}`, headers)
-    axios.get(`${url}meta?product_id=${27190}`, headers)
+    axios.get(`${url}meta?product_id=${24156}`, headers)
       .then((response) => {
         // console.log('this is results from metadata fetch', response.data);
         setMetaData(response.data);
@@ -78,6 +78,7 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       display: 'flex',
       justifyContent: 'center',
+      height: '850px'
       // backgroundColor: 'gold',
     },
     section: {
