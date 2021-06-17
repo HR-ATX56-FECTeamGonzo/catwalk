@@ -22,8 +22,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-import exampleData from '../../store/exampleData.js';
-
 const useStyles = makeStyles({
   root: {
     minWidth: 180,

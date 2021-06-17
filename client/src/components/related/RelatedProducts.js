@@ -4,7 +4,7 @@ import GITHUB_API_KEY from '../../config/config.js';
 import { Typography } from '@material-ui/core';
 import RPPassProps from './RPPassProps.js';
 
-import exampleData from '../../store/exampleData.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 const RelatedProducts = () => {
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx';
@@ -12,9 +12,10 @@ const RelatedProducts = () => {
   const [RPInfo, setRPInfo] = useState([]);
   const [RPStyles, setRPStyles] = useState([]);
   const [RPMetaData, setRPMetaData] = useState([]);
+  const currentProductId = useSelector(state => state.currentProductId);
 
   const getRelatedProductIds = () => {
-    axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
+    axios.get(`${url}/products/${currentProductId}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
       .then((result) => {
         let promises = [];
         for (let i = 0; i < result.data.length; i++) {
@@ -28,7 +29,7 @@ const RelatedProducts = () => {
         return Promise.all(promises);
       })
       .then((result) => {
-        return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
+        return axios.get(`${url}/products/${currentProductId}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
       })
       .then((result) => {
         let promises = [];
@@ -43,7 +44,7 @@ const RelatedProducts = () => {
         return Promise.all(promises);
       })
       .then((result) => {
-        return axios.get(`${url}/products/${exampleData.id}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
+        return axios.get(`${url}/products/${currentProductId}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } });
       })
       .then((result) => {
         let promises = [];
