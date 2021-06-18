@@ -78,11 +78,10 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       display: 'flex',
       justifyContent: 'center',
-      height: '850px'
+      height: '850px',
       // backgroundColor: 'gold',
-    },
-    section: {
-      paddingLeft: '12.5%',
+      minWidth: '1000px',
+      maxWidth: '1000px'
     },
     reviews: {
       backgroundColor: 'white',
@@ -99,11 +98,11 @@ const RatingsAndReviews = () => {
   return (
     <Grid id="review" container className={classes.main} >
       {/* <Grid id="review" container direction="row" > */}
-      <Grid container item className={classes.section} direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
-      <Grid container item direction="column" md={3} className={classes.other}>
+      <Grid container item direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
+      <Grid container item direction="column" md={4} className={classes.other}>
         {metaData.ratings ? <SideBar metaData={metaData} /> : null}
       </Grid>
-      <Grid container item direction="column" className={classes.reviews} md={6}>
+      <Grid container item direction="column" className={classes.reviews} md={8}>
         <Grid container item direction="row" alignItems="center" spacing={1}>
           <Grid item><p>{reviewData.length} Reviews sorted by </p></Grid>
           <Grid item>

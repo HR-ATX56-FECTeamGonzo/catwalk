@@ -28,13 +28,15 @@ const useStyles = makeStyles(() => ({
     flexWrap: 'nowrap',
     justifyContent: 'start',
     overflow: 'hidden',
+    width: '100%',
+    margin: '0px auto'
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    minWidth: '800px',
-    maxWidth: '800px'
+    minWidth: '1000px',
+    maxWidth: '1000px'
   },
 }));
 
@@ -48,7 +50,7 @@ const OutfitList = (props) => {
       <div className={classes.root}>
         {/* {isLoading ?
           <div>Loading . . . </div> : */}
-        <GridList className={classes.gridList} cols={3.5} spacing={5} cellHeight={340}>
+        <GridList className={classes.gridList} cols={4.5} spacing={5} cellHeight={340}>
           {outfitList.map((each, index) => (
             <GridListTile key={index}>
               <OutfitCard key={index}
