@@ -102,7 +102,7 @@ const RPCard = (props) => {
   const [modalStyle] = useState(getModalStyle);
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
-  const currentProductId = useSelector(state => state.currentProductId);
+  // const currentProductId = useSelector(state => state.currentProductId);
   const currentProductFeatures = useSelector(state => state.currentProductData.features);
   const currentProductName = useSelector(state => state.currentProductData.name);
 
