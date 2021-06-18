@@ -1,11 +1,41 @@
 import Redux from 'redux';
-import axios from './axios-config.js';
-import calculateAverage from './calculateAverage.js';
+import calculateAverage from './lib/calculateAverage.js';
 
 
-const updateAverage = (rating) => ({
-  type: 'UPDATE_AVG_RATING',
-  payload: rating
+const updateName = (obj) => {
+  let { name, id, category, description, features } = obj;
+  return {
+    type: 'UPDATE_NAME',
+    payload: { name, id, category, description, features}
+  };
+};
+
+const updateStyleData = (arr) => {
+  let index = arr.findIndex((style) => style['default?']);
+  if (index === -1) {
+    // console.log('no default style');
+    index = 0;
+  }
+  let defaultStyle = arr[index];
+  // console.log(JSON.stringify(defaultStyle));
+  return {
+    type: 'UPDATE_DEFAULT_STYLE',
+    payload: {
+      'original_price': defaultStyle['original_price'],
+      'sale_price': defaultStyle['sale_price'],
+      name: defaultStyle.name,
+      'thumbnail_url': defaultStyle.photos[0].thumbnail_url
+    }
+  };
+};
+
+const updateRatingsData = (ratings) => ({
+  type: 'UPDATE_RATING_DATA',
+  payload: {
+    count: Object.values(ratings).reduce((sum, val) => parseInt(sum) + parseInt(val)),
+    average: calculateAverage(ratings),
+    ratings: ratings,
+  }
 });
 
 const updateRelated = (products) => ({
@@ -13,22 +43,24 @@ const updateRelated = (products) => ({
   payload: products
 });
 
-const updateMetaData = (ratings) => ({
-  type: 'UPDATE_RATING_METADATA',
-  payload: {
-    total: Object.values(ratings).reduce((sum, val) => sum + val),
-    ratings: ratings
-  }
-});
-
-const processReviewData = (id) => {
-  return (dispatch) => {
-    axios.get('/reviews/meta', {params: { 'product_id': id}})
-      .then(({data}) => {
-        dispatch(updateAverage(calculateAverage(data.ratings)));
-        dispatch(updateMetaData(data.ratings));
-      });
+const updateReviewData = (obj) => {
+  let { recommended, characteristics } = obj;
+  return {
+    type: 'UPDATE_REVIEW_DATA',
+    payload: {recommended, characteristics}
   };
 };
 
-export default processReviewData;
+const processResponseData = (data) => {
+  return (dispatch) => {
+    console.log(data);
+    dispatch(updateName(data[1]));
+    dispatch(updateStyleData(data[3].results));
+    dispatch(updateReviewData(data[0]));
+    dispatch(updateRatingsData(data[0].ratings));
+    dispatch(updateRelated(data[2]));
+  };
+};
+
+export default processResponseData;
+

@@ -1,4 +1,4 @@
-export default function(ratings) {
+const calc = (ratings) => {
   var reviewCount = 0;
   var sum = 0;
   for (const [key, value] of Object.entries(ratings) ) {
@@ -11,4 +11,6 @@ export default function(ratings) {
     sum = (Math.round(sum * 4) / 4);
   }
   return sum;
-}
+
+};
+export default calc;

@@ -8,6 +8,7 @@ import storeFuncs from './store/store.js';
 import { PersistGate } from 'redux-persist/integration/react';
 
 Window._store = storeFuncs.store;
+// storeFuncs.persistor.purge();  /* USE THIS TO RESET STORE */
 
 ReactDOM.render(
   <Provider store={storeFuncs.store} >
