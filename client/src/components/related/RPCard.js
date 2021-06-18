@@ -24,9 +24,6 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 
-import exampleData from '../../store/exampleData.js';
-
-
 const useStyles = makeStyles({
   root: {
     minWidth: 180,
@@ -106,6 +103,8 @@ const RPCard = (props) => {
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
   const currentProductId = useSelector(state => state.currentProductId);
+  const currentProductFeatures = useSelector(state => state.currentProductData.features);
+  const currentProductName = useSelector(state => state.currentProductData.name);
 
 
   const starRating = props.metaData;
@@ -121,10 +120,11 @@ const RPCard = (props) => {
 
 
   const makeComparisons = () => {
-    const CPFeaturesAll = exampleData.features;
+    const CPFeaturesAll = currentProductFeatures;
     const RPFeaturesAll = props.features;
     const CPFeatureNames = CPFeaturesAll.map(each => each.feature);
     const RPFeatureNames = RPFeaturesAll.map(each => each.feature);
+    let newRPFeaturesAll = [];
     let comparisons = [];
     let comparisonObj = {};
 
@@ -133,7 +133,7 @@ const RPCard = (props) => {
       comparisonObj.CPValue = each.value;
       if (RPFeatureNames.includes(each.feature)) {
         comparisonObj.RPValue = RPFeaturesAll[RPFeatureNames.indexOf(each.feature)].value;
-        RPFeaturesAll.splice(RPFeatureNames.indexOf(each.feature), 1);
+        newRPFeaturesAll = newRPFeaturesAll.concat(RPFeaturesAll.slice(0, RPFeatureNames.indexOf(each.feature))).concat(RPFeaturesAll.slice(RPFeatureNames.indexOf(each.feature) + 1));
       } else {
         comparisonObj.RPValue = 'N/A';
       }
@@ -169,7 +169,6 @@ const RPCard = (props) => {
     dispatch(funcs.updateCurrentProductId(productId));
     dispatch(funcs.updateCurrentProductStars(averageStarRating));
     dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
-    // console.log(props);
     trackClick('relatedProductsCard', 'relatedProducts');
   };
 
@@ -184,7 +183,7 @@ const RPCard = (props) => {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>{exampleData.name}</StyledTableCell>
+              <StyledTableCell>{currentProductName}</StyledTableCell>
               <StyledTableCell align='center'>Features</StyledTableCell>
               <StyledTableCell align='center'>{props.name}</StyledTableCell>
             </TableRow>
