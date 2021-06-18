@@ -82,12 +82,10 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       display: 'flex',
       justifyContent: 'center',
-      height: '775px'
+      height: '850px',
       // backgroundColor: 'gold',
-    },
-    section: {
-      // paddingLeft: '12.5%',
-      height: '35px',
+      minWidth: '1000px',
+      maxWidth: '1000px'
     },
     reviews: {
       backgroundColor: 'white',
@@ -105,53 +103,51 @@ const RatingsAndReviews = () => {
   const classes = useStyles();
   // if the data doesnt exist yet render null
   return (
-    <div id="reviews">
-
-      <Grid container className={classes.main} >
-        {/* <Grid id="review" container direction="row" > */}
-        <Grid container item direction="column" md={3} className={classes.other}>
-          <Grid container item className={classes.section} direction="row"><Typography variant="h4">RATINGS & REVIEWS</Typography></Grid>
-          {metaData.ratings ? <SideBar metaData={metaData} /> : null}
-        </Grid>
-        <Grid container item direction="column" className={classes.reviews} md={6}>
-          <Grid container item direction="row" alignItems="center" spacing={1}>
-            <Grid item><p>{reviewData.length} Reviews sorted by </p></Grid>
-            <Grid item>
-              <FormControl className="sortSelector">
-                <Select
-                  labelId="sort-select-label"
-                  id="sort-selector"
-                  value={sort}
-                  onChange={(event) => { sortMethodChange(event.target.value); }}
-                >
-                  <MenuItem value="relevant">Relevant</MenuItem>
-                  <MenuItem value="newest">Newest</MenuItem>
-                  <MenuItem value="helpful">Helpful</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid className={classes.reviews} container item direction="column">{reviewData[1] ? <ReviewsList url={url} reviewData={reviewData.slice(0, count)} /> : null}</Grid>
-          {/* making MORE REVIEWS button dissapear when out of reviews */}
-          < Grid className={classes.reviewsButtons} container item direction="row" spacing={2}>
-            <Grid item>{count < reviewData.length
-              ? <Button variant="outlined" color="primary" onClick={() => {
-                setCount(count + 2);
-              }}>MORE REVIEWS</Button>
-              : null}</Grid>
-            <Grid item>
-              {metaData.ratings
-                ? <NewReview
-                  doUpdateMetaData={doUpdateMetaData}
-                  setdoUpdateMetaData={setdoUpdateMetaData}
-                  currentCharacteristics={metaData.characteristics} />
-                : null}
-            </Grid>
-          </Grid>
-        </Grid>
-        {/* </Grid > */}
+    <Grid id="review" container className={classes.main} >
+      {/* <Grid id="review" container direction="row" > */}
+      <Grid container item direction="column" md={4} className={classes.other}>
+        <Grid container item direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
+        {metaData.ratings ? <SideBar metaData={metaData} /> : null}
       </Grid>
-    </div>
+      <Grid container item direction="column" className={classes.reviews} md={8}>
+        <Grid container item direction="row" alignItems="center" spacing={1}>
+          <Grid item><p>{reviewData.length} Reviews sorted by </p></Grid>
+          <Grid item>
+            <FormControl className="sortSelector">
+              <Select
+                labelId="sort-select-label"
+                id="sort-selector"
+                value={sort}
+                onChange={(event) => { sortMethodChange(event.target.value); }}
+              >
+                <MenuItem value="relevant">Relevant</MenuItem>
+                <MenuItem value="newest">Newest</MenuItem>
+                <MenuItem value="helpful">Helpful</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid className={classes.reviews} container item direction="column">{reviewData[1] ? <ReviewsList url={url} reviewData={reviewData.slice(0, count)} /> : null}</Grid>
+        {/* making MORE REVIEWS button dissapear when out of reviews */}
+        < Grid className={classes.reviewsButtons} container item direction="row" spacing={2}>
+          <Grid item>{count < reviewData.length
+            ? <Button variant="outlined" color="primary" onClick={() => {
+              setCount(count + 2);
+            }}>MORE REVIEWS</Button>
+            : null}</Grid>
+          <Grid item>
+            {metaData.ratings
+              ? <NewReview
+                doUpdateMetaData={doUpdateMetaData}
+                setdoUpdateMetaData={setdoUpdateMetaData}
+                currentCharacteristics={metaData.characteristics} />
+              : null}
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* </Grid > */}
+    </Grid>
+
   );
 };
 export default RatingsAndReviews;

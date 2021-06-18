@@ -25,19 +25,19 @@ import { useCookies } from 'react-cookie';
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex',
-    // flexDirection: 'column',
+    display: 'table',
     flexWrap: 'nowrap',
-    // justifyContent: 'center',
+    justifyContent: 'start',
     overflow: 'hidden',
-    // width: '75%'
+    width: '100%',
+    margin: '0px auto'
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    minWidth: '800px',
-    maxWidth: '800px'
+    minWidth: '1000px',
+    maxWidth: '1000px'
   },
 }));
 
@@ -46,28 +46,24 @@ const OutfitList = (props) => {
   const outfitList = useSelector(state => state.outfitList);
 
   return (
-    <div className={classes.root}>
-      <Grid container item direction="column">
-        <Grid item direction="row">
-          <Typography variant='subtitle1' align='center' display='block'>Your Outfit List</Typography>
-        </Grid>
-        <Grid item direction="row">
-          {/* {isLoading ?
+    <div>
+      <Typography variant='subtitle1' align='left' display='block'>Your Outfit List</Typography>
+      <div className={classes.root}>
+        {/* {isLoading ?
           <div>Loading . . . </div> : */}
-          <GridList className={classes.gridList} cols={3.5} spacing={5} cellHeight={340}>
-            {outfitList.map((each, index) => (
-              <GridListTile key={index}>
-                <OutfitCard key={index}
-                  index={index}
-                  outfit={each}
-                  cookies={props.cookies}
-                />
-              </GridListTile>
-            ))}
-          </GridList >
-          {/* } */}
-        </Grid>
-      </Grid>
+        <GridList className={classes.gridList} cols={4.5} spacing={5} cellHeight={340}>
+          {outfitList.map((each, index) => (
+            <GridListTile key={index}>
+              <OutfitCard key={index}
+                index={index}
+                outfit={each}
+                cookies={props.cookies}
+              />
+            </GridListTile>
+          ))}
+        </GridList >
+        {/* } */}
+      </div >
     </div>
   );
 
