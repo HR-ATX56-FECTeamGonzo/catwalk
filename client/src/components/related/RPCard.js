@@ -174,7 +174,7 @@ const RPCard = (props) => {
   };
 
   useEffect(() => {
-    makeComparisons();
+    // makeComparisons();
   }, []);
 
   const body = (

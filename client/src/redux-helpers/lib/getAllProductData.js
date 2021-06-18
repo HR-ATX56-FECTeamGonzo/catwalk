@@ -47,7 +47,7 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
           console.error('request for product data cancelled - ' + e.message);
           return;
         }
-        console.error('request during dispatch to store - ' + e.message);
+        console.error('error during dispatch to store - ' + e.message);
       });
   };
 };

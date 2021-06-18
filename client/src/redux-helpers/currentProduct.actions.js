@@ -3,10 +3,10 @@ import calculateAverage from './lib/calculateAverage.js';
 import {batch} from 'react-redux';
 
 const updateName = (obj) => {
-  let { name, id, category, description, features } = obj;
+  let { name, id, category, description, features, slogan } = obj;
   return {
     type: 'UPDATE_NAME',
-    payload: { name, id, category, description, features}
+    payload: { name, id, category, description, features, slogan}
   };
 };
 
@@ -32,14 +32,19 @@ const updateStyleData = (arr) => {
   };
 };
 
-const updateRatingsData = (ratings) => ({
-  type: 'UPDATE_RATING_DATA',
-  payload: {
-    count: Object.values(ratings).reduce((sum, val) => parseInt(sum) + parseInt(val)),
-    average: calculateAverage(ratings),
-    ratings: ratings,
+const updateRatingsData = (ratings) => {
+  let payload;
+  if (Object.keys(ratings).length === 0) {
+    payload = { count: 0, average: 0, ratings: 0 };
+  } else {
+    payload = {
+      count: Object.values(ratings).reduce((sum, val) => parseInt(sum) + parseInt(val)),
+      average: calculateAverage(ratings),
+      ratings: ratings,
+    };
   }
-});
+  return ({ type: 'UPDATE_RATING_DATA', payload });
+};
 
 const updateRelated = (products) => ({
   type: 'UPDATE_RELATED_PRODUCTS',

@@ -64,11 +64,14 @@ const Overview = () => {
   const [view, setView] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const productID = useSelector((state) => state.currentProductId);
-  const [productData, setData] = useState({});
-  const [productInfo, setInfo] = useState(exampleData);
-  // this eventually gets replaced by store variable
+  //const [productData, setData] = useState({});
   const styles = useSelector((state) => state.test.styles);
-  const [currentStyle, setCurrentStyle] = useState(getDefaultStyle(exampleData.styles.results));
+  const currentStyle = useSelector((state) => {
+    console.log('from currentstyle selector');
+    console.log(state.test.styles);
+    let arr = state.test.styles;
+    return arr[state.currentProductStyleIndex];
+  });
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
   const classes = LayoutViews({ 'height': view === 0 ? '65vh' : '95vh'});
   const dispatch = useDispatch();
@@ -76,7 +79,7 @@ const Overview = () => {
 
   const changePhotoIndex = (index) => {
     setPhotoIndex(prevState => {
-      prevState[currentStyle.info.style_id] = index;
+      prevState[currentStyle.style_id] = index;
       return prevState;
     });
   };
@@ -94,43 +97,11 @@ const Overview = () => {
   };
 
   useEffect(() => {
-    dispatch(
-      {
-        type: 'UPDATE_CURRENT_PRODUCT_STYLE_INDEX',
-        payload: currentStyle.index
-      });
-  }, [currentStyle]);
-
-  useEffect(() => {
     console.log('product was changed to id ' + productID);
     const source = axios.CancelToken.source();
     var test = () => {
       setIsLoading(true);
       dispatch(dispatchAllProductData(productID, source.token));
-/*       getAllProductData(productID, source.token)
-      .then((data) => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          var productInfo = {
-            ratings: data[0].ratings,
-            name: data[1].name,
-            category: data[1].category,
-            slogan: data[1].slogan,
-            description: data[1].description
-          };
-          setData(data);
-          setInfo(productInfo);
-          let styles = data[2].results;
-          setStyles(styles);
-          setCurrentStyle(getDefaultStyle(styles));
-          setPhotoIndex(styles.reduce(setIdtoKey, {}));
-        });
-      })
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        console.error('error setting overview state' + e);
-      }); */
       setIsLoading(false);
     };
     test();
@@ -149,16 +120,15 @@ const Overview = () => {
         <ImageGallery
           view={view}
           toggleView={(e) => { toggleView(e); } }
-          photos={currentStyle.info.photos}
-          index={photoIndexes[currentStyle.info.style_id]}
+          photos={currentStyle.photos}
+          index={photoIndexes[currentStyle.style_id]}
           clickHandler={changePhotoIndex}/>
       </Collapse>
     <div className={classes.menu}>
       <ProductInfo
-        currentProduct={productInfo}
-        currentStyle={currentStyle.info}/>
+        currentStyle={currentStyle}/>
       <StyleList/>
-      <AddToCart stock={currentStyle.info.skus}/>
+      <AddToCart stock={currentStyle.skus}/>
     </div>
   </div>);
 };

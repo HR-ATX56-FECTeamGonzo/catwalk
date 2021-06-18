@@ -6,4 +6,6 @@ const request = axios.create({
   headers: {'Authorization': key},
 });
 request.CancelToken = axios.CancelToken;
+request.isCancel = axios.isCancel;
+
 export default request;
