@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Grid from '@material-ui/core/Grid';
 
 import { useCookies } from 'react-cookie';
 

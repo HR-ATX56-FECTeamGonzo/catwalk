@@ -65,7 +65,7 @@ const OutfitCard = (props) => {
     return state.currentProductStyleIndex;
   });
   const currentProductStars = useSelector(state => {
-    return state.currentProductStars;
+    return state.currentProductStars || 0;
   });
 
   const dispatch = useDispatch();
