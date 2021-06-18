@@ -18,16 +18,19 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Grid from '@material-ui/core/Grid';
 
 import { useCookies } from 'react-cookie';
 
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'table',
+    display: 'flex',
+    // flexDirection: 'column',
     flexWrap: 'nowrap',
-    justifyContent: 'start',
+    // justifyContent: 'center',
     overflow: 'hidden',
+    // width: '75%'
   },
   gridList: {
     flexWrap: 'nowrap',
@@ -43,24 +46,28 @@ const OutfitList = (props) => {
   const outfitList = useSelector(state => state.outfitList);
 
   return (
-    <div>
-      <Typography variant='subtitle1' align='left' display='block'>Your Outfit List</Typography>
-      <div className={classes.root}>
-        {/* {isLoading ?
+    <div className={classes.root}>
+      <Grid container item direction="column">
+        <Grid item direction="row">
+          <Typography variant='subtitle1' align='center' display='block'>Your Outfit List</Typography>
+        </Grid>
+        <Grid item direction="row">
+          {/* {isLoading ?
           <div>Loading . . . </div> : */}
-        <GridList className={classes.gridList} cols={3.5} spacing={5} cellHeight={340}>
-          {outfitList.map((each, index) => (
-            <GridListTile key={index}>
-              <OutfitCard key={index}
-                index={index}
-                outfit={each}
-                cookies={props.cookies}
-              />
-            </GridListTile>
-          ))}
-        </GridList >
-        {/* } */}
-      </div >
+          <GridList className={classes.gridList} cols={3.5} spacing={5} cellHeight={340}>
+            {outfitList.map((each, index) => (
+              <GridListTile key={index}>
+                <OutfitCard key={index}
+                  index={index}
+                  outfit={each}
+                  cookies={props.cookies}
+                />
+              </GridListTile>
+            ))}
+          </GridList >
+          {/* } */}
+        </Grid>
+      </Grid>
     </div>
   );
 

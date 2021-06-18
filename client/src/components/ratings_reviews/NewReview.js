@@ -5,7 +5,6 @@ import TextFields from './NewReviewTextFields.js';
 import GITHUB_API_KEY from '../../config/config.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -94,7 +93,7 @@ const NewReview = (props) => {
   };
 
   // do you reccomend this product? -- RADIO ARRAY
-  const [reccomend, setReccomend] = useState(null);
+  const [recommend, setReccomend] = useState(null);
   const handleRadioChange = (event) => {
     setReccomend(event.target.value);
   };
@@ -105,6 +104,7 @@ const NewReview = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+
   // RadioArray handlers and hooks ------------------------------------------
   const [characteristicArray, setCharacteristicArray] = useState(null);
   const [size, setSize] = useState(null);
@@ -136,7 +136,7 @@ const NewReview = (props) => {
   const [isAlert, setIsAlert] = useState(true);
   const [isComplete, setIsComplete] = useState(null);
   const isFormReady = () => {
-    if (!bodyError && rating !== null && reccomend !== null && !nameError && !emailError && characteristicsComplete) {
+    if (!bodyError && rating !== null && recommend !== null && !nameError && !emailError && characteristicsComplete) {
       setIsComplete(true);
     } else {
       setIsComplete(false);
@@ -144,14 +144,15 @@ const NewReview = (props) => {
   };
 
   const handleSubmit = () => {
-    const recommend = reccomend === 1 ? true : false;
+    console.log(recommend);
+    let recommendation = recommend === 'true' ? true : false;
     const params = {
       'product_id': currentProductId,
       'rating': rating,
       'summary': summary,
       'body': body,
       'photos': uploadedPhotos,
-      'recommend': recommend,
+      'recommend': recommendation,
       'name': name,
       'email': email,
       'characteristics': charParams
@@ -162,6 +163,8 @@ const NewReview = (props) => {
       axios.post(url, params, headers)
         .then(() => {
           console.log('success!');
+          props.setdoUpdateMetaData(props.doUpdateMetaData + 1);
+          // dispatch
         })
         .catch(() => console.log('there has been an error submitting your form'));
     }
@@ -249,9 +252,9 @@ const NewReview = (props) => {
                   <Grid item>
                     <FormControl component="fieldset">
                       <FormLabel component="legend">Do you recommend this Product?</FormLabel>
-                      <RadioGroup row aria-label="recommend" name="recommend" value={reccomend} onChange={handleRadioChange}>
-                        <FormControlLabel value="1" control={<Radio />} label="Yes" />
-                        <FormControlLabel value="2" control={<Radio />} label="No" />
+                      <RadioGroup row aria-label="recommend" name="recommend" value={recommend} onChange={handleRadioChange}>
+                        <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="false" control={<Radio />} label="No" />
                       </RadioGroup>
                     </FormControl>
                   </Grid>
@@ -307,7 +310,7 @@ const NewReview = (props) => {
                     setEmail={setEmail}
                     emailError={emailError}
                     setEmailError={setEmailError}
-                    reccomend={reccomend}
+                    // reccomend={reccomend}
                     uploadedPhotos={uploadedPhotos}
                     setUploadedPhotos={setUploadedPhotos}
                   />

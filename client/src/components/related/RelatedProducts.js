@@ -3,6 +3,8 @@ import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import { Typography } from '@material-ui/core';
 import RPPassProps from './RPPassProps.js';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -67,15 +69,38 @@ const RelatedProducts = () => {
   useEffect(() => {
     getRelatedProductIds();
   }, []);
-
+  const useStyles = makeStyles((theme) => ({
+    main: {
+      // maxWidth: '75%',
+      // position: 'fixed',
+      display: 'flex',
+      justifyContent: 'center',
+      // height: '775px'
+      // backgroundColor: 'gold',
+    },
+  }));
+  const classes = useStyles();
   return (
-    <div id='relatedProducts'>
-      <Typography variant='subtitle1' align='left'>Related Products</Typography>
-      {!isLoading ?
-        <RPPassProps RPInfo={RPInfo} RPStyles={RPStyles} RPMetaData={RPMetaData} />
-        : <div>Loading . . . </div>
-      }
-    </div>
+    // <div id='relatedProducts' align='center'>
+    <Grid className={classes.main} container direction="column">
+      <Grid container item direction="column">
+        <Grid item direction="row">
+          <Typography variant='subtitle1' >Related Products</Typography>
+        </Grid>
+
+      </Grid>
+      <Grid container item direction="column">
+        <Grid item direction="row">
+          {!isLoading ?
+            <RPPassProps RPInfo={RPInfo} RPStyles={RPStyles} RPMetaData={RPMetaData} />
+            : <div>Loading . . . </div>
+          }
+        </Grid>
+      </Grid>
+    </Grid>
+
+
+    // </div>
   );
 };
 

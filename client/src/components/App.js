@@ -7,9 +7,17 @@ import OutfitList from './related/OutfitList.js';
 var App = () => (
   <div>
     <Overview />
-    <RelatedProducts />
-    <OutfitList />
-    <RatingsAndReviews />
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      // leftMargin: '100px'
+      // justifyContent: 'flex-start'
+    }}>
+
+      <RelatedProducts />
+      <OutfitList />
+      <RatingsAndReviews />
+    </div>
   </div>
 );
 
