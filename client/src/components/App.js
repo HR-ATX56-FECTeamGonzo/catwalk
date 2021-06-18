@@ -4,12 +4,22 @@ import Overview from './overview/Overview.js';
 import RelatedProducts from './related/RelatedProducts.js';
 import OutfitList from './related/OutfitList.js';
 
+import Grid from '@material-ui/core/Grid';
+
+
 var App = () => (
   <div>
     <Overview />
-    <RelatedProducts />
-    <OutfitList />
-    <RatingsAndReviews />
+    <Grid
+      container
+      direction="column"
+      justify="flex-end"
+      alignItems="center"
+    >
+      <RelatedProducts />
+      <OutfitList />
+      <RatingsAndReviews />
+    </Grid>
   </div>
 );
 
