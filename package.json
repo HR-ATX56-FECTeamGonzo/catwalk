@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon client/src/server/index",
+    "server": "nodemon server/index.js",
     "start": "nodemon client/src/index.js",
     "dev:react": "webpack --watch",
     "test": "jest"
