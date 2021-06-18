@@ -5,6 +5,9 @@ import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import NewReview from './NewReview.js';
 import SideBar from './SideBar.js';
+import Typography from '@material-ui/core/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+
 // -----------material-ui stuff-----------
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -25,15 +28,14 @@ const RatingsAndReviews = () => {
   const [reviewData, setReviewData] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
+  const currentProductId = useSelector(state => state.currentProductId);
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
-  // const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
   const headers = { headers: { 'Authorization': `${GITHUB_API_KEY}` } };
-  // state are needed for the sidebar component
   const [metaData, setMetaData] = useState({});
 
   // getting reviews for a product
   const getReviews = () => {
-    axios.get(`${url}?count=1000&sort=${sort}&product_id=${24156}`, headers)
+    axios.get(`${url}?count=1000&sort=${sort}&product_id=${currentProductId}`, headers)
       // axios.get(`${url}?count=1000&sort=${sort}&product_id=${exampleData.id}`, headers)
       .then((response) => {
         // console.log(response.data.results);
@@ -46,7 +48,7 @@ const RatingsAndReviews = () => {
   // a method for fetching metadata for products is needed to send to SideBar component
   const getMetaData = () => {
     // axios.get(`${url}meta?product_id=${exampleData.id}`, headers)
-    axios.get(`${url}meta?product_id=${24156}`, headers)
+    axios.get(`${url}meta?product_id=${currentProductId}`, headers)
       .then((response) => {
         // console.log('this is results from metadata fetch', response.data);
         setMetaData(response.data);
@@ -66,7 +68,10 @@ const RatingsAndReviews = () => {
   useEffect(() => {
     getMetaData();
     getReviews();
-  }, [sort]);
+  }, [sort, currentProductId]);
+  useEffect(() => {
+    setCount(2);
+  }, [currentProductId]);
 
   const useStyles = makeStyles((theme) => ({
     progressBar: {
@@ -78,11 +83,12 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       display: 'flex',
       justifyContent: 'center',
-      height: '850px'
+      height: '775px'
       // backgroundColor: 'gold',
     },
     section: {
-      paddingLeft: '12.5%',
+      // paddingLeft: '12.5%',
+      height: '35px',
     },
     reviews: {
       backgroundColor: 'white',
@@ -93,14 +99,17 @@ const RatingsAndReviews = () => {
     reviewsButtons: {
       paddingTop: '15px',
     },
+    reviews: {
+      paddingTop: '30px',
+    },
   }));
   const classes = useStyles();
   // if the data doesnt exist yet render null
   return (
     <Grid id="review" container className={classes.main} >
       {/* <Grid id="review" container direction="row" > */}
-      <Grid container item className={classes.section} direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
       <Grid container item direction="column" md={3} className={classes.other}>
+        <Grid container item className={classes.section} direction="row"><Typography variant="h4">RATINGS & REVIEWS</Typography></Grid>
         {metaData.ratings ? <SideBar metaData={metaData} /> : null}
       </Grid>
       <Grid container item direction="column" className={classes.reviews} md={6}>
@@ -121,7 +130,7 @@ const RatingsAndReviews = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container item direction="column">{reviewData[1] ? <ReviewsList url={url} reviewData={reviewData.slice(0, count)} /> : null}</Grid>
+        <Grid className={classes.reviews} container item direction="column">{reviewData[1] ? <ReviewsList url={url} reviewData={reviewData.slice(0, count)} /> : null}</Grid>
         {/* making MORE REVIEWS button dissapear when out of reviews */}
         < Grid className={classes.reviewsButtons} container item direction="row" spacing={2}>
           <Grid item>{count < reviewData.length

@@ -22,14 +22,14 @@ import Sliders from './SidebarSliders.js';
 const SideBar = (props) => {
   // console.log('this is props from sidebar:', props.metaData);
   // need to find the average star rating
-  const starRating = props.metaData.ratings;
+  const starRating = props.metaData.ratings || 0;
   const oneStar = Number(starRating[1] || 0);
   const twoStar = Number(starRating[2] || 0);
   const threeStar = Number(starRating[3] || 0);
   const fourStar = Number(starRating[4] || 0);
   const fiveStar = Number(starRating[5] || 0);
   const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
-  const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
+  const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars) || 0;
   // i need to find the metrics for the fit, comfort etc.
   const characteristics = props.metaData.characteristics;
   // now i need to calculate the percent of reviews that recommend this product
@@ -100,7 +100,7 @@ const SideBar = (props) => {
         <Grid item>
           <Box className={classes.starsBars}>
             <Grid container direction="column">
-              <Grid item>{percentRecommended}% of reviews recommend this product</Grid>
+              <Grid item>{percentRecommended || 0}% of reviews recommend this product</Grid>
               <Grid container item direction="row" alignItems="center" spacing={1} className={classes.progressBarContainer}>
                 <Grid item>
                   <p>5 STARS</p>
