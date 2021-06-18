@@ -13,7 +13,7 @@ const getDefaultStyle = (arr) => {
 };
 
 // will be called like so: store.dispatch(getAllProductData)
-export const dispatchAllProductData = (id) => {
+export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.source()).token) => {
   return (dispatch) => {
     // assign promises to variables first
     // review metadata
@@ -41,6 +41,13 @@ export const dispatchAllProductData = (id) => {
           dispatch({ type: 'UPDATE_PRODUCT_DATA', payload: productData});
         });
         return data;
+      })
+      .catch(e => {
+        if (axios.isCancel(e)) {
+          console.error('request for product data cancelled - ' + e.message);
+          return;
+        }
+        console.error('request during dispatch to store - ' + e.message);
       });
   };
 };

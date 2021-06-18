@@ -61,24 +61,18 @@ const LayoutViews = makeStyles({
 });
 
 const Overview = () => {
-  const productID = useSelector((state) => state.currentProductId);
   const [view, setView] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const productID = useSelector((state) => state.currentProductId);
   const [productData, setData] = useState({});
   const [productInfo, setInfo] = useState(exampleData);
-  const [isLoading, setIsLoading] = useState(false);
   // this eventually gets replaced by store variable
-  const [styles, setStyles] = useState(exampleData.styles.results);
+  const styles = useSelector((state) => state.test.styles);
   const [currentStyle, setCurrentStyle] = useState(getDefaultStyle(exampleData.styles.results));
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
   const classes = LayoutViews({ 'height': view === 0 ? '65vh' : '95vh'});
   const dispatch = useDispatch();
 
-  const changeStyle = (e, idx) => {
-    setCurrentStyle({
-      info: styles[idx],
-      index: idx
-    });
-  };
 
   const changePhotoIndex = (index) => {
     setPhotoIndex(prevState => {
@@ -88,7 +82,10 @@ const Overview = () => {
   };
 
   const toggleView = (e) => {
+    e.stopPropagation();
+    console.log('attempting to toggle view');
     if (e.target === e.currentTarget) {
+      console.log('toggling view');
       setView(prevState => {
         return prevState === 0 ? 1 : 0;
         }
@@ -109,8 +106,8 @@ const Overview = () => {
     const source = axios.CancelToken.source();
     var test = () => {
       setIsLoading(true);
-      dispatch(dispatchAllProductData(productID));
-      getAllProductData(productID, source.token)
+      dispatch(dispatchAllProductData(productID, source.token));
+/*       getAllProductData(productID, source.token)
       .then((data) => {
         ReactDOM.unstable_batchedUpdates(() => {
           var productInfo = {
@@ -133,12 +130,14 @@ const Overview = () => {
       })
       .catch((e) => {
         console.error('error setting overview state' + e);
-      });
+      }); */
+      setIsLoading(false);
     };
     test();
     return () => {
       console.log('cleanup in overview');
       source.cancel('calling token cancel');
+      setIsLoading(false);
     };
   }, [productID]);
 
@@ -158,10 +157,7 @@ const Overview = () => {
       <ProductInfo
         currentProduct={productInfo}
         currentStyle={currentStyle.info}/>
-      <StyleList
-        styles={styles}
-        current={currentStyle.index}
-        clickHandler={changeStyle}/>
+      <StyleList/>
       <AddToCart stock={currentStyle.info.skus}/>
     </div>
   </div>);

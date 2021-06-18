@@ -10,21 +10,23 @@ var initialProduct = {
   reviewData: null, // will have avg rating and total rating count along with usual metadata
   ratingData: null,
   defaultStyle: null,
-  related: []
+  related: [],
+  styles: []
 };
 
 const updateProduct = (oldObj, newValue) => {
   return Object.assign({}, oldObj, newValue);
 };
 
-const DefaultStyle = (state = null, action) => {
+const StyleData = (state = null, action) => {
   switch (action.type) {
-  case 'UPDATE_DEFAULT_STYLE':
-    return updateProduct(state, {defaultStyle: action.payload});
+  case 'UPDATE_STYLE_DATA':
+    return updateProduct(state, action.payload);
   default:
     return state;
   }
 };
+
 
 const Name = (state = null, action) => {
   switch (action.type) {
@@ -77,7 +79,7 @@ export const Product = createReducer(initialProduct, {
   UPDATE_NAME: Name,
   UPDATE_RATING_DATA: RatingData,
   UPDATE_REVIEW_DATA: ReviewData,
-  UPDATE_DEFAULT_STYLE: DefaultStyle,
-  UPDATE_RELATED_PRODUCTS: Related
+  UPDATE_STYLE_DATA: StyleData,
+  UPDATE_RELATED_PRODUCTS: Related,
 });
 

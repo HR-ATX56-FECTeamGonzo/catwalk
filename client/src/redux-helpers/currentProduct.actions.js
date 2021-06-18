@@ -1,6 +1,6 @@
 import Redux from 'redux';
 import calculateAverage from './lib/calculateAverage.js';
-
+import {batch} from 'react-redux';
 
 const updateName = (obj) => {
   let { name, id, category, description, features } = obj;
@@ -19,12 +19,15 @@ const updateStyleData = (arr) => {
   let defaultStyle = arr[index];
   // console.log(JSON.stringify(defaultStyle));
   return {
-    type: 'UPDATE_DEFAULT_STYLE',
+    type: 'UPDATE_STYLE_DATA',
     payload: {
-      'original_price': defaultStyle['original_price'],
-      'sale_price': defaultStyle['sale_price'],
-      name: defaultStyle.name,
-      'thumbnail_url': defaultStyle.photos[0].thumbnail_url
+      styles: arr,
+      defaultStyle: {
+        'original_price': defaultStyle['original_price'],
+        'sale_price': defaultStyle['sale_price'],
+        name: defaultStyle.name,
+        'thumbnail_url': defaultStyle.photos[0].thumbnail_url
+      }
     }
   };
 };
@@ -54,11 +57,13 @@ const updateReviewData = (obj) => {
 const processResponseData = (data) => {
   return (dispatch) => {
     console.log(data);
-    dispatch(updateName(data[1]));
-    dispatch(updateStyleData(data[3].results));
-    dispatch(updateReviewData(data[0]));
-    dispatch(updateRatingsData(data[0].ratings));
-    dispatch(updateRelated(data[2]));
+    batch(() => {
+      dispatch(updateName(data[1]));
+      dispatch(updateStyleData(data[3].results));
+      dispatch(updateReviewData(data[0]));
+      dispatch(updateRatingsData(data[0].ratings));
+      dispatch(updateRelated(data[2]));
+    });
   };
 };
 

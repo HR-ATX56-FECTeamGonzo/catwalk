@@ -1,8 +1,9 @@
 import React from 'react';
 import { GridList, GridListTile, GridListTileBar, Icon, Typography } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { useSelector, useDispatch } from 'react-redux';
 
-const StyleList = ({styles, current, clickHandler}) => {
+const StyleList = () => {
   var thumbnailStyle = {
     width: '100px',
     height: '100px'
@@ -15,6 +16,19 @@ const StyleList = ({styles, current, clickHandler}) => {
     background: 'white',
     margin: '5px'
   };
+
+  const styles = useSelector((state) => state.test.styles);
+  const current = useSelector((state => state.currentProductStyleIndex));
+  const dispatch = useDispatch();
+
+  const handleClick = (e, idx) => {
+    e.stopPropagation();
+    dispatch({
+      type: 'UPDATE_CURRENT_PRODUCT_STYLE_INDEX',
+      payload: idx
+    });
+  };
+
 
   return (
     <div id='styleList'>
@@ -31,7 +45,7 @@ const StyleList = ({styles, current, clickHandler}) => {
             cols={1}
             style={thumbnailStyle}
             key={idx}
-            onClick={(e) => { e.stopPropagation(); clickHandler(e, idx); }}>
+            onClick={(e) => { handleClick(e, idx); }}>
             <img src={x.photos[0]['thumbnail_url']}/>
             {idx === current &&
             <GridListTileBar
