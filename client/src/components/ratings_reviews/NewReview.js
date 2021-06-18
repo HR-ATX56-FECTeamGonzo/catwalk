@@ -3,6 +3,8 @@ import axios from 'axios';
 import Characteristics from './NewReviewCharacteristics.js';
 import TextFields from './NewReviewTextFields.js';
 import GITHUB_API_KEY from '../../config/config.js';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -74,7 +76,7 @@ const useStyles = makeStyles(theme => ({
 
 const NewReview = (props) => {
 
-
+  const currentProductId = useSelector(state => state.currentProductId);
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -105,16 +107,23 @@ const NewReview = (props) => {
   };
   // RadioArray handlers and hooks ------------------------------------------
   const [characteristicArray, setCharacteristicArray] = useState(null);
-  const [size, setSize] = React.useState(null);
-  const [width, setWidth] = React.useState(null);
-  const [comfort, setComfort] = React.useState(null);
-  const [quality, setQuality] = React.useState(null);
-  const [length, setLength] = React.useState(null);
-  const [fit, setFit] = React.useState(null);
+  const [size, setSize] = useState(null);
+  const [sizeErr, setSizeErr] = useState(true);
+  const [width, setWidth] = useState(null);
+  const [widthErr, setWidthErr] = useState(true);
+  const [comfort, setComfort] = useState(null);
+  const [comfortErr, setComfortErr] = useState(true);
+  const [quality, setQuality] = useState(null);
+  const [qualityErr, setQualityErr] = useState(true);
+  const [length, setLength] = useState(null);
+  const [lengthErr, setLengthErr] = useState(true);
+  const [fit, setFit] = useState(null);
+  const [fitErr, setFitErr] = useState(true);
+  const [characteristicsComplete, setCharacteristicsComplete] = useState(false);
 
   // textfield handlers and hooks --------------------------------------------
   const [summaryError, setSummaryError] = useState(true);
-  const [summary, setSummary] = useState(' ');
+  const [summary, setSummary] = useState('');
   const [bodyError, setBodyError] = useState(true);
   const [body, setBody] = useState('');
   const [nameError, setNameError] = useState(true);
@@ -123,13 +132,11 @@ const NewReview = (props) => {
   const [email, setEmail] = useState('');
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
 
-
-
   // submission handler and alert hooks
   const [isAlert, setIsAlert] = useState(true);
   const [isComplete, setIsComplete] = useState(null);
   const isFormReady = () => {
-    if (!bodyError && rating !== null && reccomend !== null && !nameError && !emailError) {
+    if (!bodyError && rating !== null && reccomend !== null && !nameError && !emailError && characteristicsComplete) {
       setIsComplete(true);
     } else {
       setIsComplete(false);
@@ -139,7 +146,7 @@ const NewReview = (props) => {
   const handleSubmit = () => {
     const recommend = reccomend === 1 ? true : false;
     const params = {
-      'product_id': 24156,
+      'product_id': currentProductId,
       'rating': rating,
       'summary': summary,
       'body': body,
@@ -186,7 +193,7 @@ const NewReview = (props) => {
   useEffect(() => {
     isFormReady();
     generateCharParams();
-  }, [bodyError, summaryError, nameError, emailError]);
+  }, [bodyError, nameError, emailError, sizeErr, widthErr, comfortErr, qualityErr, lengthErr, fitErr]);
 
   return (
     <div>
@@ -255,17 +262,30 @@ const NewReview = (props) => {
                     conditionalStuff={props.currentCharacteristics}
                     characteristicArray={characteristicArray}
                     size={size}
+                    sizeErr={sizeErr}
                     setSize={setSize}
+                    setSizeErr={setSizeErr}
                     width={width}
                     setWidth={setWidth}
+                    widthErr={widthErr}
+                    setWidthErr={setWidthErr}
                     comfort={comfort}
                     setComfort={setComfort}
+                    comfortErr={comfortErr}
+                    setComfortErr={setComfortErr}
                     quality={quality}
                     setQuality={setQuality}
+                    qualityErr={qualityErr}
+                    setQualityErr={setQualityErr}
                     length={length}
                     setLength={setLength}
+                    lengthErr={lengthErr}
+                    setLengthErr={setLengthErr}
                     fit={fit}
                     setFit={setFit}
+                    fitErr={fitErr}
+                    setFitErr={setFitErr}
+                    setCharacteristicsComplete={setCharacteristicsComplete}
                   />
                 </Grid>
 

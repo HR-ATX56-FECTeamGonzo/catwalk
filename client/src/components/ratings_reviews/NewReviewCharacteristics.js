@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextFields from './NewReviewTextFields.js';
 
 
@@ -45,17 +45,17 @@ const Characteristics = (props) => {
   // };
 
   const classes = useStyles();
-  // const [size, setSize] = React.useState('');
+
   const sizeMeanings = ['', 'A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
-  // const [width, setWidth] = React.useState('');
+
   const widthMeanings = ['', 'Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'];
-  // const [comfort, setComfort] = React.useState('');
+
   const comfortMeanings = ['', 'Uncomfortable', 'Slightly uncomfortable', 'Ok', 'Comfortable', 'Perfect'];
-  // const [quality, setQuality] = React.useState('');
+
   const qualityMeanings = ['', 'Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
-  // const [length, setLength] = React.useState('');
+
   const lengthMeanings = ['', 'Runs Short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'];
-  // const [fit, setFit] = React.useState('');
+
   const fitMeanings = ['', 'Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'];
   const options = ['', 1, 2, 3, 4, 5, 6];
   const handleRadioGroupChange = (event, selection) => {
@@ -74,31 +74,50 @@ const Characteristics = (props) => {
       props.setFit(event.target.value);
     }
   };
-
+  const handleRadioGroupErrorChange = (selection) => {
+    if (
+      (!props.sizeErr || !props.conditionalStuff.Size)
+      && (!props.widthErr || !props.conditionalStuff.Width)
+      && (!props.comfortErr || !props.conditionalStuff.Comfort)
+      && (!props.qualityErr || !props.conditionalStuff.Quality)
+      && (!props.lengthErr || !props.conditionalStuff.Length)
+      && (!props.fitErr || !props.conditionalStuff.Fit)) {
+      console.log('eventually this should work');
+      props.setCharacteristicsComplete(true);
+    } else if (options[1] === selection) {
+      props.setSizeErr(false);
+    } else if (options[2] === selection) {
+      props.setWidthErr(false);
+    } else if (options[3] === selection) {
+      props.setComfortErr(false);
+    } else if (options[4] === selection) {
+      props.setQualityErr(false);
+    } else if (options[5] === selection) {
+      props.setLengthErr(false);
+    } else if (options[6] === selection) {
+      props.setFitErr(false);
+    }
+  };
+  useEffect(() => {
+    handleRadioGroupErrorChange();
+  }, [props.sizeErr, props.widthErr, props.comfortErr, props.qualityErr, props.lengthErr, props.fitErr]);
   return (
     <Grid container item >
       <Grid container item spacing={3} direction="column">
-        {/* <Grid item >
-          <Grid item>
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Do you recommend this Product?</FormLabel>
-              <RadioGroup row aria-label="recommend" name="recommend" value={reccomend} onChange={handleRadioChange}>
-                <FormControlLabel value="1" control={<Radio />} label="Yes" />
-                <FormControlLabel value="2" control={<Radio />} label="No" />
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Divider /> */}
-
         {props.conditionalStuff.Size
           ? <Grid item>
-            <FormControl component="fieldset">
+            <FormControl error={props.sizeErr} component="fieldset">
               <Typography className={classes.topLabel}>{sizeMeanings[Number(props.size)]}</Typography>
               <FormLabel component="legend">Size </FormLabel>
-              <RadioGroup className={classes.radioArray} row aria-label="Size" name="Size" value={props.size} onChange={(event) => {
-                handleRadioGroupChange(event, 1);
-              }}>
+              <RadioGroup
+                className={classes.radioArray}
+                row aria-label="Size"
+                name="Size"
+                value={props.size}
+                onChange={(event) => {
+                  handleRadioGroupChange(event, 1);
+                  handleRadioGroupErrorChange(1);
+                }}>
                 <FormControlLabel value={'1'} control={<Radio />} />
                 <FormControlLabel value={'2'} control={<Radio />} />
                 <FormControlLabel value={'3'} control={<Radio />} />
@@ -115,7 +134,7 @@ const Characteristics = (props) => {
         <Divider />
         {props.conditionalStuff.Width
           ? <Grid item>
-            <FormControl component="fieldset">
+            <FormControl error={props.widthErr} component="fieldset">
               <Typography className={classes.topLabel} >{widthMeanings[Number(props.width)]}</Typography>
               <FormLabel component="legend">Width</FormLabel>
               <RadioGroup
@@ -124,6 +143,7 @@ const Characteristics = (props) => {
                 value={props.width}
                 onChange={(event) => {
                   handleRadioGroupChange(event, 2);
+                  handleRadioGroupErrorChange(2);
                 }}>
                 <FormControlLabel value={'1'} control={<Radio />} />
                 <FormControlLabel value={'2'} control={<Radio />} />
@@ -141,7 +161,7 @@ const Characteristics = (props) => {
         <Divider />
         {props.conditionalStuff.Comfort
           ? <Grid item>
-            <FormControl component="fieldset">
+            <FormControl error={props.comfortErr} component="fieldset">
               <Typography className={classes.topLabel} >{comfortMeanings[Number(props.comfort)]}</Typography>
               <FormLabel component="legend">Comfort</FormLabel>
               <RadioGroup
@@ -151,6 +171,7 @@ const Characteristics = (props) => {
                 value={props.comfort}
                 onChange={(event) => {
                   handleRadioGroupChange(event, 3);
+                  handleRadioGroupErrorChange(3);
                 }}>
                 <FormControlLabel value={'1'} control={<Radio />} />
                 <FormControlLabel value={'2'} control={<Radio />} />
@@ -168,7 +189,7 @@ const Characteristics = (props) => {
         <Divider />
         {props.conditionalStuff.Quality
           ? <Grid item>
-            <FormControl component="fieldset">
+            <FormControl error={props.qualityErr} component="fieldset">
               <Typography className={classes.topLabel} >{qualityMeanings[Number(props.quality)]}</Typography>
               <FormLabel component="legend">Quality</FormLabel>
               <RadioGroup
@@ -178,6 +199,7 @@ const Characteristics = (props) => {
                 value={props.quality}
                 onChange={(event) => {
                   handleRadioGroupChange(event, 4);
+                  handleRadioGroupErrorChange(4);
                 }}>
                 <FormControlLabel value={'1'} control={<Radio />} />
                 <FormControlLabel value={'2'} control={<Radio />} />
@@ -195,7 +217,7 @@ const Characteristics = (props) => {
         <Divider />
         {props.conditionalStuff.Length
           ? <Grid item>
-            <FormControl component="fieldset">
+            <FormControl error={props.lengthErr} component="fieldset">
               <Typography className={classes.topLabel} >{lengthMeanings[Number(props.length)]}</Typography>
               <FormLabel component="legend">Length</FormLabel>
               <RadioGroup
@@ -205,6 +227,7 @@ const Characteristics = (props) => {
                 value={props.length}
                 onChange={(event) => {
                   handleRadioGroupChange(event, 5);
+                  handleRadioGroupErrorChange(5);
                 }}>
                 <FormControlLabel value={'1'} control={<Radio />} />
                 <FormControlLabel value={'2'} control={<Radio />} />
@@ -222,7 +245,7 @@ const Characteristics = (props) => {
         <Divider />
         {props.conditionalStuff.Fit
           ? <Grid item>
-            <FormControl component="fieldset">
+            <FormControl error={props.fitErr} component="fieldset">
               <Typography className={classes.topLabel} >{fitMeanings[Number(props.fit)]}</Typography>
               <FormLabel component="legend">Fit</FormLabel>
               <RadioGroup
@@ -232,6 +255,7 @@ const Characteristics = (props) => {
                 value={props.fit}
                 onChange={(event) => {
                   handleRadioGroupChange(event, 6);
+                  handleRadioGroupErrorChange(6);
                 }}>
                 <FormControlLabel value={'1'} control={<Radio />} />
                 <FormControlLabel value={'2'} control={<Radio />} />

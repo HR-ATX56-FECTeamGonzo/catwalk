@@ -125,14 +125,16 @@ const TextFields = (props) => {
     props.setEmail(event);
   };
   const handleEmailErrorChange = () => {
+    let space = props.email.indexOf(' ');
     let at = props.email.indexOf('@');
     let dot = props.email.indexOf('.');
-    if ((at === -1 || dot === -1) || (dot < at)) {
+    if (at === -1 || at === 0 || dot === -1 || space !== -1 || dot < at) {
+      props.setEmailError(true);
+    } else if (props.email[props.email.length - 1] === '.') {
       props.setEmailError(true);
     } else {
       props.setEmailError(false);
     }
-
     if (props.email.length === 0) {
       props.setEmailError(true);
     }
