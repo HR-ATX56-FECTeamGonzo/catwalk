@@ -78,8 +78,10 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       display: 'flex',
       justifyContent: 'center',
-      height: '850px'
+      height: '850px',
       // backgroundColor: 'gold',
+      minWidth: '1000px',
+      maxWidth: '1000px'
     },
     section: {
       paddingLeft: '12.5%',
