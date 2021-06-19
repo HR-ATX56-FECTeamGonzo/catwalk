@@ -17,7 +17,7 @@ const styles = makeStyles({
   },
   name: {
     fontWeight: '600',
-    fontSize: '4em',
+    fontSize: '2.2em',
     lineHeight: '1.0'
   },
   sale: {

@@ -48,14 +48,16 @@ const TabsWrapper = ({clickHandler, current, photos, classes, isVisible}) => (
       scrollButtons = 'on'
       variant = 'scrollable'
       onChange={(e, val) => { clickHandler(e, val); }}>
-      {photos.map((x, idx) => (
-        <Tab key={idx}
-          disabled={!isVisible}
-          className= {classes.tab}
-          icon={ <img src={x['thumbnail_url']}/> }
-          value={idx} >
-        </Tab>
-      ))}
+      {photos.map((x, idx) => {
+        return (
+          <Tab key={idx}
+            disabled={!isVisible}
+            className= {classes.tab}
+            icon={ <img src={x.thumbnail_url}/> }
+            value={idx} >
+          </Tab>
+        );
+      })}
     </Tabs>
   </Fade>
 );

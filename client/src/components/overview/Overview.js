@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Collapse, Fade, Box, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ProductInfo from './components/ProductInfo.js';
+import MoreProductInfo from './components/MoreProductInfo.js';
 import StyleList from './components/StyleList.js';
 import AddToCart from './components/AddToCart.js';
 import ImageGallery from './components/ImageGallery.js';
@@ -120,6 +121,7 @@ const Overview = () => {
         <ProductInfo />
         <StyleList />
         <AddToCart />
+        <MoreProductInfo />
       </div>
     </div>);
 };

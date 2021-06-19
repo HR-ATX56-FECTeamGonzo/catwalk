@@ -33,6 +33,7 @@ const StyledButton = withStyles({
     textAlign: 'center'
   }
 })(Button);
+
 const Sizes = React.forwardRef((props, ref) => {
   var options = Object.keys(props.options);
   if (options.length < 1) {
