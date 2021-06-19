@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ReviewsList from './ReviewsList.js';
-import exampleData from '../../store/exampleData.js';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import NewReview from './NewReview.js';

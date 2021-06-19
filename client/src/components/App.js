@@ -13,13 +13,12 @@ var App = () => (
       direction="column"
       justify="flex-end"
       alignItems="center"
-
     >
       <RelatedProducts />
       <OutfitList />
       <RatingsAndReviews />
     </Grid>
-  </div >
+  </div>
 );
 
 export default App;

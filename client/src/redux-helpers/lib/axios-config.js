@@ -5,5 +5,7 @@ const request = axios.create({
   baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/',
   headers: {'Authorization': key},
 });
-request.CancelToken = axios.CancelToken.bind(this);
+request.CancelToken = axios.CancelToken;
+request.isCancel = axios.isCancel;
+
 export default request;
