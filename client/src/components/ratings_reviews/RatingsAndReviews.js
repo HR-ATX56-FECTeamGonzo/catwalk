@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ReviewsList from './ReviewsList.js';
-import exampleData from '../../store/exampleData.js';
 import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import NewReview from './NewReview.js';
 import SideBar from './SideBar.js';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
+import trackClick from '../util.js';
 
 // -----------material-ui stuff-----------
 import { makeStyles } from '@material-ui/core/styles';
@@ -61,7 +61,8 @@ const RatingsAndReviews = () => {
   const sortMethodChange = (event) => {
     // console.log('this is the method we are chosing to sort by next........', event);
     setSort(event);
-    setReviewData([]);
+    trackClick('sort method change', 'ratings and reviews');
+    // setReviewData([]);
   };
 
   // this is similar to component did mount because this will run after the initial rendering of the page.
@@ -103,15 +104,19 @@ const RatingsAndReviews = () => {
   const classes = useStyles();
   // if the data doesnt exist yet render null
   return (
-    <Grid id="review" container className={classes.main} >
+    <Grid id="reviews" container className={classes.main} >
       {/* <Grid id="review" container direction="row" > */}
       <Grid container item direction="column" md={4} className={classes.other}>
-        <Grid container item direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
+        <Grid container item direction="row">
+          <Typography variant="h4">RATINGS & REVIEWS</Typography>
+        </Grid>
         {metaData.ratings ? <SideBar metaData={metaData} /> : null}
       </Grid>
       <Grid container item direction="column" className={classes.reviews} md={8}>
         <Grid container item direction="row" alignItems="center" spacing={1}>
-          <Grid item><p>{reviewData.length} Reviews sorted by </p></Grid>
+          <Grid item>
+            <Typography variant="subtitle1">{reviewData.length} Reviews sorted by</Typography>
+          </Grid>
           <Grid item>
             <FormControl className="sortSelector">
               <Select
@@ -133,6 +138,7 @@ const RatingsAndReviews = () => {
           <Grid item>{count < reviewData.length
             ? <Button variant="outlined" color="primary" onClick={() => {
               setCount(count + 2);
+              trackClick('more reviews', 'Ratings and Reviews');
             }}>MORE REVIEWS</Button>
             : null}</Grid>
           <Grid item>
@@ -145,9 +151,7 @@ const RatingsAndReviews = () => {
           </Grid>
         </Grid>
       </Grid>
-      {/* </Grid > */}
     </Grid>
-
   );
 };
 export default RatingsAndReviews;

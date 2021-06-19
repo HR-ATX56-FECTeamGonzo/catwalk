@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { Select, MenuItem, Button, Box, Popover, Grid, FormControl } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import InputBase from '@material-ui/core/InputBase';
 import axios from '../../../redux-helpers/lib/axios-config.js';
 
@@ -24,7 +25,7 @@ const StyledButton = withStyles({
   root: {
     fontSize: '0.9375rem',
     padding: '7px 5px',
-    width: '97%',
+    width: '96%',
     margin: '10px 0px'
   },
   label: {
@@ -32,14 +33,13 @@ const StyledButton = withStyles({
     textAlign: 'center'
   }
 })(Button);
+
 const Sizes = React.forwardRef((props, ref) => {
   var options = Object.keys(props.options);
   if (options.length < 1) {
-    return (
-      <Select value='0' disabled={true} input={<StyledInput/>}>
-        <MenuItem value='0'>OUT OF STOCK</MenuItem>
-      </Select>
-    );
+    return <Select value='0' open={props.open} ref={ref} disabled={true} input={<StyledInput/>}>
+      <MenuItem value='0'>OUT OF STOCK</MenuItem>
+    </Select>;
   }
   return (
     <Select {...props} ref={ref} input={<StyledInput/>}>
@@ -64,8 +64,8 @@ const Quantities = props => {
   );
 };
 
-
-const AddToCart = ({stock}) => {
+const AddToCart = () => {
+  const stock = useSelector(state => state.styleData.styles[state.currentProductStyleIndex].skus);
   const [step, setStep] = useState(0);
   const [isOpen, open] = useState(false);
   const [currentSize, setSize] = useState('0');

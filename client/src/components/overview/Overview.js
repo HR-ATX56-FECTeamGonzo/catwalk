@@ -1,16 +1,14 @@
-/* eslint-disable indent */
-import React, {useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createSelector } from 'reselect';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Collapse, Fade, Box, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { sizing, borders, spacing, flexbox } from '@material-ui/system';
-import exampleData from './exampleData.js';
 import ProductInfo from './components/ProductInfo.js';
+import MoreProductInfo from './components/MoreProductInfo.js';
 import StyleList from './components/StyleList.js';
 import AddToCart from './components/AddToCart.js';
 import ImageGallery from './components/ImageGallery.js';
-import {getAllProductData, dispatchAllProductData } from '../../redux-helpers/lib/getAllProductData.js';
+import { dispatchAllProductData } from '../../redux-helpers/lib/getAllProductData.js';
 import axios from 'axios';
 
 const getDefaultStyle = (arr) => {
@@ -19,7 +17,7 @@ const getDefaultStyle = (arr) => {
     index = 0;
   }
   let info = arr[index];
-  return {info, index};
+  return { info, index };
 };
 
 const setIdtoKey = (sum, val) => {
@@ -62,110 +60,70 @@ const LayoutViews = makeStyles({
 });
 
 const Overview = () => {
-  const productID = useSelector((state) => state.currentProductId);
   const [view, setView] = useState(0);
-  const [productData, setData] = useState({});
-  const [productInfo, setInfo] = useState(exampleData);
   const [isLoading, setIsLoading] = useState(false);
-  // this eventually gets replaced by store variable
-  const [styles, setStyles] = useState(exampleData.styles.results);
-  const [currentStyle, setCurrentStyle] = useState(getDefaultStyle(exampleData.styles.results));
-  const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
-  const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh'});
+  const productID = useSelector((state) => state.currentProductId);
+  const styleIndex = useSelector((state) => state.currentProductStyleIndex);
+  //const [productData, setData] = useState({});
+  const styles = useSelector((state => state.styleData.styles));
+  const [photoIndexes, setPhotoIndex] = useState(styles.map(x => 0));
+  const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh' });
   const dispatch = useDispatch();
 
-  const changeStyle = (e, idx) => {
-    setCurrentStyle({
-      info: styles[idx],
-      index: idx
-    });
-  };
 
   const changePhotoIndex = (index) => {
     setPhotoIndex(prevState => {
-      prevState[currentStyle.info.style_id] = index;
+      prevState[styleIndex] = index;
       return prevState;
     });
   };
 
   const toggleView = (e) => {
+    e.stopPropagation();
+    console.log('attempting to toggle view');
     if (e.target === e.currentTarget) {
+      console.log('toggling view');
       setView(prevState => {
         return prevState === 0 ? 1 : 0;
-        }
+      }
       );
     }
   };
 
   useEffect(() => {
-    dispatch(
-      {
-        type: 'UPDATE_CURRENT_PRODUCT_STYLE_INDEX',
-        payload: currentStyle.index
-      });
-  }, [currentStyle]);
-
-  useEffect(() => {
-    console.log('product was changed to id ' + productID);
+    //console.log('product was changed to id ' + productID);
     const source = axios.CancelToken.source();
     var test = () => {
       setIsLoading(true);
-      dispatch(dispatchAllProductData(productID));
-      getAllProductData(productID, source.token)
-      .then((data) => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          var productInfo = {
-            ratings: data[0].ratings,
-            name: data[1].name,
-            category: data[1].category,
-            slogan: data[1].slogan,
-            description: data[1].description
-          };
-          setData(data);
-          setInfo(productInfo);
-          let styles = data[2].results;
-          setStyles(styles);
-          setCurrentStyle(getDefaultStyle(styles));
-          setPhotoIndex(styles.reduce(setIdtoKey, {}));
-        });
-      })
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        console.error('error setting overview state' + e);
-      });
+      dispatch(dispatchAllProductData(productID, source.token));
+      setIsLoading(false);
     };
     test();
     return () => {
       console.log('cleanup in overview');
       source.cancel('calling token cancel');
+      setIsLoading(false);
     };
   }, [productID]);
 
-  return ( isLoading ? <p className={classes.root}>loading...</p> :
-  <div id="overview" className={classes.root}>
+  return (isLoading ? <p className={classes.root}>loading...</p> :
+    <div id="overview" className={classes.root}>
       <Collapse
         in={view !== 0} collapsedHeight='100%'
-        classes = { {container: classes.container, hidden: classes.hidden, entered: classes.entered } }>
+        classes={{ container: classes.container, hidden: classes.hidden, entered: classes.entered }}>
         <ImageGallery
           view={view}
-          toggleView={(e) => { toggleView(e); } }
-          photos={currentStyle.info.photos}
-          index={photoIndexes[currentStyle.info.style_id]}
-          clickHandler={changePhotoIndex}/>
+          toggleView={(e) => { toggleView(e); }}
+          index={photoIndexes[styleIndex]}
+          clickHandler={changePhotoIndex} />
       </Collapse>
-    <div className={classes.menu}>
-      <ProductInfo
-        currentProduct={productInfo}
-        currentStyle={currentStyle.info}/>
-      <StyleList
-        styles={styles}
-        current={currentStyle.index}
-        clickHandler={changeStyle}/>
-      <AddToCart stock={currentStyle.info.skus}/>
-    </div>
-  </div>);
+      <div className={classes.menu}>
+        <ProductInfo />
+        <StyleList />
+        <AddToCart />
+        <MoreProductInfo />
+      </div>
+    </div>);
 };
 
 

@@ -14,6 +14,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
+import trackClick from '../util.js';
 
 
 // here i will render the review item div with all of the passed down props
@@ -32,7 +33,10 @@ const ReviewItem = (props) => {
   const yesButton = (event) => {
     event.preventDefault();
     (clickedYes === false) ? axios.put(`${props.url}${props.data.review_id.toString()}/helpful`, null, headers)
-      .then(() => console.log('successful Yes function'))
+      .then(() => {
+        console.log('successful Yes function');
+        trackClick('increase helpfulness', 'Ratings and Reviews');
+      })
       .catch((err) => console.log('there was an error trying to mark a review as helpful', err)) : console.log('you cant click more than once');
     setClickedYes(true);
   };
@@ -41,7 +45,11 @@ const ReviewItem = (props) => {
   const reportButton = (event) => {
     event.preventDefault();
     (reported === false) ? axios.put(`${props.url}${props.data.review_id.toString()}/report`, null, headers)
-      .then(() => console.log('successful Yes function'))
+      .then(() => {
+        console.log('successful Yes function');
+        trackClick('report', 'Ratings and Reviews');
+
+      })
       .catch((err) => console.log('there was an error trying to report a review', err)) : console.log('you cant report something twice, it shoulve dissapeared already, never to return');
     setReported(true);
   };
@@ -115,7 +123,7 @@ const ReviewItem = (props) => {
 
   return (
     <div>
-      { reported ? null :
+      {reported ? null :
         <Grid container>
           <Grid container direction="row" justify="space-between">
             <Grid item>

@@ -1,7 +1,7 @@
 const outfitFuncs = {
-  addOutfit: ({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }) => ({
+  addOutfit: ({ id, name, category, styleName, originalPrice, salePrice, imageURL, averageStars }) => ({
     type: 'ADD_OUTFIT',
-    payload: { id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }
+    payload: { id, name, category, styleName, originalPrice, salePrice, imageURL, averageStars }
   }),
 
   deleteOutfit: (index) => ({
@@ -15,7 +15,7 @@ const outfitFuncs = {
         return [...previousState,
         {
           id: action.payload.id, name: action.payload.name, category: action.payload.category,
-          styleName: action.payload.styleName, styleId: action.payload.styleId,
+          styleName: action.payload.styleName,
           originalPrice: action.payload.originalPrice, salePrice: action.payload.salePrice,
           imageURL: action.payload.imageURL, averageStars: action.payload.averageStars
         }];
