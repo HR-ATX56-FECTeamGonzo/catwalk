@@ -24,6 +24,7 @@ const useStyles = makeStyles({
   button: {
     backgroundColor: 'rgba(100, 100, 100, .3)',
     margin: '10px',
+    border: 'solid 1px rgba(200, 200, 200, .5)',
     position: 'absolute',
     transition: '300ms cubic-bezier(0.4, 0, 0.2, 1)',
     '&:hover': {
