@@ -75,11 +75,11 @@ const RelatedProducts = () => {
   }, []);
 
   useEffect(() => {
-    console.log('trying to update RP Cards!!!');
+    //console.log('trying to update RP Cards!!!');
     // if useRef is NOT equal to relatedProductIds
     let sameRelateds = ((prev, current) => {
-      console.log('prev: ' + JSON.stringify(prev));
-      console.log('current: ' + JSON.stringify(current));
+      //console.log('prev: ' + JSON.stringify(prev));
+      //console.log('current: ' + JSON.stringify(current));
       if (prev.length === current.length) {
         for (var x = 0; x < prev.length; x++) {
           if (prev[x] !== current[x]) {
@@ -95,6 +95,7 @@ const RelatedProducts = () => {
     if (!sameRelateds) {
       //treated as synchronous
       ReactDOM.unstable_batchedUpdates(() => {
+        setIsLoading(true);
         setRPInfo([]);
         setRPStyles([]);
         setRPMetaData([]);
