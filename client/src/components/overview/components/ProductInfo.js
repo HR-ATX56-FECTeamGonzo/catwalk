@@ -37,12 +37,13 @@ const Price = ({prices, className}) => {
 
 };
 
-const ProductInfo = ({currentStyle}) => {
+const ProductInfo = () => {
   const category = useSelector(state => state.test.category);
   const name = useSelector(state => state.test.name);
   const original = currentStyle.original_price;
   const sale = currentStyle.sale_price;
   const classes = styles({sale: sale});
+
   return (
     <div id='ProductInfo' className={classes.root}>
       <Rating />

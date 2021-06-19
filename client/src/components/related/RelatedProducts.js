@@ -13,7 +13,7 @@ const RelatedProducts = () => {
   const [RPStyles, setRPStyles] = useState([]);
   const [RPMetaData, setRPMetaData] = useState([]);
   const currentProductId = useSelector(state => state.test.id);
-  const relatedProductIds = useSelector(state => state.test.related)
+  const relatedProductIds = useSelector(state => state.test.related);
 
   const getRelatedProductIds = () => {
     axios.get(`${url}/products/${currentProductId}/related`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
