@@ -58,14 +58,16 @@ const OutfitCard = (props) => {
   const classes = useStyles();
 
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx';
-  const currentProductId = useSelector(state => {
-    return state.currentProductId;
+  const currentProduct = useSelector(state => {
+    let {productData, currentProductId, styleData} = state;
+    return {...productData, id: currentProductId, defaultStyle: styleData.defaultStyle};
   });
+  console.log('from outfit card\n' + JSON.stringify(currentProduct));
   const currentProductStyleIndex = useSelector(state => {
     return state.currentProductStyleIndex;
   });
   const currentProductStars = useSelector(state => {
-    return state.currentProductStars || 0;
+    return state.ratingData.average || 0;
   });
 
   const dispatch = useDispatch();
@@ -76,62 +78,69 @@ const OutfitCard = (props) => {
   };
 
 
-  const handleAdd = (productId) => {
-    const id = productId.currentProductId.toString();
-    let { name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars } = '';
+  const handleAdd = () => {
+    dispatch(outfitFuncs.addOutfit({
+      id: currentProduct.id, name: currentProduct.name, category: currentProduct.category,
+      styleName: currentProduct.defaultStyle.name,
+      originalPrice: currentProduct.defaultStyle.original_price, salePrice: currentProduct.defaultStyle.sale_price, imageURL: currentProduct.defaultStyle.thumbnail_url,
+      averageStars: currentProductStars
+    }));
+    trackClick('outfitListAddIcon', 'relatedProducts');
+    // const id = productId.currentProductId.toString();
+    // let { name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars } = '';
 
-    const axiosInstance = axios.create({
-      'headers': {
-        'Authorization': `${GITHUB_API_KEY}`
-      }
-    });
+    // const axiosInstance = axios.create({
+    //   'headers': {
+    //     'Authorization': `${GITHUB_API_KEY}`
+    //   }
+    // });
 
-    axios.all([
-      axiosInstance.get(`${url}/products/${id}`),
-      axiosInstance.get(`${url}/products/${id}/styles`),
-      axiosInstance.get(`${url}/reviews/meta?product_id=${id}`)
-    ])
-      .then(axios.spread((...results) => {
-        const info = results[0].data;
-        const styles = results[1].data;
-        const metaData = results[2].data;
-        // console.log(results[1].data.results);
-        name = info.name;
-        category = info.category;
-        styleName = styles.results[currentProductStyleIndex].name;
-        styleId = styles.results[currentProductStyleIndex].style_id;
-        originalPrice = styles.results[currentProductStyleIndex].original_price;
-        salePrice = styles.results[currentProductStyleIndex].sale_price;
+    // axios.all([
+    //   axiosInstance.get(`${url}/products/${id}`),
+    //   axiosInstance.get(`${url}/products/${id}/styles`),
+    //   axiosInstance.get(`${url}/reviews/meta?product_id=${id}`)
+    // ])
+    //   .then(axios.spread((...results) => {
+    //     const info = results[0].data;
+    //     const styles = results[1].data;
+    //     const metaData = results[2].data;
+    //     // console.log(results[1].data.results);
+    //     name = info.name;
+    //     category = info.category;
+    //     styleName = styles.results[currentProductStyleIndex].name;
+    //     styleId = styles.results[currentProductStyleIndex].style_id;
+    //     originalPrice = styles.results[currentProductStyleIndex].original_price;
+    //     salePrice = styles.results[currentProductStyleIndex].sale_price;
 
-        for (let i = 0; i < styles.results[currentProductStyleIndex].photos.length; i++) {
-          if (styles.results[currentProductStyleIndex].photos[i].thumbnail_url) {
-            imageURL = styles.results[currentProductStyleIndex].photos[i].thumbnail_url;
-          }
-        }
+    //     for (let i = 0; i < styles.results[currentProductStyleIndex].photos.length; i++) {
+    //       if (styles.results[currentProductStyleIndex].photos[i].thumbnail_url) {
+    //         imageURL = styles.results[currentProductStyleIndex].photos[i].thumbnail_url;
+    //       }
+    //     }
 
-        if (!imageURL) {
-          imageURL = './noImage.png';
-        }
+    //     if (!imageURL) {
+    //       imageURL = './noImage.png';
+    //     }
 
-        const starRating = metaData.ratings;
-        const oneStar = Number(starRating[1] || 0);
-        const twoStar = Number(starRating[2] || 0);
-        const threeStar = Number(starRating[3] || 0);
-        const fourStar = Number(starRating[4] || 0);
-        const fiveStar = Number(starRating[5] || 0);
-        const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
-        const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
+    //     const starRating = metaData.ratings;
+    //     const oneStar = Number(starRating[1] || 0);
+    //     const twoStar = Number(starRating[2] || 0);
+    //     const threeStar = Number(starRating[3] || 0);
+    //     const fourStar = Number(starRating[4] || 0);
+    //     const fiveStar = Number(starRating[5] || 0);
+    //     const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
+    //     const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
 
-        averageStars = averageStarRating;
+    //     averageStars = averageStarRating;
 
-      }))
-      .then((results) => {
-        dispatch(funcs.updateCurrentProductStars(averageStars));
-        dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
-        //console.log(props.outfit.imageURL);
-        trackClick('outfitListAddIcon', 'relatedProducts');
-      })
-      .catch((err) => console.log(err));
+    //   }))
+    //   .then((results) => {
+    //     dispatch(funcs.updateCurrentProductStars(averageStars));
+    //     dispatch(outfitFuncs.addOutfit({ id, name, category, styleName, styleId, originalPrice, salePrice, imageURL, averageStars }));
+    //     //console.log(props.outfit.imageURL);
+    //     trackClick('outfitListAddIcon', 'relatedProducts');
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   return (
@@ -144,7 +153,7 @@ const OutfitCard = (props) => {
 
       <CardMedia
         className={classes.media}
-        onClick={props.outfit.name === 'Add to Outfit' ? () => handleAdd({ currentProductId }) : null}
+        onClick={props.outfit.name === 'Add to Outfit' ? () => handleAdd() : null}
       >
         {props.outfit.name !== 'Add to Outfit' ?
           <img src={props.outfit.imageURL} alt={props.outfit.name} className={classes.media} />

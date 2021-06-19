@@ -2,6 +2,7 @@ import Thumbnails from './Thumbnails.js';
 import MainImage from './MainImage.js';
 import Indicator from './Indicator.js';
 import React, { useState, useEffect } from 'react';
+import {useSelector} from 'react-redux';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
@@ -32,14 +33,15 @@ const useStyles = makeStyles({
 });
 
 
-const ImageGallery = ({view, toggleView, photos, index = 0, clickHandler}) => {
+const ImageGallery = ({view, toggleView, index = 0, clickHandler}) => {
   // state for currently displayed image that's instantiated with index prop
+  const photos = useSelector(state => state.styleData.styles[state.currentProductStyleIndex].photos);
   const [currentIndex, setIndex] = useState(index);
   const currentView = view;
   const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';
   const styles = useStyles({bgColor});
   // style hook
-
+  console.log(photos);
   const scrollGallery = (e, idx) => {
     e.stopPropagation();
     setIndex(idx);

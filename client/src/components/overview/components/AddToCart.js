@@ -1,17 +1,47 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { Select, MenuItem, Button, Box, Popover } from '@material-ui/core';
-import { display } from '@material-ui/system';
+import { Select, MenuItem, Button, Box, Popover, Grid, FormControl } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
+import InputBase from '@material-ui/core/InputBase';
 import axios from '../../../redux-helpers/lib/axios-config.js';
 
+const StyledInput = withStyles({
+  root: {
+    cursor: 'text',
+    width: '80%',
+    flexDirection: 'column',
+    alignItems: 'stretch'
+  },
+  input: {
+    width: '100%',
+    borderRadius: 4,
+    border: '2px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px'
+  }
+})(InputBase);
+
+const StyledButton = withStyles({
+  root: {
+    fontSize: '0.9375rem',
+    padding: '7px 5px',
+    width: '96%',
+    margin: '10px 0px'
+  },
+  label: {
+    width: '85%',
+    textAlign: 'center'
+  }
+})(Button);
 const Sizes = React.forwardRef((props, ref) => {
   var options = Object.keys(props.options);
   if (options.length < 1) {
-    return <Select value='0' disabled={true}>
+    return <Select value='0' open={props.open} ref={ref} disabled={true} input={<StyledInput/>}>
       <MenuItem value='0'>OUT OF STOCK</MenuItem>
     </Select>;
   }
   return (
-    <Select {...props} ref={ref}>
+    <Select {...props} ref={ref} input={<StyledInput/>}>
       <MenuItem value='0' disabled>Select Size</MenuItem>
       {options.map((x, idx) => (
         <MenuItem key={idx} value={x}>{x}</MenuItem>))}
@@ -26,14 +56,15 @@ const Quantities = props => {
     options.push(x);
   }
   return (
-    <Select {...props}>
+    <Select {...props} input={<StyledInput/>}>
       <MenuItem value='-' disabled>-</MenuItem>
       {options.map(x => (<MenuItem key={x} value={x}>{x}</MenuItem>))}
     </Select>
   );
 };
 
-const AddToCart = ({stock}) => {
+const AddToCart = () => {
+  const stock = useSelector(state => state.styleData.styles[state.currentProductStyleIndex].skus);
   const [step, setStep] = useState(0);
   const [isOpen, open] = useState(false);
   const [currentSize, setSize] = useState('0');
@@ -98,29 +129,36 @@ const AddToCart = ({stock}) => {
   }, [stock]);
 
   return (
-    <div id='AddToCart'>
-      <Sizes
-        ref={sizeRef}
-        value={currentSize}
-        options={sizes}
-        open={isOpen}
-        onOpen={() => open(true)}
-        onClose={() => open(false)}
-        onChange={(e) => (handleSizeChange(e.target.value))}/>
-      <Quantities value={quantity}
-        disabled={step < 1}
-        onChange={(e) => (handleQuantityChange(e.target.value))}
-        count={sizes[currentSize] ? sizes[currentSize][0] : 0}/>
-      <br/>
-      <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible' } >
-        <Button onClick={handleButtonClick}>ADD TO CART</Button>
-      </Box>
-      <Popover
-        anchorEl={anchor}
-        open={Boolean(anchor)}
-        onClose={() => { setAnchor(null); }}>
-        Please select a size.
-      </Popover>
+    <div id='AddToCart' style={{padding: '20px 0px'}}>
+      <Grid container>
+        <Grid item xs={8}>
+          <Sizes
+            ref={sizeRef}
+            value={currentSize}
+            options={sizes}
+            open={isOpen}
+            onOpen={() => open(true)}
+            onClose={() => open(false)}
+            onChange={(e) => (handleSizeChange(e.target.value))}/>
+        </Grid>
+        <Grid item xs={3}>
+          <Quantities value={quantity}
+            disabled={step < 1}
+            onChange={(e) => (handleQuantityChange(e.target.value))}
+            count={sizes[currentSize] ? sizes[currentSize][0] : 0}/>
+        </Grid>
+        <Grid item xs={12}>
+          <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible' } >
+            <StyledButton size='large' onClick={handleButtonClick} variant='outlined'>ADD TO CART</StyledButton>
+          </Box>
+          <Popover
+            anchorEl={anchor}
+            open={Boolean(anchor)}
+            onClose={() => { setAnchor(null); }}>
+            Please select a size.
+          </Popover>
+        </Grid>
+      </Grid>
     </div>
   );
 };

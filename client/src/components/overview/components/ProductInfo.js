@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import Rating from './Rating.js';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 const styles = makeStyles({
   root: {
@@ -36,15 +38,20 @@ const Price = ({prices, className}) => {
 
 };
 
-const ProductInfo = ({currentProduct, currentStyle}) => {
-  const original = currentStyle.original_price;
-  const sale = currentStyle.sale_price;
+const ProductInfo = () => {
+  const category = useSelector(state => state.productData.category);
+  const name = useSelector(state => state.productData.name);
+  const {original, sale} = useSelector(state => {
+    let {original_price, sale_price} = state.styleData.styles[state.currentProductStyleIndex];
+    return {original: original_price, sale: sale_price};
+  });
   const classes = styles({sale: sale});
+
   return (
     <div id='ProductInfo' className={classes.root}>
-      <Rating ratings={currentProduct.ratings}/>
-      <Typography className={classes.category}>{currentProduct.category}</Typography>
-      <Typography className={classes.name}>{currentProduct.name}</Typography>
+      <Rating />
+      <Typography className={classes.category}>{category}</Typography>
+      <Typography className={classes.name}>{name}</Typography>
       <Price prices={{original, sale}} className={classes.sale}/>
       {/*  <h4 id='slogan'>{currentProduct.slogan}</h4>
       <p id='description'>{currentProduct.description}</p> */}
