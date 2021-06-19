@@ -1,19 +1,28 @@
 import React from 'react';
-import { GridList, GridListTile, GridListTileBar, Icon, Typography } from '@material-ui/core';
+import { GridList, GridListTile, GridListTileBar, Icon, Typography, makeStyles } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-const StyleList = ({styles, current, clickHandler}) => {
-  var thumbnailStyle = {
-    width: '100px',
-    height: '100px'
-  };
+var useStyles = makeStyles({
+  grid: {
+    width: '420px',
 
-  var iconStyle = {
+  },
+  icon: {
     color: 'black',
     border: '1px solid black',
     borderRadius: '50%',
     background: 'white',
     margin: '5px'
+  },
+  thumbnail: {
+    height: '100px'
+  }
+});
+const StyleList = ({styles, current, clickHandler}) => {
+  const classes = useStyles();
+  var thumbnailStyle = {
+    width: '100px',
+    height: '100px'
   };
 
   return (
@@ -25,11 +34,12 @@ const StyleList = ({styles, current, clickHandler}) => {
         {styles[current].name}
       </Typography>
       {/*refactor tilebar ==> badge */}
-      <GridList className='styleGrid' cols={4} style={{width: '420px'}}>
+      <GridList className={classes.grid} cols={4} cellHeight={100}>
         {styles.map((x, idx) => (
           <GridListTile
+            component='div'
             cols={1}
-            style={thumbnailStyle}
+            style = {thumbnailStyle}
             key={idx}
             onClick={(e) => { e.stopPropagation(); clickHandler(e, idx); }}>
             <img src={x.photos[0]['thumbnail_url']}/>
@@ -38,7 +48,7 @@ const StyleList = ({styles, current, clickHandler}) => {
               style={{background: 'none'}}
               title=' '
               titlePosition='top'
-              actionIcon={<CheckCircleIcon style={iconStyle}/>}
+              actionIcon={<CheckCircleIcon className={classes.icon}/>}
               actionPosition='right'/>
             }
           </GridListTile>

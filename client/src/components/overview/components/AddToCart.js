@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { Select, MenuItem, Button, Box, Popover } from '@material-ui/core';
+import { Select, MenuItem, Button, Box, Popover, Grid } from '@material-ui/core';
 import { display } from '@material-ui/system';
 import axios from '../../../redux-helpers/lib/axios-config.js';
 
@@ -99,28 +99,35 @@ const AddToCart = ({stock}) => {
 
   return (
     <div id='AddToCart'>
-      <Sizes
-        ref={sizeRef}
-        value={currentSize}
-        options={sizes}
-        open={isOpen}
-        onOpen={() => open(true)}
-        onClose={() => open(false)}
-        onChange={(e) => (handleSizeChange(e.target.value))}/>
-      <Quantities value={quantity}
-        disabled={step < 1}
-        onChange={(e) => (handleQuantityChange(e.target.value))}
-        count={sizes[currentSize] ? sizes[currentSize][0] : 0}/>
-      <br/>
-      <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible' } >
-        <Button onClick={handleButtonClick}>ADD TO CART</Button>
-      </Box>
-      <Popover
-        anchorEl={anchor}
-        open={Boolean(anchor)}
-        onClose={() => { setAnchor(null); }}>
-        Please select a size.
-      </Popover>
+      <Grid container>
+        <Grid item>
+          <Sizes
+            ref={sizeRef}
+            value={currentSize}
+            options={sizes}
+            open={isOpen}
+            onOpen={() => open(true)}
+            onClose={() => open(false)}
+            onChange={(e) => (handleSizeChange(e.target.value))}/>
+        </Grid>
+        <Grid item>
+          <Quantities value={quantity}
+            disabled={step < 1}
+            onChange={(e) => (handleQuantityChange(e.target.value))}
+            count={sizes[currentSize] ? sizes[currentSize][0] : 0}/>
+        </Grid>
+        <Grid item>
+          <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible' } >
+            <Button onClick={handleButtonClick}>ADD TO CART</Button>
+          </Box>
+          <Popover
+            anchorEl={anchor}
+            open={Boolean(anchor)}
+            onClose={() => { setAnchor(null); }}>
+            Please select a size.
+          </Popover>
+        </Grid>
+      </Grid>
     </div>
   );
 };

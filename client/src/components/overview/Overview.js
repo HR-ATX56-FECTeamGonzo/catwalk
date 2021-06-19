@@ -56,7 +56,8 @@ const LayoutViews = makeStyles({
     left: '52%',
     margin: 'auto',
     height: '65vh',
-
+    paddingTop: '5vh',
+    maxHeight: '40%'
   }
 });
 
@@ -70,7 +71,7 @@ const Overview = () => {
   const [styles, setStyles] = useState(exampleData.styles.results);
   const [currentStyle, setCurrentStyle] = useState(getDefaultStyle(exampleData.styles.results));
   const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
-  const classes = LayoutViews({ 'height': view === 0 ? '65vh' : '95vh'});
+  const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh'});
   const dispatch = useDispatch();
 
   const changeStyle = (e, idx) => {
