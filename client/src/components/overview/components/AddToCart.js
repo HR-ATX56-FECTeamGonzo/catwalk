@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import React, {useState, useEffect, useRef } from 'react';
-import {useSelector} from 'react-redux';
-import { Select, MenuItem, Button, Box, Popover } from '@material-ui/core';
-import { display } from '@material-ui/system';
-=======
 import React, {useState, useEffect, useRef} from 'react';
 import { Select, MenuItem, Button, Box, Popover, Grid, FormControl } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import InputBase from '@material-ui/core/InputBase';
->>>>>>> 8b9125fcc6d09f378ffac7389d9651bba5bb12d6
 import axios from '../../../redux-helpers/lib/axios-config.js';
 
 const StyledInput = withStyles({
@@ -31,7 +25,7 @@ const StyledButton = withStyles({
   root: {
     fontSize: '0.9375rem',
     padding: '7px 5px',
-    width: '97%',
+    width: '95%',
     margin: '10px 0px'
   },
   label: {
@@ -42,17 +36,9 @@ const StyledButton = withStyles({
 const Sizes = React.forwardRef((props, ref) => {
   var options = Object.keys(props.options);
   if (options.length < 1) {
-<<<<<<< HEAD
-    return <Select value='0' open={props.open} ref={ref} disabled={true}>
+    return <Select value='0' open={props.open} ref={ref} disabled={true} input={<StyledInput/>}>
       <MenuItem value='0'>OUT OF STOCK</MenuItem>
     </Select>;
-=======
-    return (
-      <Select value='0' disabled={true} input={<StyledInput/>}>
-        <MenuItem value='0'>OUT OF STOCK</MenuItem>
-      </Select>
-    );
->>>>>>> 8b9125fcc6d09f378ffac7389d9651bba5bb12d6
   }
   return (
     <Select {...props} ref={ref} input={<StyledInput/>}>
