@@ -89,10 +89,10 @@ const RatingsAndReviews = () => {
       maxWidth: '1000px'
     },
     reviews: {
-      backgroundColor: 'white',
+      backgroundColor: '#fbf9f3',
     },
     other: {
-      backgroundColor: 'white',
+      backgroundColor: '#fbf9f3',
     },
     reviewsButtons: {
       paddingTop: '15px',

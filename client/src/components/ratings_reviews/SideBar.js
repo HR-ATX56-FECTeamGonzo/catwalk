@@ -56,13 +56,13 @@ const SideBar = (props) => {
       },
     },
     rating: {
-      backgroundColor: 'white',
+      backgroundColor: '#fbf9f3',
     },
     starsBars: {
-      backgroundColor: 'white',
+      backgroundColor: '#fbf9f3',
     },
     characteristics: {
-      backgroundColor: 'white',
+      backgroundColor: '#fbf9f3',
     },
     characteristicsContainer: {
       height: '40px',
@@ -76,11 +76,14 @@ const SideBar = (props) => {
       display: 'flex',
       justifyContent: 'space-between',
     },
+    sideBar: {
+      backgroundColor: '#fbf9f3',
+    },
   }));
 
   const classes = useStyles();
   return (
-    <Grid container>
+    <Grid container className={classes.sideBar}>
       <Grid container item direction="column" spacing={4}>
         <Grid item>
           <Box className={classes.rating}>

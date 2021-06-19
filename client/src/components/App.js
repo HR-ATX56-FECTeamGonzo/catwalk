@@ -7,6 +7,19 @@ import Grid from '@material-ui/core/Grid';
 
 var App = () => (
   <div>
+    <Grid container item direction="row" style={{
+      width: '100%',
+      height: '105px',
+      backgroundColor: '#fbf9f3',
+    }}>
+      <Grid item style={{
+        // justify: 'center'
+      }}>
+        <img src="logo.png" alt="logo" style={{
+          height: '100px'
+        }} />
+      </Grid>
+    </Grid>
     <Overview />
     <Grid
       container
