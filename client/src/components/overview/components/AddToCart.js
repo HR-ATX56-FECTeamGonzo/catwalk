@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Select, MenuItem, Button, Box, Popover, Grid, FormControl } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
@@ -7,6 +7,9 @@ import axios from '../../../redux-helpers/lib/axios-config.js';
 
 const StyledInput = withStyles({
   root: {
+    '&& .MuiSelect-select.MuiSelect-select': {
+      paddingRight: '0px',
+    },
     cursor: 'text',
     width: '80%',
     flexDirection: 'column',
@@ -17,7 +20,7 @@ const StyledInput = withStyles({
     borderRadius: 4,
     border: '2px solid #ced4da',
     fontSize: 16,
-    padding: '10px 26px 10px 12px'
+    padding: '10px 0px 10px 12px'
   }
 })(InputBase);
 
@@ -25,8 +28,10 @@ const StyledButton = withStyles({
   root: {
     fontSize: '0.9375rem',
     padding: '7px 5px',
-    width: '96%',
-    margin: '10px 0px'
+    width: '96.5%',
+    margin: '10px 0px',
+    marginRight: '20px',
+    border: '2px solid #ced4da',
   },
   label: {
     width: '85%',
@@ -37,12 +42,12 @@ const StyledButton = withStyles({
 const Sizes = React.forwardRef((props, ref) => {
   var options = Object.keys(props.options);
   if (options.length < 1) {
-    return <Select value='0' open={props.open} ref={ref} disabled={true} input={<StyledInput/>}>
+    return <Select value='0' open={props.open} ref={ref} disabled={true} input={<StyledInput />}>
       <MenuItem value='0'>OUT OF STOCK</MenuItem>
     </Select>;
   }
   return (
-    <Select {...props} ref={ref} input={<StyledInput/>}>
+    <Select {...props} ref={ref} input={<StyledInput />}>
       <MenuItem value='0' disabled>Select Size</MenuItem>
       {options.map((x, idx) => (
         <MenuItem key={idx} value={x}>{x}</MenuItem>))}
@@ -57,7 +62,7 @@ const Quantities = props => {
     options.push(x);
   }
   return (
-    <Select {...props} input={<StyledInput/>}>
+    <Select {...props} input={<StyledInput />}>
       <MenuItem value='-' disabled>-</MenuItem>
       {options.map(x => (<MenuItem key={x} value={x}>{x}</MenuItem>))}
     </Select>
@@ -75,7 +80,7 @@ const AddToCart = () => {
   var sizes = {};
   // filter sizes with 0 quantity out and duplicate stocks for a size
   for (var x in stock) {
-    let {size, quantity} = stock[x];
+    let { size, quantity } = stock[x];
     if (quantity > 0) {
       if (sizes[size]) {
         sizes[size][0] += quantity;
@@ -107,7 +112,7 @@ const AddToCart = () => {
 
     let count = quantity;
     let skuID = parseInt(sizes[currentSize][1]);
-    let requests = [...Array(count)].map(x => (axios.post('cart', {'sku_id': skuID })));
+    let requests = [...Array(count)].map(x => (axios.post('cart', { 'sku_id': skuID })));
     Promise.all(requests)
       .then(data => {
         if (!data.status) {
@@ -130,26 +135,29 @@ const AddToCart = () => {
   }, [stock]);
 
   return (
-    <div id='AddToCart' style={{padding: '20px 0px'}}>
-      <Grid container>
-        <Grid item xs={8}>
-          <Sizes
-            ref={sizeRef}
-            value={currentSize}
-            options={sizes}
-            open={isOpen}
-            onOpen={() => open(true)}
-            onClose={() => open(false)}
-            onChange={(e) => (handleSizeChange(e.target.value))}/>
-        </Grid>
-        <Grid item xs={3}>
-          <Quantities value={quantity}
-            disabled={step < 1}
-            onChange={(e) => (handleQuantityChange(e.target.value))}
-            count={sizes[currentSize] ? sizes[currentSize][0] : 0}/>
+    <div id='AddToCart' style={{ padding: '20px 0px' }}>
+      <Grid container >
+        <Grid container item direction="row" styles={{ display: 'flex', justifyContent: 'space-between', marginRight: '20px' }}>
+          <Grid item xs={8}>
+            <Sizes
+              ref={sizeRef}
+              value={currentSize}
+              options={sizes}
+              open={isOpen}
+              onOpen={() => open(true)}
+              onClose={() => open(false)}
+              onChange={(e) => (handleSizeChange(e.target.value))} />
+          </Grid>
+          <Grid item xs={4} >
+            <Quantities value={quantity}
+              disabled={step < 1}
+              onChange={(e) => (handleQuantityChange(e.target.value))}
+              count={sizes[currentSize] ? sizes[currentSize][0] : 0} />
+          </Grid>
+
         </Grid>
         <Grid item xs={12}>
-          <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible' } >
+          <Box visibility={Object.keys(sizes).length === 0 ? 'hidden' : 'visible'} >
             <StyledButton size='large' onClick={handleButtonClick} variant='outlined'>ADD TO CART</StyledButton>
           </Box>
           <Popover
