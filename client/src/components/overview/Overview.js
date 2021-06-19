@@ -66,7 +66,7 @@ const Overview = () => {
   //const [productData, setData] = useState({});
   const styles = useSelector((state => state.styleData.styles));
   const [photoIndexes, setPhotoIndex] = useState(styles.map(x => 0));
-  const classes = LayoutViews({ 'height': view === 0 ? '65vh' : '95vh'});
+  const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh'});
   const dispatch = useDispatch();
 
 

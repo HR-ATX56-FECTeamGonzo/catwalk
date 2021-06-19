@@ -25,7 +25,7 @@ const StyledButton = withStyles({
   root: {
     fontSize: '0.9375rem',
     padding: '7px 5px',
-    width: '95%',
+    width: '96%',
     margin: '10px 0px'
   },
   label: {
