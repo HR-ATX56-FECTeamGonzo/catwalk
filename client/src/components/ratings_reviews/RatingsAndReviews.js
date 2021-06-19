@@ -31,6 +31,7 @@ const RatingsAndReviews = () => {
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx/reviews/';
   const headers = { headers: { 'Authorization': `${GITHUB_API_KEY}` } };
   const [metaData, setMetaData] = useState({});
+  const [doUpdateMetaData, setdoUpdateMetaData] = useState(0);
 
   // getting reviews for a product
   const getReviews = () => {
@@ -67,10 +68,8 @@ const RatingsAndReviews = () => {
   useEffect(() => {
     getMetaData();
     getReviews();
-  }, [sort, currentProductId]);
-  useEffect(() => {
     setCount(2);
-  }, [currentProductId]);
+  }, [sort, currentProductId, doUpdateMetaData]);
 
   const useStyles = makeStyles((theme) => ({
     progressBar: {
@@ -82,12 +81,10 @@ const RatingsAndReviews = () => {
       // position: 'fixed',
       display: 'flex',
       justifyContent: 'center',
-      height: '775px'
+      height: '850px',
       // backgroundColor: 'gold',
-    },
-    section: {
-      // paddingLeft: '12.5%',
-      height: '35px',
+      minWidth: '1000px',
+      maxWidth: '1000px'
     },
     reviews: {
       backgroundColor: 'white',
@@ -107,11 +104,11 @@ const RatingsAndReviews = () => {
   return (
     <Grid id="review" container className={classes.main} >
       {/* <Grid id="review" container direction="row" > */}
-      <Grid container item direction="column" md={3} className={classes.other}>
-        <Grid container item className={classes.section} direction="row"><Typography variant="h4">RATINGS & REVIEWS</Typography></Grid>
+      <Grid container item direction="column" md={4} className={classes.other}>
+        <Grid container item direction="row"><h2>RATINGS & REVIEWS</h2></Grid>
         {metaData.ratings ? <SideBar metaData={metaData} /> : null}
       </Grid>
-      <Grid container item direction="column" className={classes.reviews} md={6}>
+      <Grid container item direction="column" className={classes.reviews} md={8}>
         <Grid container item direction="row" alignItems="center" spacing={1}>
           <Grid item><p>{reviewData.length} Reviews sorted by </p></Grid>
           <Grid item>
@@ -138,12 +135,18 @@ const RatingsAndReviews = () => {
             }}>MORE REVIEWS</Button>
             : null}</Grid>
           <Grid item>
-            {metaData.ratings ? <NewReview currentCharacteristics={metaData.characteristics} /> : null}
+            {metaData.ratings
+              ? <NewReview
+                doUpdateMetaData={doUpdateMetaData}
+                setdoUpdateMetaData={setdoUpdateMetaData}
+                currentCharacteristics={metaData.characteristics} />
+              : null}
           </Grid>
         </Grid>
       </Grid>
       {/* </Grid > */}
     </Grid>
+
   );
 };
 export default RatingsAndReviews;

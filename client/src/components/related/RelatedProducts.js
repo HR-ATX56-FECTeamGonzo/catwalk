@@ -3,6 +3,8 @@ import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import { Typography } from '@material-ui/core';
 import RPPassProps from './RPPassProps.js';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -68,8 +70,7 @@ const RelatedProducts = () => {
 
   useEffect(() => {
     getRelatedProductIds();
-  }, [currentProductId]);
-
+  }, []);
   return (
     <div id='relatedProducts'>
       <Typography variant='subtitle1' align='left'>Related Products</Typography>
@@ -80,5 +81,6 @@ const RelatedProducts = () => {
     </div>
   );
 };
+
 
 export default RelatedProducts;

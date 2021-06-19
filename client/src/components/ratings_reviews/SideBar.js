@@ -8,6 +8,7 @@ import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Sliders from './SidebarSliders.js';
 
@@ -20,6 +21,8 @@ import Sliders from './SidebarSliders.js';
 //  - how the product fits on a scale from too small to too large
 //  - how comfortable the product is from poor to perfect
 const SideBar = (props) => {
+  // const averageStarRating = useSelector(state => test.ratingData);
+
   // console.log('this is props from sidebar:', props.metaData);
   // need to find the average star rating
   const starRating = props.metaData.ratings || 0;
@@ -34,9 +37,9 @@ const SideBar = (props) => {
   const characteristics = props.metaData.characteristics;
   // now i need to calculate the percent of reviews that recommend this product
   const recommended = props.metaData.recommended;
-  const t = Number(recommended.true);
-  const f = Number(recommended.false);
-  const percentRecommended = ((t / (t + f)) * 100).toFixed(0);
+  const t = Number(recommended.true) || 0;
+  const f = Number(recommended.false) || 0;
+  const percentRecommended = ((t / (t + f)) * 100).toFixed(0) || 0;
   // console.log('percent of people recommended', Math.floor(percentRecommended * 100));
   const useStyles = makeStyles((theme) => ({
     progressBarContainer: {

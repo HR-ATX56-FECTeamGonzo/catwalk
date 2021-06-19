@@ -3,9 +3,7 @@ import RatingsAndReviews from './ratings_reviews/RatingsAndReviews.js';
 import Overview from './overview/Overview.js';
 import RelatedProducts from './related/RelatedProducts.js';
 import OutfitList from './related/OutfitList.js';
-
 import Grid from '@material-ui/core/Grid';
-
 
 var App = () => (
   <div>

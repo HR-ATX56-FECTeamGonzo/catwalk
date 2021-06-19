@@ -67,7 +67,7 @@ const OutfitCard = (props) => {
     return state.currentProductStyleIndex;
   });
   const currentProductStars = useSelector(state => {
-    return state.ratingData.average;
+    return state.ratingData.average || 0;
   });
 
   const dispatch = useDispatch();

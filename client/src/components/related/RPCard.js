@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
@@ -214,7 +215,7 @@ const RPCard = (props) => {
         {body}
       </Modal>
       <IconButton onClick={handleOpen} className={classes.icon}>
-        <StarBorderIcon />
+        <StarIcon style={{ fill: '#cccb99' }} />
       </IconButton>
       <CardMedia onClick={() => handleClick(props.id)} className={classes.media} image={image}>
         {/* <img src={props.imageURL} alt={props.name} className={classes.media} /> */}
