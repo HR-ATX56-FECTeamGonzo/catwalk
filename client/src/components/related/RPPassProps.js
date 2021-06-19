@@ -38,19 +38,19 @@ const RPPassProps = (props) => {
     for (let i = 0; i < props.RPInfo.length; i++) {
       arr.push({});
     }
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < props.RPInfo.length; i++) {
       arr[i].id = props.RPInfo[i].id;
       arr[i].name = props.RPInfo[i].name;
       arr[i].category = props.RPInfo[i].category;
       arr[i].features = props.RPInfo[i].features;
 
-      for (let k = 0; k < arr.length; k++) {
+      for (let k = 0; k < props.RPMetaData.length; k++) {
         if (props.RPMetaData[k].product_id === arr[i].id.toString()) {
           arr[i].metaData = props.RPMetaData[k].ratings;
         }
       }
 
-      for (let m = 0; m < arr.length; m++) {
+      for (let m = 0; m < props.RPStyles.length; m++) {
         if (props.RPStyles[m].product_id === arr[i].id.toString()) {
           for (let j = 0; j < props.RPStyles[m].results.length; j++) {
             if (props.RPStyles[m].results[j].photos[0].thumbnail_url) {

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
 import trackClick from '../util.js';
+// import getAllProductData from 'client/src/redux-helpers/lib/getAllProductData.js';
+import { updateRelated } from '../../redux-helpers/currentProduct.actions.js';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -167,13 +169,14 @@ const RPCard = (props) => {
   };
 
   const handleClick = (productId) => {
-    dispatch(funcs.updateCurrentProductId(productId));
+    dispatch(updateRelated([]));
+    dispatch(funcs.updateCurrentProductId(productId)); //will cause other parts of store to update, including related ids
     dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
     trackClick('relatedProductsCard', 'relatedProducts');
   };
 
   useEffect(() => {
-    // makeComparisons();
+    makeComparisons();
   }, []);
 
   const body = (

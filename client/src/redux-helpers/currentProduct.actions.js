@@ -46,7 +46,7 @@ const updateRatingsData = (ratings) => {
   return ({ type: 'UPDATE_RATING_DATA', payload });
 };
 
-const updateRelated = (products) => ({
+export const updateRelated = (products) => ({
   type: 'UPDATE_RELATED_PRODUCTS',
   payload: products
 });
