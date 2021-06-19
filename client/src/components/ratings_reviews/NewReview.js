@@ -4,6 +4,7 @@ import Characteristics from './NewReviewCharacteristics.js';
 import TextFields from './NewReviewTextFields.js';
 import GITHUB_API_KEY from '../../config/config.js';
 import { useDispatch, useSelector } from 'react-redux';
+import trackClick from '../util.js';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -99,6 +100,7 @@ const NewReview = (props) => {
   };
   const handleOpen = () => {
     setOpen(true);
+    trackClick('Make Review', 'Ratings and Reviews');
   };
 
   const handleClose = () => {
@@ -159,11 +161,11 @@ const NewReview = (props) => {
     };
     console.log('/reviews', params, headers);
     if (isComplete) {
-      // alert('yeetlioli boyyola');
       axios.post(url, params, headers)
         .then(() => {
           console.log('success!');
           props.setdoUpdateMetaData(props.doUpdateMetaData + 1);
+          trackClick('submitted new form', 'Ratings and Reviews');
           // dispatch
         })
         .catch(() => console.log('there has been an error submitting your form'));
@@ -197,15 +199,14 @@ const NewReview = (props) => {
     isFormReady();
     generateCharParams();
   }, [bodyError, nameError, emailError, sizeErr, widthErr, comfortErr, qualityErr, lengthErr, fitErr]);
-
+  useEffect(() => {
+    handleClose();
+  }, [props.doUpdateMetaData]);
   return (
     <div>
-
       <Button variant="contained" color="primary" onClick={handleOpen}>
         Make Review
       </Button>
-
-
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -310,7 +311,6 @@ const NewReview = (props) => {
                     setEmail={setEmail}
                     emailError={emailError}
                     setEmailError={setEmailError}
-                    // reccomend={reccomend}
                     uploadedPhotos={uploadedPhotos}
                     setUploadedPhotos={setUploadedPhotos}
                   />

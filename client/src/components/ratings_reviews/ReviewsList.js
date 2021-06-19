@@ -7,8 +7,12 @@ import { makeStyles } from '@material-ui/core/styles';
 const ReviewsList = (props) => {
   const useStyles = makeStyles((theme) => ({
     reviews: {
+      display: 'flex',
+      flexDirection: 'column',
       maxHeight: '625px',
       minHeight: '300px',
+      width: '100%',
+      minWidth: '300px',
       maxWidth: '650px',
       overflowY: 'auto',
       overflowX: 'hidden',

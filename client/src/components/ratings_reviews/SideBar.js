@@ -47,7 +47,9 @@ const SideBar = (props) => {
       padding: '5px'
     },
     progressBar: {
-      minWidth: 200,
+      minWidth: '100%',
+      width: '200px',
+      maxWidth: '200px',
       height: '10px',
       '& .MuiLinearProgress-barColorPrimary': {
         backgroundColor: '#7CFC00',
