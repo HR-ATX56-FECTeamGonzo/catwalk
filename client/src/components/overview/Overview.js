@@ -1,4 +1,4 @@
-import {createSelector} from 'reselect';
+import { createSelector } from 'reselect';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Collapse, Fade, Box, Grid } from '@material-ui/core';
@@ -16,7 +16,7 @@ const getDefaultStyle = (arr) => {
     index = 0;
   }
   let info = arr[index];
-  return {info, index};
+  return { info, index };
 };
 
 const setIdtoKey = (sum, val) => {
@@ -66,7 +66,7 @@ const Overview = () => {
   //const [productData, setData] = useState({});
   const styles = useSelector((state => state.styleData.styles));
   const [photoIndexes, setPhotoIndex] = useState(styles.map(x => 0));
-  const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh'});
+  const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh' });
   const dispatch = useDispatch();
 
 
@@ -90,7 +90,7 @@ const Overview = () => {
   };
 
   useEffect(() => {
-    console.log('product was changed to id ' + productID);
+    //console.log('product was changed to id ' + productID);
     const source = axios.CancelToken.source();
     var test = () => {
       setIsLoading(true);
@@ -105,20 +105,20 @@ const Overview = () => {
     };
   }, [productID]);
 
-  return ( isLoading ? <p className={classes.root}>loading...</p> :
+  return (isLoading ? <p className={classes.root}>loading...</p> :
     <div id="overview" className={classes.root}>
       <Collapse
         in={view !== 0} collapsedHeight='100%'
-        classes = { {container: classes.container, hidden: classes.hidden, entered: classes.entered } }>
+        classes={{ container: classes.container, hidden: classes.hidden, entered: classes.entered }}>
         <ImageGallery
           view={view}
-          toggleView={(e) => { toggleView(e); } }
+          toggleView={(e) => { toggleView(e); }}
           index={photoIndexes[styleIndex]}
-          clickHandler={changePhotoIndex}/>
+          clickHandler={changePhotoIndex} />
       </Collapse>
       <div className={classes.menu}>
-        <ProductInfo/>
-        <StyleList/>
+        <ProductInfo />
+        <StyleList />
         <AddToCart />
       </div>
     </div>);

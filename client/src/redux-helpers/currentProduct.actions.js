@@ -1,6 +1,6 @@
 import Redux from 'redux';
 import calculateAverage from './lib/calculateAverage.js';
-import {batch} from 'react-redux';
+import { batch } from 'react-redux';
 
 const updateProductData = (obj) => {
   let { name, category, description, features, slogan } = obj;
@@ -55,13 +55,13 @@ const updateReviewData = (obj) => {
   let { recommended, characteristics } = obj;
   return {
     type: 'UPDATE_REVIEW_DATA',
-    payload: {recommended, characteristics}
+    payload: { recommended, characteristics }
   };
 };
 
 const processResponseData = (data) => {
   return (dispatch) => {
-    console.log(data);
+    //console.log(data);
     batch(() => {
       dispatch(updateProductData(data[1]));
       dispatch(updateStyleData(data[3].results));

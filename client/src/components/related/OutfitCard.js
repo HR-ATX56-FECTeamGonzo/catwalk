@@ -59,10 +59,10 @@ const OutfitCard = (props) => {
 
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx';
   const currentProduct = useSelector(state => {
-    let {productData, currentProductId, styleData} = state;
-    return {...productData, id: currentProductId, defaultStyle: styleData.defaultStyle};
+    let { productData, currentProductId, styleData } = state;
+    return { ...productData, id: currentProductId, defaultStyle: styleData.defaultStyle };
   });
-  console.log('from outfit card\n' + JSON.stringify(currentProduct));
+  //console.log('from outfit card\n' + JSON.stringify(currentProduct));
   const currentProductStyleIndex = useSelector(state => {
     return state.currentProductStyleIndex;
   });

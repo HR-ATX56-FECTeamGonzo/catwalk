@@ -1,6 +1,6 @@
 import axios from './axios-config.js';
 import calculateAverage from './calculateAverage.js';
-import {batch} from 'react-redux';
+import { batch } from 'react-redux';
 import process from '../currentProduct.actions.js';
 
 const getDefaultStyle = (arr) => {
@@ -9,7 +9,7 @@ const getDefaultStyle = (arr) => {
     index = 0;
   }
   let info = arr[index];
-  return {info, index};
+  return { info, index };
 };
 
 // will be called like so: store.dispatch(getAllProductData)
@@ -17,7 +17,7 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
   return (dispatch) => {
     // assign promises to variables first
     // review metadata
-    var reviewMetadata = axios.get('/reviews/meta', {params: { 'product_id': id}});
+    var reviewMetadata = axios.get('/reviews/meta', { params: { 'product_id': id } });
     // product info
     var productInfo = axios.get(`products/${id}`);
     // related products
@@ -29,7 +29,7 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
       .then((responses) => {
         // processing this will be a pain
         let data = responses.map(x => x.data);
-        console.log('testing batch dispatch');
+        //console.log('testing batch dispatch');
         dispatch(process(data));
         return data;
       })
@@ -47,7 +47,7 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
 export const getAllProductData = (id, cancelToken = (axios.CancelToken.source()).token) => {
   // assign promises to variables first
   // review metadata
-  var reviewMetadata = axios.get('/reviews/meta', {params: { 'product_id': id}}, {cancelToken});
+  var reviewMetadata = axios.get('/reviews/meta', { params: { 'product_id': id } }, { cancelToken });
   // product info
   var productInfo = axios.get(`products/${id}`, { cancelToken });
   // related products
