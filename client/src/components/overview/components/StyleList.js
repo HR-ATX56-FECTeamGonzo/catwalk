@@ -17,7 +17,7 @@ const StyleList = () => {
     margin: '5px'
   };
 
-  const styles = useSelector((state) => state.test.styles);
+  const styles = useSelector((state) => state.styleData.styles);
   const current = useSelector((state => state.currentProductStyleIndex));
   const dispatch = useDispatch();
 

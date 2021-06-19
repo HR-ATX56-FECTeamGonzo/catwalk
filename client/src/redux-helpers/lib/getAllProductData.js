@@ -29,17 +29,8 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
       .then((responses) => {
         // processing this will be a pain
         let data = responses.map(x => x.data);
-        var productData = {
-          name: data[1].name,
-          features: data[1].features,
-          category: data[1].category,
-          ratings: data[0].ratings
-        };
         console.log('testing batch dispatch');
-        batch(() => {
-          dispatch(process(data));
-          dispatch({ type: 'UPDATE_PRODUCT_DATA', payload: productData});
-        });
+        dispatch(process(data));
         return data;
       })
       .catch(e => {

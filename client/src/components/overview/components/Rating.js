@@ -24,7 +24,7 @@ const styles = makeStyles({
 });
 
 const RatingInfo = () => {
-  const ratingData = useSelector(state => state.test.ratingData);
+  const ratingData = useSelector(state => state.ratingData);
   const classes = styles();
   // calculate review count and average rating
 

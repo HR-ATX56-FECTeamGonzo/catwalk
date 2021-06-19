@@ -11,6 +11,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 Window._store = storeFuncs.store;
 
 // storeFuncs.persistor.purge();  /* USE THIS TO RESET STORE */
+storeFuncs.store.dispatch(dispatchAllProductData(24156));
 
 ReactDOM.render(
   <Provider store={storeFuncs.store} >

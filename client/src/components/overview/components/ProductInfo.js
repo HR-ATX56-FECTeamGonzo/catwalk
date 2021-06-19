@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import Rating from './Rating.js';
 import { Typography } from '@material-ui/core';
@@ -38,10 +39,12 @@ const Price = ({prices, className}) => {
 };
 
 const ProductInfo = () => {
-  const category = useSelector(state => state.test.category);
-  const name = useSelector(state => state.test.name);
-  const original = currentStyle.original_price;
-  const sale = currentStyle.sale_price;
+  const category = useSelector(state => state.productData.category);
+  const name = useSelector(state => state.productData.name);
+  const {original, sale} = useSelector(state => {
+    let {original_price, sale_price} = state.styleData.styles[state.currentProductStyleIndex];
+    return {original: original_price, sale: sale_price};
+  });
   const classes = styles({sale: sale});
 
   return (

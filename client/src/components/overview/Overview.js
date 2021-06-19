@@ -1,6 +1,5 @@
-
-import React, {useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import {createSelector} from 'reselect';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Collapse, Fade, Box, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -61,16 +60,17 @@ const Overview = () => {
   const [view, setView] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const productID = useSelector((state) => state.currentProductId);
+  const styleIndex = useSelector((state) => state.currentProductStyleIndex);
   //const [productData, setData] = useState({});
-
-  const [photoIndexes, setPhotoIndex] = useState(styles.reduce(setIdtoKey, {}));
+  const styles = useSelector((state => state.styleData.styles));
+  const [photoIndexes, setPhotoIndex] = useState(styles.map(x => 0));
   const classes = LayoutViews({ 'height': view === 0 ? '65vh' : '95vh'});
   const dispatch = useDispatch();
 
 
   const changePhotoIndex = (index) => {
     setPhotoIndex(prevState => {
-      prevState[currentStyle.style_id] = index;
+      prevState[styleIndex] = index;
       return prevState;
     });
   };
@@ -108,17 +108,16 @@ const Overview = () => {
       <Collapse
         in={view !== 0} collapsedHeight='100%'
         classes = { {container: classes.container, hidden: classes.hidden, entered: classes.entered } }>
-        {/* <ImageGallery
+        <ImageGallery
           view={view}
           toggleView={(e) => { toggleView(e); } }
-          index={photoIndexes[currentStyle.style_id]}
-          clickHandler={changePhotoIndex}/> */}
+          index={photoIndexes[styleIndex]}
+          clickHandler={changePhotoIndex}/>
       </Collapse>
       <div className={classes.menu}>
-        <ProductInfo
-          currentStyle={currentStyle}/>
+        <ProductInfo/>
         <StyleList/>
-        <AddToCart stock={currentStyle.skus}/>
+        <AddToCart />
       </div>
     </div>);
 };

@@ -103,8 +103,8 @@ const RPCard = (props) => {
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
   // const currentProductId = useSelector(state => state.currentProductId);
-  const currentProductFeatures = useSelector(state => state.currentProductData.features);
-  const currentProductName = useSelector(state => state.currentProductData.name);
+  const currentProductFeatures = useSelector(state => state.productData.features);
+  const currentProductName = useSelector(state => state.productData.name);
 
 
   const starRating = props.metaData;
@@ -167,7 +167,6 @@ const RPCard = (props) => {
 
   const handleClick = (productId) => {
     dispatch(funcs.updateCurrentProductId(productId));
-    dispatch(funcs.updateCurrentProductStars(averageStarRating));
     dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
     trackClick('relatedProductsCard', 'relatedProducts');
   };
