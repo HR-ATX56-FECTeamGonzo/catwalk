@@ -52,7 +52,9 @@ const LayoutViews = makeStyles({
     position: 'absolute',
     left: '52%',
     margin: 'auto',
-    height: '65vh'
+    height: '65vh',
+    paddingTop: '5vh',
+    maxHeight: '40%'
   }
 });
 

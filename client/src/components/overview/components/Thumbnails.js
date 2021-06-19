@@ -4,8 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 const tabStyles = {
   root: {
-    minWidth: '104px',
-    width: '104px',
+    minWidth: '60px',
+    maxWidth: '110px',
+    width: '110px',
     height: '100%',
     alignItems: 'center',
     padding: '0px 2px',
@@ -18,7 +19,7 @@ const tabStyles = {
       boxSizing: 'border-box'
     },
     '& .MuiTabs-scroller': {
-      width: '100px'
+      width: '100%'
     }
   },
   tab: {
