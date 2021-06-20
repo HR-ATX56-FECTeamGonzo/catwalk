@@ -70,10 +70,12 @@ const Overview = () => {
   const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh' });
   const dispatch = useDispatch();
 
-
+  console.log('initial photo indexes: ' + photoIndexes);
   const changePhotoIndex = (index) => {
     setPhotoIndex(prevState => {
+      console.log('previous state: ' + prevState);
       prevState[styleIndex] = index;
+      console.log('new state: ' + prevState);
       return prevState;
     });
   };
@@ -98,11 +100,12 @@ const Overview = () => {
       dispatch(dispatchAllProductData(productID, source.token));
       setIsLoading(false);
     };
+    console.log();
     test();
     return () => {
       console.log('cleanup in overview');
       source.cancel('calling token cancel');
-      setIsLoading(false);
+      setIsLoading(true);
     };
   }, [productID]);
 

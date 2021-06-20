@@ -7,6 +7,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
+import axios from 'axios';
+
 
 const useStyles = makeStyles({
   gallery: {
@@ -42,7 +44,9 @@ const ImageGallery = ({ view, toggleView, index = 0, clickHandler }) => {
   const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';
   const styles = useStyles({ bgColor });
   // style hook
-  //console.log(photos);
+  console.log('photo array: ');
+  console.log(photos);
+  console.log('photo index of this gallery: ' + index);
   const scrollGallery = (e, idx) => {
     e.stopPropagation();
     setIndex(idx);

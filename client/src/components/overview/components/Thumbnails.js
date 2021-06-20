@@ -39,6 +39,11 @@ const tabStyles = {
   }
 };
 
+const onError = (e) => {
+  console.log('running onError');
+  e.target.src = './noImage.png';
+};
+
 const TabsWrapper = ({clickHandler, current, photos, classes, isVisible}) => (
   <Fade in={isVisible} >
     <Tabs id='thumbnails'
@@ -53,7 +58,7 @@ const TabsWrapper = ({clickHandler, current, photos, classes, isVisible}) => (
           <Tab key={idx}
             disabled={!isVisible}
             className= {classes.tab}
-            icon={ <img src={x.thumbnail_url}/> }
+            icon={ <img src={x.thumbnail_url} onError={(e) => { onError(e, x); }}/> }
             value={idx} >
           </Tab>
         );

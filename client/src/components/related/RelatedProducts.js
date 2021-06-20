@@ -67,6 +67,7 @@ const RelatedProducts = () => {
   };
 
   useEffect(() => {
+    console.log('initial related products render');
     getRelatedProductIds(relatedProductIds);
   }, []);
 

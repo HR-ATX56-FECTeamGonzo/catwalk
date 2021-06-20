@@ -35,11 +35,15 @@ const MainImage = ({view, src, clickHandler}) => {
     setZoom(prevState => !prevState);
   };
 
+  const onError = (e) => {
+    console.log('running onError');
+    e.target.src = './noImage.png';
+  };
 
   return (
     <Box className={classes.root}
       onClick={(e) => { clickHandler(e); }} >
-      <Box ref={imgRef} component='img' src={src} onClick={handleClick}/>
+      <Box ref={imgRef} component='img' src={src} onClick={handleClick} onError={(e) => { onError(e); }}/>
       <ZoomedImage
         src={src}
         dimensions={imgRef.current}

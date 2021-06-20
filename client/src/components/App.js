@@ -28,7 +28,6 @@ var App = () => (
       justify="flex-start"
       alignItems="center"
     >
-
       <RelatedProducts />
       <OutfitList />
       <RatingsAndReviews />

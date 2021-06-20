@@ -16,3 +16,4 @@ const trackClick = (element, widget) => {
 };
 
 export default trackClick;
+
