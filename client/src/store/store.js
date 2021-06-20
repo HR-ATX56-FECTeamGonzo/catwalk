@@ -11,6 +11,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 const persistConfig = {
   key: 'outfitList',
   storage,
+  whitelist: ['outfitList']
 };
 
 const rootReducer = combineReducers({
@@ -26,7 +27,7 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose;
 const allMiddleware = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(persistedReducer, defaultState, allMiddleware);

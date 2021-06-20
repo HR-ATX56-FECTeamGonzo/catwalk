@@ -2,6 +2,7 @@ var path = require('path');
 const SRC_DIR = path.join(__dirname, '/client/src');
 var DIST_DIR = path.join(__dirname, '/client/dist');
 
+
 module.exports = {
   entry: path.join(SRC_DIR, 'index.js'),
   output: {
@@ -20,6 +21,4 @@ module.exports = {
       }
     ]
   },
-  devtool: 'inline-source-map',
-  mode: 'development'
 };

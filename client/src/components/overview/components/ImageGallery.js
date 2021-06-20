@@ -43,10 +43,12 @@ const ImageGallery = ({ view, toggleView, index = 0, clickHandler }) => {
   const currentView = view;
   const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';
   const styles = useStyles({ bgColor });
+
   // style hook
   console.log('photo array: ');
   console.log(photos);
   console.log('photo index of this gallery: ' + index);
+
   const scrollGallery = (e, idx) => {
     e.stopPropagation();
     setIndex(idx);

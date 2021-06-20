@@ -26,9 +26,8 @@ var App = () => (
       container
       direction="column"
       justify="flex-start"
-      alignItems="center"
-    >
-      <RelatedProducts />
+      alignItems="center">
+      {/* <RelatedProducts /> */}
       <OutfitList />
       <RatingsAndReviews />
     </Grid>

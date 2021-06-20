@@ -92,7 +92,7 @@ const RelatedProducts = () => {
     if (!sameRelateds) {
       //treated as synchronous
       ReactDOM.unstable_batchedUpdates(() => {
-        //console.log('update')
+        console.log('update');
         setIsLoading(true);
         setRPInfo([]);
         setRPStyles([]);

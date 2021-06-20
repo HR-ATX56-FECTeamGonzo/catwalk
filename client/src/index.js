@@ -12,7 +12,7 @@ Window._store = storeFuncs.store;
 
 // storeFuncs.persistor.purge();  /* USE THIS TO RESET STORE */
 
-ReactDOM.render(
+export default ReactDOM.render(
   <Provider store={storeFuncs.store} >
     <PersistGate loading={null} persistor={storeFuncs.persistor}>
       <App />

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Collapse, Fade, Box, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -69,8 +69,9 @@ const Overview = () => {
   const [photoIndexes, setPhotoIndex] = useState(styles.map(x => 0));
   const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh' });
   const dispatch = useDispatch();
-
+  const prevID = useRef(productID);
   console.log('initial photo indexes: ' + photoIndexes);
+  console.log('initial productID: ' + productID);
   const changePhotoIndex = (index) => {
     setPhotoIndex(prevState => {
       console.log('previous state: ' + prevState);
@@ -100,7 +101,7 @@ const Overview = () => {
       dispatch(dispatchAllProductData(productID, source.token));
       setIsLoading(false);
     };
-    console.log();
+    console.log('product id was changed for some reason');
     test();
     return () => {
       console.log('cleanup in overview');
