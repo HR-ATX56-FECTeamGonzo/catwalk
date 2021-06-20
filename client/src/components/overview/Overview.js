@@ -59,6 +59,8 @@ const LayoutViews = makeStyles({
   }
 });
 
+
+
 const Overview = () => {
   const [view, setView] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,8 +72,10 @@ const Overview = () => {
   const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh' });
   const dispatch = useDispatch();
   const prevID = useRef(productID);
+
   console.log('initial photo indexes: ' + photoIndexes);
   console.log('initial productID: ' + productID);
+
   const changePhotoIndex = (index) => {
     setPhotoIndex(prevState => {
       console.log('previous state: ' + prevState);

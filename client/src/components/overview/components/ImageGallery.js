@@ -7,6 +7,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
+import { createSelector } from 'reselect';
 import axios from 'axios';
 
 
@@ -35,10 +36,21 @@ const useStyles = makeStyles({
   }
 });
 
+const getPhotos = createSelector(
+  [
+    state => state.styleData.styles,
+    state => state.currentProductStyleIndex
+  ], (styles, index) => styles[index].photos
+);
 
-const ImageGallery = ({ view, toggleView, index = 0, clickHandler }) => {
+const indexCache = createSelector([
+  state => state.styleData.styles
+], (styles) => styles.map(x => 0));
+
+const ImageGallery = ({ view, toggleView, index, clickHandler }) => {
   // state for currently displayed image that's instantiated with index prop
-  const photos = useSelector(state => state.styleData.styles[state.currentProductStyleIndex].photos);
+  const photos = useSelector(getPhotos);
+
   const [currentIndex, setIndex] = useState(index);
   const currentView = view;
   const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';

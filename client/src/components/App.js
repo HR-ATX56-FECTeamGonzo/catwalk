@@ -27,7 +27,7 @@ var App = () => (
       direction="column"
       justify="flex-start"
       alignItems="center">
-      {/* <RelatedProducts /> */}
+      <RelatedProducts />
       <OutfitList />
       <RatingsAndReviews />
     </Grid>

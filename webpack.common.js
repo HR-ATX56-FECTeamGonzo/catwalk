@@ -1,7 +1,7 @@
-var path = require('path');
+const path = require('path');
 const SRC_DIR = path.join(__dirname, '/client/src');
 var DIST_DIR = path.join(__dirname, '/client/dist');
-
+const webpack = require('webpack');
 
 module.exports = {
   entry: path.join(SRC_DIR, 'index.js'),
@@ -21,4 +21,9 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.LOGGER_LEVEL': JSON.stringify('info')
+    })
+  ]
 };

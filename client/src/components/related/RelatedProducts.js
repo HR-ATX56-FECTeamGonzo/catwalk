@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import axios from '../../redux-helpers/lib/axios-config.js';
 import GITHUB_API_KEY from '../../config/config.js';
 import { Typography } from '@material-ui/core';
 import RPPassProps from './RPPassProps.js';
