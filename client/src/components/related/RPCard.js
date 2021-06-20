@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import funcs from '../../redux-helpers/related/reduxRelatedProducts.js';
 import trackClick from '../util.js';
 
@@ -99,23 +100,13 @@ const getModalStyle = () => {
 
 //RPCard function
 const RPCard = (props) => {
+
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [comparisons, setComparisons] = useState([]);
   const [open, setOpen] = useState(false);
-  // const currentProductId = useSelector(state => state.currentProductId);
   const currentProductFeatures = useSelector(state => state.productData.features);
   const currentProductName = useSelector(state => state.productData.name);
-
-
-  const starRating = props.metaData;
-  const oneStar = Number(starRating[1] || 0);
-  const twoStar = Number(starRating[2] || 0);
-  const threeStar = Number(starRating[3] || 0);
-  const fourStar = Number(starRating[4] || 0);
-  const fiveStar = Number(starRating[5] || 0);
-  const totalStars = (oneStar + twoStar + threeStar + fourStar + fiveStar);
-  const averageStarRating = (((oneStar) + (twoStar * 2) + (threeStar * 3) + (fourStar * 4) + (fiveStar * 5)) / totalStars);
 
   const dispatch = useDispatch();
 
@@ -167,8 +158,10 @@ const RPCard = (props) => {
   };
 
   const handleClick = (productId) => {
-    dispatch(funcs.updateCurrentProductId(productId));
-    dispatch(funcs.updateCurrentProductStyleIndex(props.styleIndex));
+    batch(() => {
+      dispatch(funcs.updateCurrentProductId(productId));
+      dispatch(funcs.updateCurrentProductStyleIndex(props.defaultStyle.index));
+    });
     trackClick('relatedProductsCard', 'relatedProducts');
   };
 
@@ -202,7 +195,7 @@ const RPCard = (props) => {
     </div>
   );
 
-  const image = props.imageURL;
+  const image = props.defaultStyle.photos[0].thumbnail_url || './noImage.png';
 
   return (
     <Card className={classes.root}>
@@ -225,15 +218,15 @@ const RPCard = (props) => {
         <Typography variant='subtitle2' align='left'>{props.name}</Typography>
         {/* need to strikethrough original price */}
         <Typography variant='caption' align='left'>
-          <span style={props.salePrice ? { 'textDecoration': 'line-through' } : null}>
-            ${props.originalPrice}
+          <span style={props.defaultStyle.sale_price ? { 'textDecoration': 'line-through' } : null}>
+            ${props.defaultStyle.original_price}
           </span>
           <span style={{ color: 'red' }}>
-            {props.salePrice ? '$' + props.salePrice : null}
+            {props.defaultStyle.sale_price ? '$' + props.defaultStyle.sale_Price : null}
           </span>
         </Typography><br />
         <Typography component="legend"></Typography>
-        <Rating size="small" name="averageStarRating" value={Number(averageStarRating.toFixed(1))} readOnly precision={0.25}
+        <Rating size="small" name="averageStarRating" value={Number(props.avgRating)} readOnly precision={0.25}
           emptyIcon={<StarBorderIcon fontSize="inherit" />} />
       </CardContent>
     </Card>

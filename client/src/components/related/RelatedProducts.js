@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from '../../redux-helpers/lib/axios-config.js';
+import axios from 'axios';
 import GITHUB_API_KEY from '../../config/config.js';
 import { Typography } from '@material-ui/core';
 import RPPassProps from './RPPassProps.js';
@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRelated } from '../../redux-helpers/currentProduct.actions.js';
+import { getAllProductData } from '../../redux-helpers/lib/getAllProductData.js';
 
 const RelatedProducts = () => {
   const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx';
@@ -15,13 +16,71 @@ const RelatedProducts = () => {
   const [RPInfo, setRPInfo] = useState([]);
   const [RPStyles, setRPStyles] = useState([]);
   const [RPMetaData, setRPMetaData] = useState([]);
+  const [relatedProductData, setData] = useState([]);
   const dispatch = useDispatch();
-
-  const currentProductId = useSelector(state => state.currentProductId);
   const relatedProductIds = useSelector(state => state.related);
   const priorRPIds = useRef(relatedProductIds);
 
-  const getRelatedProductIds = (ids) => {
+  const test = (ids) => {
+    let promises = ids.map(x => getAllProductData(x));
+    Promise.all(promises)
+      .then(data => {
+        setData(data);
+      })
+      .then((result) => {
+        priorRPIds.current = ids;
+        setIsLoading(false);
+      })
+      .catch((err) => console.log('error fetching data for related products - ' + err));
+  };
+
+
+  useEffect(() => {
+    console.log('initial related products render');
+  }, []);
+
+  useEffect(() => {
+    console.log('related product IDs changed');
+    // if useRef is NOT equal to relatedProductIds
+    let sameRelateds = ((prev, current) => {
+      console.log('prev: ' + JSON.stringify(prev));
+      console.log('current: ' + JSON.stringify(current));
+      if (prev.length === current.length) {
+        for (var x = 0; x < prev.length; x++) {
+          if (prev[x] !== current[x]) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return false;
+    })(priorRPIds.current, relatedProductIds);
+
+    //console.log(sameRelateds ? 'related ids are the same' : 'related ids are different');
+    if (!sameRelateds) {
+      console.log('updating related product cards');
+      //treated as synchronous
+      setIsLoading(true);
+      test(relatedProductIds);
+    }
+  }, [relatedProductIds]);
+
+  return (
+    <div id='relatedProducts'>
+      <Typography variant='subtitle1' align='left'>Related Products</Typography>
+      {!isLoading ?
+        <RPPassProps data={relatedProductData} />
+        : <div>Loading . . . </div>
+      }
+    </div>
+  );
+};
+
+
+export default RelatedProducts;
+
+
+/*   const getRelatedProductIds = (ids) => {
     //console.log(ids);
     Promise.resolve(ids)
       .then((result) => {
@@ -61,57 +120,8 @@ const RelatedProducts = () => {
         return Promise.all(promises);
       })
       .then((result) => {
+        priorRPIds.current = ids;
         setIsLoading(false);
       })
       .catch((err) => console.log('error with getRelatedProductIds'));
-  };
-
-  useEffect(() => {
-    console.log('initial related products render');
-    getRelatedProductIds(relatedProductIds);
-  }, []);
-
-  useEffect(() => {
-    //console.log('trying to update RP Cards!!!');
-    // if useRef is NOT equal to relatedProductIds
-    let sameRelateds = ((prev, current) => {
-      console.log('prev: ' + JSON.stringify(prev));
-      console.log('current: ' + JSON.stringify(current));
-      if (prev.length === current.length) {
-        for (var x = 0; x < prev.length; x++) {
-          if (prev[x] !== current[x]) {
-            return false;
-          }
-        }
-        return true;
-      }
-      return false;
-    })(priorRPIds.current, relatedProductIds);
-
-    //console.log(sameRelateds ? 'related ids are the same' : 'related ids are different');
-    if (!sameRelateds) {
-      //treated as synchronous
-      ReactDOM.unstable_batchedUpdates(() => {
-        console.log('update');
-        setIsLoading(true);
-        setRPInfo([]);
-        setRPStyles([]);
-        setRPMetaData([]);
-      });
-      getRelatedProductIds(relatedProductIds);
-    }
-  }, [relatedProductIds]);
-
-  return (
-    <div id='relatedProducts'>
-      <Typography variant='subtitle1' align='left'>Related Products</Typography>
-      {!isLoading ?
-        <RPPassProps RPInfo={RPInfo} RPStyles={RPStyles} RPMetaData={RPMetaData} />
-        : <div>Loading . . . </div>
-      }
-    </div>
-  );
-};
-
-
-export default RelatedProducts;
+  }; */

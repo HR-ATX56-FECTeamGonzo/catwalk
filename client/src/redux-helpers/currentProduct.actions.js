@@ -61,7 +61,6 @@ const updateReviewData = (obj) => {
 
 const processResponseData = (data) => {
   return (dispatch) => {
-    //console.log(data);
     batch(() => {
       dispatch(updateProductData(data[1]));
       dispatch(updateStyleData(data[3].results));

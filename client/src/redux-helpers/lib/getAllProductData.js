@@ -35,19 +35,30 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
   };
 };
 
+const findDefault = (arr) => {
+  let index = arr.findIndex((style) => style['default?']);
+  if (index === -1) {
+    // console.log('no default style');
+    index = 0;
+  }
+  return {...arr[index], index};
+};
+
 export const getAllProductData = (id, cancelToken = (axios.CancelToken.source()).token) => {
   // assign promises to variables first
   // review metadata
   var reviewMetadata = axios.get('/reviews/meta', { params: { 'product_id': id } }, { cancelToken });
   // product info
   var productInfo = axios.get(`products/${id}`, { cancelToken });
-  // related products
-  var relatedProducts = axios.get(`products/${id}/related`, { cancelToken });
   // styles
   var styles = axios.get(`products/${id}/styles`, { cancelToken });
   return Promise.all([reviewMetadata, productInfo, styles])
-    .then((data) => {
-      return data.map(x => x.data);
+    .then((responses) => {
+      let data = responses.map(x => x.data);
+      let { id, name, category, features } = data[1];
+      let defaultStyle = findDefault(data[2].results);
+      let avgRating = calculateAverage(data[0].ratings);
+      return {id, name, category, features, defaultStyle, avgRating};
     });
 
 };

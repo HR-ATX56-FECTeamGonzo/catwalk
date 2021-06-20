@@ -6,8 +6,9 @@
   "scripts": {
     "server": "nodemon server/index.js",
     "start": "nodemon client/src/index.js",
-    "dev:react": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "build:dev": "webpack --config webpack.dev.js --watch",
+    "dev:serve": "webpack serve --open --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.prod.js",
     "test": "jest"
   },
   "author": "HR-ATX56-FECTeamGonzo",
