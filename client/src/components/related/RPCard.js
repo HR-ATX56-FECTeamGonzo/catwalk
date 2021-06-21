@@ -100,7 +100,6 @@ const getModalStyle = () => {
 
 //RPCard function
 const RPCard = (props) => {
-
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [comparisons, setComparisons] = useState([]);
@@ -160,13 +159,13 @@ const RPCard = (props) => {
   const handleClick = (productId) => {
     batch(() => {
       dispatch(funcs.updateCurrentProductId(productId));
-      dispatch(funcs.updateCurrentProductStyleIndex(props.defaultStyle.index));
+      // dispatch(funcs.updateCurrentProductStyleIndex(props.defaultStyle.index));
     });
     trackClick('relatedProductsCard', 'relatedProducts');
   };
 
   useEffect(() => {
-    // makeComparisons();
+    makeComparisons();
   }, []);
 
   const body = (

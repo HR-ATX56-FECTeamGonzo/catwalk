@@ -42,7 +42,7 @@ const ProductInfo = () => {
   const category = useSelector(state => state.productData.category);
   const name = useSelector(state => state.productData.name);
   const {original, sale} = useSelector(state => {
-    let {original_price, sale_price} = state.styleData.styles[state.currentProductStyleIndex];
+    let {original_price, sale_price} = state.styleData.styles[state.styleIndex];
     return {original: original_price, sale: sale_price};
   });
   const classes = styles({sale: sale});

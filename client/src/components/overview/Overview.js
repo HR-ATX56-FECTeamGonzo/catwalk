@@ -11,19 +11,6 @@ import ImageGallery from './components/ImageGallery.js';
 import { dispatchAllProductData } from '../../redux-helpers/lib/getAllProductData.js';
 import axios from 'axios';
 
-const getDefaultStyle = (arr) => {
-  let index = arr.findIndex((style) => style['default?']);
-  if (index === -1) {
-    index = 0;
-  }
-  let info = arr[index];
-  return { info, index };
-};
-
-const setIdtoKey = (sum, val) => {
-  sum[val.style_id] = 0;
-  return sum;
-};
 
 const LayoutViews = makeStyles({
   root: {
@@ -54,35 +41,32 @@ const LayoutViews = makeStyles({
     left: '52%',
     margin: 'auto',
     height: '65vh',
-    paddingTop: '5vh',
     maxHeight: '40%'
   }
 });
 
-
+const makePhotoIndexes = createSelector(
+  [state => state.styleData.styles],
+  styles => styles.map(x => 0)
+);
 
 const Overview = () => {
   const [view, setView] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const productID = useSelector((state) => state.currentProductId);
-  const styleIndex = useSelector((state) => state.currentProductStyleIndex);
-  //const [productData, setData] = useState({});
-  const styles = useSelector((state => state.styleData.styles));
-  const [photoIndexes, setPhotoIndex] = useState(styles.map(x => 0));
+  // const styleIndex = useSelector((state) => state.styleIndex);
+  // const [productData, setData] = useState({});
+  // const styles = useSelector((state => state.styleData.styles));
+  // const photoIndexes = useSelector(makePhotoIndexes);
   const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh' });
   const dispatch = useDispatch();
   const prevID = useRef(productID);
 
-  console.log('initial photo indexes: ' + photoIndexes);
+  // console.log('initial photo indexes: ' + photoIndexes);
   console.log('initial productID: ' + productID);
-
   const changePhotoIndex = (index) => {
-    setPhotoIndex(prevState => {
-      console.log('previous state: ' + prevState);
-      prevState[styleIndex] = index;
-      console.log('new state: ' + prevState);
-      return prevState;
-    });
+    photoIndexes[styleIndex] = index;
+    console.log(photoIndexes);
   };
 
   const toggleView = (e) => {
@@ -98,15 +82,17 @@ const Overview = () => {
   };
 
   useEffect(() => {
-    //console.log('product was changed to id ' + productID);
+    console.log('previous id was ' + prevID.current);
+    console.log('product was changed to id ' + productID);
     const source = axios.CancelToken.source();
     var test = () => {
       setIsLoading(true);
       dispatch(dispatchAllProductData(productID, source.token));
       setIsLoading(false);
     };
-    console.log('product id was changed for some reason');
-    test();
+    if (productID !== prevID.current) {
+      test();
+    }
     return () => {
       console.log('cleanup in overview');
       source.cancel('calling token cancel');
@@ -122,7 +108,6 @@ const Overview = () => {
         <ImageGallery
           view={view}
           toggleView={(e) => { toggleView(e); }}
-          index={photoIndexes[styleIndex]}
           clickHandler={changePhotoIndex} />
       </Collapse>
       <div className={classes.menu}>

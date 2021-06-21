@@ -9,21 +9,21 @@ var defaultState = {
     name: 'Heir Force One', category: 'Kicks',
     description: 'Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I"m just a sneaker pro, I love Pumas and shell toes, but can"t nothin compare to a fresh crispy white pearl',
     slogan: 'A sneaker dynasty',
+    features: [
+      {
+        "feature": "Fabric",
+        "value": "Canvas"
+      },
+      {
+        "feature": "Buttons",
+        "value": "Brass"
+      }
+    ]
   },
   styleData: {
     defaultStyle: {
       original_price: '99.00', sale_price: null, name: 'White & White',
       thumbnail_url: 'https://images.unsplash.com/photo-1544441892-794166f1e3be?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-      features: [
-        {
-          "feature": "Fabric",
-          "value": "Canvas"
-        },
-        {
-          "feature": "Buttons",
-          "value": "Brass"
-        }
-      ]
     },
     styles: [
       {
@@ -382,7 +382,7 @@ var defaultState = {
       }
     ]
   },
-  currentProductStyleIndex: 0,
+  styleIndex: 0,
   outfitList: [{ name: 'Add to Outfit' }],
 };
 

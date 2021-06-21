@@ -1,7 +1,7 @@
 import Thumbnails from './Thumbnails.js';
 import MainImage from './MainImage.js';
 import Indicator from './Indicator.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { sizing, borders, spacing, flexbox } from '@material-ui/system';
@@ -36,40 +36,39 @@ const useStyles = makeStyles({
   }
 });
 
-const getPhotos = createSelector(
-  [
-    state => state.styleData.styles,
-    state => state.currentProductStyleIndex
-  ], (styles, index) => styles[index].photos
-);
 
-const indexCache = createSelector([
-  state => state.styleData.styles
-], (styles) => styles.map(x => 0));
+const indexCache = createSelector(
+  (state) => state.styleData.styles,
+  (styles) => styles.map(x => 0));
 
-const ImageGallery = ({ view, toggleView, index, clickHandler }) => {
+const ImageGallery = ({ view, toggleView, clickHandler }) => {
+  const styleIndex = useSelector(state => state.styleIndex);
   // state for currently displayed image that's instantiated with index prop
-  const photos = useSelector(getPhotos);
+  const photos = useSelector(state => state.styleData.styles[state.styleIndex].photos);
+  const photoIndexes = useSelector(indexCache);
+  console.log('INSIDE IMAGE GALLERY');
+  console.log('photo array: ');
+  console.log(photos);
+  console.log(photoIndexes);
+  const [currentIndex, setIndex] = useState(photoIndexes[styleIndex]);
 
-  const [currentIndex, setIndex] = useState(index);
   const currentView = view;
   const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';
   const styles = useStyles({ bgColor });
 
   // style hook
-  console.log('photo array: ');
-  console.log(photos);
-  console.log('photo index of this gallery: ' + index);
+  // console.log('photo index of this gallery: ' + index);
 
   const scrollGallery = (e, idx) => {
     e.stopPropagation();
     setIndex(idx);
-    clickHandler(idx);
+    photoIndexes[styleIndex] = idx;
+    // clickHandler(idx);
   };
 
   // sets currently selected item on style change
   useEffect(() => {
-    setIndex(index);
+    setIndex(photoIndexes[styleIndex]);
   }, [photos]);
 
 

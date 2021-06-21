@@ -21,13 +21,13 @@ const rootReducer = combineReducers({
   related,
   productData,
   currentProductId: funcs.currentProductIdReducer,
-  currentProductStyleIndex: funcs.currentProductStyleIndexReducer,
+  styleIndex: funcs.currentProductStyleIndexReducer,
   outfitList: outfitFuncs.outfitListReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 80 }) || compose;
 const allMiddleware = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(persistedReducer, defaultState, allMiddleware);

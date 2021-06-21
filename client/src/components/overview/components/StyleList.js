@@ -27,7 +27,7 @@ const StyleList = () => {
   };
 
   const styles = useSelector((state) => state.styleData.styles);
-  const current = useSelector((state => state.currentProductStyleIndex));
+  const current = useSelector((state => state.styleIndex));
   const dispatch = useDispatch();
 
   const handleClick = (e, idx) => {

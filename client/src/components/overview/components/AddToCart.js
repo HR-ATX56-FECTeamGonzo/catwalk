@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import InputBase from '@material-ui/core/InputBase';
 import axios from '../../../redux-helpers/lib/axios-config.js';
+import trackClick from '../../util.js';
 
 const StyledInput = withStyles({
   root: {
@@ -70,7 +71,7 @@ const Quantities = props => {
 };
 
 const AddToCart = () => {
-  const stock = useSelector(state => state.styleData.styles[state.currentProductStyleIndex].skus);
+  const stock = useSelector(state => state.styleData.styles[state.styleIndex].skus);
   const [step, setStep] = useState(0);
   const [isOpen, open] = useState(false);
   const [currentSize, setSize] = useState('0');
@@ -95,18 +96,20 @@ const AddToCart = () => {
     setSize(size);
     setQuantity('1');
     setStep(1);
+    trackClick('Select Size Dropdown', 'Overview');
   };
 
   const handleQuantityChange = (quantity) => {
     setQuantity(quantity);
     setStep(2);
+    trackClick('Select Quantity Dropdown', 'Overview');
   };
 
   const handleButtonClick = (e) => {
+    trackClick('Add to Cart', 'Overview');
     if (step === 0) {
       setAnchor(sizeRef.current);
       open(true);
-
       return;
     }
 
@@ -120,6 +123,7 @@ const AddToCart = () => {
           return;
         }
         console.log(data.status);
+
         // add a "added to cart" popup, maybe
       })
       .catch((e) => {

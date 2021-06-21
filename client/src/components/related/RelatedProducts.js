@@ -11,25 +11,22 @@ import { updateRelated } from '../../redux-helpers/currentProduct.actions.js';
 import { getAllProductData } from '../../redux-helpers/lib/getAllProductData.js';
 
 const RelatedProducts = () => {
-  const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hratx';
   const [isLoading, setIsLoading] = useState(true);
-  const [RPInfo, setRPInfo] = useState([]);
-  const [RPStyles, setRPStyles] = useState([]);
-  const [RPMetaData, setRPMetaData] = useState([]);
-  const [relatedProductData, setData] = useState([]);
+  const [relatedProductData, setRelatedProductData] = useState([]);
   const dispatch = useDispatch();
   const relatedProductIds = useSelector(state => state.related);
   const priorRPIds = useRef(relatedProductIds);
 
-  const test = (ids) => {
+  const getRelatedProductsData = (ids) => {
     let promises = ids.map(x => getAllProductData(x));
-    Promise.all(promises)
+    return Promise.all(promises)
       .then(data => {
-        setData(data);
+        console.log(data);
+        setRelatedProductData(data);
       })
-      .then((result) => {
+      .then(() => {
         priorRPIds.current = ids;
-        setIsLoading(false);
+        setTimeout(() => { setIsLoading(false); }, 100);
       })
       .catch((err) => console.log('error fetching data for related products - ' + err));
   };
@@ -37,6 +34,7 @@ const RelatedProducts = () => {
 
   useEffect(() => {
     console.log('initial related products render');
+    getRelatedProductsData(relatedProductIds);
   }, []);
 
   useEffect(() => {
@@ -56,12 +54,11 @@ const RelatedProducts = () => {
       return false;
     })(priorRPIds.current, relatedProductIds);
 
-    //console.log(sameRelateds ? 'related ids are the same' : 'related ids are different');
+    console.log(sameRelateds ? 'related ids are the same' : 'related ids are different');
     if (!sameRelateds) {
       console.log('updating related product cards');
-      //treated as synchronous
       setIsLoading(true);
-      test(relatedProductIds);
+      getRelatedProductsData(relatedProductIds);
     }
   }, [relatedProductIds]);
 
@@ -69,7 +66,7 @@ const RelatedProducts = () => {
     <div id='relatedProducts'>
       <Typography variant='subtitle1' align='left'>Related Products</Typography>
       {!isLoading ?
-        <RPPassProps data={relatedProductData} />
+        <RPPassProps data={relatedProductData} test={(e) => { setIsLoading(false); }}/>
         : <div>Loading . . . </div>
       }
     </div>

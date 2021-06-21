@@ -27,11 +27,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RPPassProps = ({data}) => {
+const RPPassProps = ({data, test}) => {
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const [RPCards, setRPCards] = useState(data);
+
+  useEffect(() => {
+    test();
+  }, [data]);
 
   return (
     <div className={classes.root}>
