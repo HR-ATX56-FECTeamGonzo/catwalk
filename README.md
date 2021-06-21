@@ -16,6 +16,17 @@ We planned, built the architecture from scratch, deployed using AWS's EC2, and o
 <li>First Contentful Pain: 0.8 s </li>
 <li>Speed Index: 1.1 s </li>
 <li>Time to Interactive: 1.6 s </li>
-
-<b>Select Libraries Used:</b>
-<li></li>
+<br>
+<b>Libraries Used:</b>
+<li>Redux and React</li>
+<li>Material UI</li>
+<li>Express</li>
+<br>
+<b>Dependencies:</b>
+<li>axios-extensions</li>
+<li>react-share</li>
+<li>redux-thunk</li>
+<li>react-persist</lis
+<li>webpack</li>
+<li>eslint</li>
+<li>jest</li>
