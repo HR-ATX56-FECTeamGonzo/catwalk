@@ -37,11 +37,3 @@ const persistor = persistStore(store);
 const storeFuncs = { store, persistor };
 
 export default { store, persistor, rootReducer };
-
-
-//also works:
-// export default createStore(
-//   rootReducer,
-//   {currentVideo: exampleVideoData[0], videoList: exampleVideoData},
-//   applyMiddleware(thunk)
-// );

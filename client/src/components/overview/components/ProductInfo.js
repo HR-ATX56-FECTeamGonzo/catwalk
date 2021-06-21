@@ -1,13 +1,15 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import Rating from './Rating.js';
-import { Typography } from '@material-ui/core';
+import SocialMediaShare from './SocialMediaShare.js';
+import { Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 
 const styles = makeStyles({
   root: {
-
+    display: 'flex',
+    alignItems: 'center'
   },
   category: {
     fontSize: '1.3em',
@@ -18,7 +20,8 @@ const styles = makeStyles({
   name: {
     fontWeight: '600',
     fontSize: '2.2em',
-    lineHeight: '1.0'
+    lineHeight: '1.0',
+    paddingRight: '1em'
   },
   sale: {
     textDecoration: props => props.sale ? 'line-through' : null
@@ -48,13 +51,14 @@ const ProductInfo = () => {
   const classes = styles({sale: sale});
 
   return (
-    <div id='ProductInfo' className={classes.root}>
+    <div id='ProductInfo'>
       <Rating />
       <Typography className={classes.category}>{category}</Typography>
-      <Typography className={classes.name}>{name}</Typography>
+      <Box className={classes.root}>
+        <Typography className={classes.name}>{name}</Typography>
+        <SocialMediaShare/>
+      </Box>
       <Price prices={{original, sale}} className={classes.sale}/>
-      {/*  <h4 id='slogan'>{currentProduct.slogan}</h4>
-      <p id='description'>{currentProduct.description}</p> */}
     </div>
   );
 };

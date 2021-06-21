@@ -63,9 +63,7 @@ const Overview = () => {
 
   const toggleView = (e) => {
     e.stopPropagation();
-    console.log('attempting to toggle view');
     if (e.target === e.currentTarget) {
-      console.log('toggling view');
       setView(prevState => {
         return prevState === 0 ? 1 : 0;
       }
@@ -86,9 +84,6 @@ const Overview = () => {
   };
 
   useEffect(() => {
-    // console.log('previous id was ' + prevID.current);
-    // console.log('product was changed to id ' + productID);
-
     if (productID !== prevID.current) {
       fetchData();
     }

@@ -21,14 +21,13 @@ const RelatedProducts = () => {
     let promises = ids.map(x => getAllProductData(x));
     return Promise.all(promises)
       .then(data => {
-        // console.log(data);
         setRelatedProductData(data);
       })
       .then(() => {
         priorRPIds.current = ids;
         setIsLoading(false);
       })
-      .catch((err) => console.log('error fetching data for related products - ' + err));
+      .catch((err) => console.log('error fetching data for related products - ' + err.message));
   };
 
 
@@ -72,50 +71,3 @@ const RelatedProducts = () => {
 
 
 export default RelatedProducts;
-
-
-/*   const getRelatedProductIds = (ids) => {
-    //console.log(ids);
-    Promise.resolve(ids)
-      .then((result) => {
-        let promises = [];
-        for (let i = 0; i < ids.length; i++) {
-          promises.push(
-            axios.get(`${url}/products/${ids[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
-              .then((results) => {
-                setRPInfo(prev => [...prev, results.data]);
-              })
-          );
-        }
-        return Promise.resolve(ids);
-      })
-      .then((result) => {
-        let promises = [];
-        for (let i = 0; i < result.length; i++) {
-          promises.push(
-            axios.get(`${url}/products/${result[i]}/styles`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
-              .then((results) => {
-                setRPStyles(prev => [...prev, results.data]);
-              })
-          );
-        }
-        return Promise.resolve(ids);
-      })
-      .then((result) => {
-        let promises = [];
-        for (let i = 0; i < result.length; i++) {
-          promises.push(
-            axios.get(`${url}/reviews/meta?product_id=${result[i]}`, { 'headers': { 'Authorization': `${GITHUB_API_KEY}` } })
-              .then((results) => {
-                setRPMetaData(prev => [...prev, results.data]);
-              })
-          );
-        }
-        return Promise.all(promises);
-      })
-      .then((result) => {
-        priorRPIds.current = ids;
-        setIsLoading(false);
-      })
-      .catch((err) => console.log('error with getRelatedProductIds'));
-  }; */

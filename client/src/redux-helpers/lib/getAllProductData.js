@@ -1,7 +1,7 @@
 import axios from './axios-config.js';
 import calculateAverage from './calculateAverage.js';
 import { batch } from 'react-redux';
-import process from '../currentProduct.actions.js';
+import processResponseData from '../currentProduct.actions.js';
 
 
 // will be called like so: store.dispatch(getAllProductData)
@@ -22,7 +22,7 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
         // processing this will be a pain
         let data = responses.map(x => x.data);
         //console.log('testing batch dispatch');
-        dispatch(process(data));
+        dispatch(processResponseData(data));
         return true;
       })
       .catch(e => {
@@ -44,14 +44,14 @@ const findDefault = (arr) => {
   return {...arr[index], index};
 };
 
-export const getAllProductData = (id, cancelToken = (axios.CancelToken.source()).token) => {
+export const getAllProductData = (id) => {
   // assign promises to variables first
   // review metadata
-  var reviewMetadata = axios.get('/reviews/meta', { params: { 'product_id': id } }, { cancelToken });
+  var reviewMetadata = axios.get('/reviews/meta', { params: { 'product_id': id } });
   // product info
-  var productInfo = axios.get(`products/${id}`, { cancelToken });
+  var productInfo = axios.get(`products/${id}`);
   // styles
-  var styles = axios.get(`products/${id}/styles`, { cancelToken });
+  var styles = axios.get(`products/${id}/styles`);
   return Promise.all([reviewMetadata, productInfo, styles])
     .then((responses) => {
       let data = responses.map(x => x.data);

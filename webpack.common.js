@@ -21,9 +21,4 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.LOGGER_LEVEL': JSON.stringify('info')
-    })
-  ]
 };

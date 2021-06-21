@@ -2,6 +2,7 @@ import React from 'react';
 import { GridList, GridListTile, GridListTileBar, Icon, Typography, makeStyles } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useSelector, useDispatch } from 'react-redux';
+import trackClick from '../../util.js';
 
 var useStyles = makeStyles({
   grid: {
@@ -31,6 +32,7 @@ const StyleList = () => {
   const dispatch = useDispatch();
 
   const handleClick = (e, idx) => {
+    trackClick('Style List', 'Overview');
     e.stopPropagation();
     dispatch({
       type: 'UPDATE_CURRENT_PRODUCT_STYLE_INDEX',

@@ -4,11 +4,11 @@ import Indicator from './Indicator.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { sizing, borders, spacing, flexbox } from '@material-ui/system';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
-import { Box, GridList, GridListTile, IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
 import { createSelector } from 'reselect';
 import axios from 'axios';
+import trackClick from '../../util.js';
 
 
 const useStyles = makeStyles({
@@ -47,8 +47,6 @@ const ImageGallery = ({ view, toggleView, clickHandler }) => {
   const photos = useSelector(state => state.styleData.styles[state.styleIndex].photos);
   const photoIndexes = useSelector(indexCache);
   const [currentIndex, setIndex] = useState(photoIndexes[styleIndex]);
-  console.log(styleIndex);
-  console.log(photoIndexes);
   const currentView = view;
   const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';
   const styles = useStyles({ bgColor });
@@ -57,6 +55,7 @@ const ImageGallery = ({ view, toggleView, clickHandler }) => {
   // console.log('photo index of this gallery: ' + index);
 
   const scrollGallery = (e, idx) => {
+    trackClick('Image Gallery', 'Overview')
     e.stopPropagation();
     setIndex(idx);
     photoIndexes[styleIndex] = idx;
