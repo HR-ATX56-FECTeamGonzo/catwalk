@@ -52,22 +52,14 @@ const makePhotoIndexes = createSelector(
 
 const Overview = () => {
   const [view, setView] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const productID = useSelector((state) => state.currentProductId);
-  // const styleIndex = useSelector((state) => state.styleIndex);
-  // const [productData, setData] = useState({});
-  // const styles = useSelector((state => state.styleData.styles));
-  // const photoIndexes = useSelector(makePhotoIndexes);
   const classes = LayoutViews({ 'height': view === 0 ? '750px' : '95vh' });
   const dispatch = useDispatch();
   const prevID = useRef(productID);
 
   // console.log('initial photo indexes: ' + photoIndexes);
-  console.log('initial productID: ' + productID);
-  const changePhotoIndex = (index) => {
-    photoIndexes[styleIndex] = index;
-    console.log(photoIndexes);
-  };
+  // console.log('initial productID: ' + productID);
 
   const toggleView = (e) => {
     e.stopPropagation();
@@ -81,24 +73,34 @@ const Overview = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('previous id was ' + prevID.current);
-    console.log('product was changed to id ' + productID);
+  const fetchData = () => {
     const source = axios.CancelToken.source();
-    var test = () => {
-      setIsLoading(true);
-      dispatch(dispatchAllProductData(productID, source.token));
-      setIsLoading(false);
-    };
+    dispatch(dispatchAllProductData(productID, source.token))
+      .then((response) => {
+        prevID.current = productID;
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  useEffect(() => {
+    // console.log('previous id was ' + prevID.current);
+    // console.log('product was changed to id ' + productID);
+
     if (productID !== prevID.current) {
-      test();
+      fetchData();
     }
     return () => {
       console.log('cleanup in overview');
-      source.cancel('calling token cancel');
       setIsLoading(true);
     };
   }, [productID]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (isLoading ? <p className={classes.root}>loading...</p> :
     <div id="overview" className={classes.root}>
@@ -107,8 +109,7 @@ const Overview = () => {
         classes={{ container: classes.container, hidden: classes.hidden, entered: classes.entered }}>
         <ImageGallery
           view={view}
-          toggleView={(e) => { toggleView(e); }}
-          clickHandler={changePhotoIndex} />
+          toggleView={(e) => { toggleView(e); }}/>
       </Collapse>
       <div className={classes.menu}>
         <ProductInfo />

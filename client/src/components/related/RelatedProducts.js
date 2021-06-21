@@ -21,12 +21,12 @@ const RelatedProducts = () => {
     let promises = ids.map(x => getAllProductData(x));
     return Promise.all(promises)
       .then(data => {
-        console.log(data);
+        // console.log(data);
         setRelatedProductData(data);
       })
       .then(() => {
         priorRPIds.current = ids;
-        setTimeout(() => { setIsLoading(false); }, 100);
+        setIsLoading(false);
       })
       .catch((err) => console.log('error fetching data for related products - ' + err));
   };
@@ -38,11 +38,10 @@ const RelatedProducts = () => {
   }, []);
 
   useEffect(() => {
-    console.log('related product IDs changed');
     // if useRef is NOT equal to relatedProductIds
     let sameRelateds = ((prev, current) => {
-      console.log('prev: ' + JSON.stringify(prev));
-      console.log('current: ' + JSON.stringify(current));
+      // console.log('prev: ' + JSON.stringify(prev));
+      // console.log('current: ' + JSON.stringify(current));
       if (prev.length === current.length) {
         for (var x = 0; x < prev.length; x++) {
           if (prev[x] !== current[x]) {
@@ -54,9 +53,7 @@ const RelatedProducts = () => {
       return false;
     })(priorRPIds.current, relatedProductIds);
 
-    console.log(sameRelateds ? 'related ids are the same' : 'related ids are different');
     if (!sameRelateds) {
-      console.log('updating related product cards');
       setIsLoading(true);
       getRelatedProductsData(relatedProductIds);
     }

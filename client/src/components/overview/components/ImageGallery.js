@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   button: {
     backgroundColor: 'rgba(100, 100, 100, .3)',
     margin: '10px',
-    border: 'solid 1px rgba(200, 200, 200, .5)',
+    border: 'solid 2px rgba(255, 255, 255, .5)',
     position: 'absolute',
     transition: '300ms cubic-bezier(0.4, 0, 0.2, 1)',
     '&:hover': {
@@ -46,12 +46,9 @@ const ImageGallery = ({ view, toggleView, clickHandler }) => {
   // state for currently displayed image that's instantiated with index prop
   const photos = useSelector(state => state.styleData.styles[state.styleIndex].photos);
   const photoIndexes = useSelector(indexCache);
-  console.log('INSIDE IMAGE GALLERY');
-  console.log('photo array: ');
-  console.log(photos);
-  console.log(photoIndexes);
   const [currentIndex, setIndex] = useState(photoIndexes[styleIndex]);
-
+  console.log(styleIndex);
+  console.log(photoIndexes);
   const currentView = view;
   const bgColor = view === 0 ? 'rgba(100, 100, 100, .3)' : 'rgba(100, 100, 100, 1)';
   const styles = useStyles({ bgColor });
@@ -63,7 +60,6 @@ const ImageGallery = ({ view, toggleView, clickHandler }) => {
     e.stopPropagation();
     setIndex(idx);
     photoIndexes[styleIndex] = idx;
-    // clickHandler(idx);
   };
 
   // sets currently selected item on style change

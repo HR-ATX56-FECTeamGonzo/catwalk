@@ -17,18 +17,18 @@ export const dispatchAllProductData = (id, cancelToken = (axios.CancelToken.sour
     // styles
     var styles = axios.get(`products/${id}/styles`);
 
-    Promise.all([reviewMetadata, productInfo, relatedProducts, styles])
+    return Promise.all([reviewMetadata, productInfo, relatedProducts, styles])
       .then((responses) => {
         // processing this will be a pain
         let data = responses.map(x => x.data);
         //console.log('testing batch dispatch');
         dispatch(process(data));
-        return data;
+        return true;
       })
       .catch(e => {
         if (axios.isCancel(e)) {
           console.error('request for product data cancelled - ' + e.message);
-          return;
+          return false;
         }
         console.error('error during dispatch to store - ' + e.message);
       });

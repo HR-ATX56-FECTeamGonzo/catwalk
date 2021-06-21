@@ -159,7 +159,7 @@ const RPCard = (props) => {
   const handleClick = (productId) => {
     batch(() => {
       dispatch(funcs.updateCurrentProductId(productId));
-      // dispatch(funcs.updateCurrentProductStyleIndex(props.defaultStyle.index));
+      dispatch(funcs.updateCurrentProductStyleIndex(props.defaultStyle.index));
     });
     trackClick('relatedProductsCard', 'relatedProducts');
   };
