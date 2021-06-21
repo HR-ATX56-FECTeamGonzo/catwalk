@@ -2,3 +2,4 @@ node_modules
 client/dist/*
 config.js
 .env
+dist/bundle*
