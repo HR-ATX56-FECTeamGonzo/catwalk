@@ -1,5 +1,3 @@
+
 node_modules
-client/dist/*
-config.js
-.env
-dist/bundle*
+node_modules
